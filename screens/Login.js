@@ -4,7 +4,7 @@ import Checkbox from 'expo-checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SelectList } from 'react-native-dropdown-select-list';
 
-const Login = ({navigation}) => {
+const Login = ({navigation, setNav}) => {
     const data =[
         {key:'1', value:'LTO'},
         {key:'2', value:'HPG'}
@@ -12,11 +12,21 @@ const Login = ({navigation}) => {
 
     const [selected, setSelected] = useState('');
     const [isChecked, setChecked] = useState(false);
-
     const [viewPassword, setViewPassword]= useState(true);
-
     const [scaleValue] = useState(new Animated.Value(1));
 
+    const [user, setUser] = useState();
+    const [password, setPassword] = useState();
+
+    const click_login = () =>{
+        setChecked(false);
+        setUser(selected);
+        console.log(user);
+        
+        if (password !== null || user !== null){
+            setNav(true);
+        }
+    }
 
   return (
     <View style={styles.container}>
@@ -34,17 +44,16 @@ const Login = ({navigation}) => {
         
         <View style={styles.textFieldContainer}>
             <Text style={styles.userLabel}>*User</Text>
-            <SelectList data={data} maxHeight={100} search={false} setSelected={setSelected} dropdownStyles={{marginBottom: 21}}/>
+            <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} />
             <View style={styles.dropdownStyle}></View>
             <Text style={styles.passwordLabel}>*Password</Text>
             <View style={styles.passwordTextfieldContainer}>
-                <TextInput style={styles.passwordTextfield} placeholder='Password' secureTextEntry={viewPassword}/>
+                <TextInput style={styles.passwordTextfield} placeholder='Password' secureTextEntry={viewPassword} value={password} onChangeText={()=>setPassword(password)}/>
                 <TouchableOpacity style={styles.eyeIconContainer} onPress={() => setViewPassword(!viewPassword)}>
                     <View>
                         {viewPassword? 
                             <Image source={require('../assets/password-hidden.png')}/>:
                             <Image source={require('../assets/password-view.png')}/>
-                            
                         }
                     </View>
                 </TouchableOpacity>
@@ -59,7 +68,7 @@ const Login = ({navigation}) => {
             </TouchableOpacity>
             
 
-            <Pressable style={styles.loginBtn} onPress={() => navigation.navigate('Dashboard')}>
+            <Pressable style={styles.loginBtn} onPress={() => click_login()}>
                 <Text style={styles.btnText}>Login</Text>
             </Pressable>
             
