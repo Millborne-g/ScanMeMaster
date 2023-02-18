@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, View, Image, Touchable, TouchableOpacity } fr
 import Display_detected_PN from '../components/Display_detected_PN_dashboard';
 import Display_table_PN_dashboard from '../components/Display_table_PN_dashboard';
 
-const Dashboard = ({navigation}) => {
+const Dashboard = ({navigation,user}) => {
   const [dashboard, setDashboard] = useState(true);
   const [list, setList] = useState(false);
   const [archive, setArchive] = useState(false);
@@ -13,7 +13,7 @@ const Dashboard = ({navigation}) => {
         <View style={styles.header}>
           <Text style={styles.headerTxt}>Dashboard</Text>
           <View style={styles.userContainer}> 
-            <Text style={styles.userTxt}>LTO</Text> 
+            <Text style={styles.userTxt}>{user}</Text> 
           </View>
         </View>
 

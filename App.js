@@ -20,13 +20,15 @@ export default function App({ navigation }) {
   const [nav, setNav] = useState(false);
   const [activeScreen, setActiveScreen] = useState('Dashboard');
 
+  const [user, setUser] = useState('')
+
   
   return (
     <>
     {nav? 
-      <TabNavigator />
+      <TabNavigator user={user} setNav={setNav}/>
       :
-      <Login setNav={setNav}/>
+      <Login setNav={setNav} setUser={setUser}/>
     }
     
     </>

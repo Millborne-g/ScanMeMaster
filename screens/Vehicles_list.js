@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity} from 'react-native';
 import Display_table_PN_list from '../components/Display_table_PN_list';
 import Add_form_PN_list from '../components/Add_form_PN_list'
 
-const Vehicles_list = () => {
+const Vehicles_list = ({user}) => {
+  const [form, setForm] = useState(false);
+  
   return (
     <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTxt}>Vehicles with Crimin...</Text>
           <View style={styles.userContainer}> 
-            <Text style={styles.userTxt}>LTO</Text> 
+            <Text style={styles.userTxt}>{user}</Text> 
           </View>
         </View>
         <View style={styles.search_bar_container}>
@@ -27,13 +29,16 @@ const Vehicles_list = () => {
         </View>
 
         <View style={styles.btn_container}>
-          <Pressable style={styles.addBtn} onPress={() => click_login()}>
+          <Pressable style={styles.addBtn} onPress={() => setForm(true)}>
             <Text style={styles.btnText}>Add</Text>
           </Pressable>
         </View>
-        <View style={styles.addForm_popup}>
-          <Add_form_PN_list />
-        </View>
+        {form &&
+          <View style={styles.addForm_popup}>
+            <Add_form_PN_list setForm={setForm}/>
+          </View>
+        }
+        
     </View>
     
    
@@ -136,7 +141,6 @@ const styles = StyleSheet.create({
       borderRadius: 4,
       elevation: 3,
       backgroundColor: '#2666FA',
-      
   },
 
   btnText: {

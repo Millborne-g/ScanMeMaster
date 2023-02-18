@@ -4,27 +4,30 @@ import Checkbox from 'expo-checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SelectList } from 'react-native-dropdown-select-list';
 
-const Login = ({navigation, setNav}) => {
+const Login = ({setNav, setUser}) => {
     const data =[
-        {key:'1', value:'LTO'},
-        {key:'2', value:'HPG'}
+        {key:1, value:'LTO'},
+        {key:2, value:'HPG'}
     ]
 
     const [selected, setSelected] = useState('');
     const [isChecked, setChecked] = useState(false);
     const [viewPassword, setViewPassword]= useState(true);
     const [scaleValue] = useState(new Animated.Value(1));
-
-    const [user, setUser] = useState();
     const [password, setPassword] = useState();
 
     const click_login = () =>{
         setChecked(false);
-        setUser(selected);
-        console.log(user);
-        
-        if (password !== null || user !== null){
+        try {
+            console.log(data[[selected-1]].value);
+            console.log(password);
+            let personnel = data[[selected-1]].value;
+            setUser(personnel);
             setNav(true);
+            setPassword('');
+        }
+        catch(err) {
+            alert("Invalid user and password")
         }
     }
 
@@ -37,18 +40,16 @@ const Login = ({navigation, setNav}) => {
             <Image source={require('../assets/logo.png')}/>
         </View>   
         <View style={styles.headerContainer}>
-            <Text style={styles.header}>Welcome Back!</Text>
-            <Text style={styles.subHeader}>Hello again, you've been missed!</Text>
+            <Text style={styles.header}>ScanMeMaster</Text>
+            <Text style={styles.subHeader}>Please Login to continue.</Text>
         </View>
-
-        
         <View style={styles.textFieldContainer}>
             <Text style={styles.userLabel}>*User</Text>
             <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} />
             <View style={styles.dropdownStyle}></View>
             <Text style={styles.passwordLabel}>*Password</Text>
             <View style={styles.passwordTextfieldContainer}>
-                <TextInput style={styles.passwordTextfield} placeholder='Password' secureTextEntry={viewPassword} value={password} onChangeText={()=>setPassword(password)}/>
+                <TextInput style={styles.passwordTextfield} placeholder='Password' secureTextEntry={viewPassword} value={password} onChangeText={(e)=>setPassword(e)}/>
                 <TouchableOpacity style={styles.eyeIconContainer} onPress={() => setViewPassword(!viewPassword)}>
                     <View>
                         {viewPassword? 
