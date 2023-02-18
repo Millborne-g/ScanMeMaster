@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View, Image, Touchable, TouchableOpacity } from 'react-native';
+import Display_detected_PN from '../components/Display_detected_PN_dashboard';
+import Display_table_PN_dashboard from '../components/Display_table_PN_dashboard';
 
 const Dashboard = ({navigation}) => {
   const [dashboard, setDashboard] = useState(true);
@@ -7,8 +9,6 @@ const Dashboard = ({navigation}) => {
   const [archive, setArchive] = useState(false);
   const [apprehended, setApprehended] = useState(false);
   return (
-    <>
-    
     <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTxt}>Dashboard</Text>
@@ -16,10 +16,26 @@ const Dashboard = ({navigation}) => {
             <Text style={styles.userTxt}>LTO</Text> 
           </View>
         </View>
-        
+
+        <View style={styles.display_PN_container}>
+          <Text style={styles.label}>Recently Scanned Vehicle</Text>
+          <Display_detected_PN/>
+        </View >
+
+        <View style={styles.display_PN_container}>
+          <View style={styles.list_label_container}>
+            <Text style={styles.label}>Vehicles with Criminal Offense</Text>
+            <TouchableOpacity>
+              <Text style={styles.view_all_text}>View All</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.table_PN_dashboard_container}>
+            <Display_table_PN_dashboard/>
+          </View>
+          
+        </View >
     </View>
-    
-    </>
   )
 }
 
@@ -30,7 +46,7 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    height: 115,
+    height: 90,
     backgroundColor: '#E4F1F8',
     paddingLeft: 30,
     paddingRight: 30,
@@ -40,7 +56,7 @@ const styles = StyleSheet.create({
   },
 
   headerTxt: {
-    marginTop: '5%',
+    marginTop: '10%',
     fontSize: 20,
     fontWeight: 'bold'
   },
@@ -53,7 +69,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 8,
     elevation: 5,
-    marginTop: '5%',
+    marginTop: '10%',
   },
 
   userTxt: {
@@ -70,6 +86,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     flexDirection: 'row'
+  },
+
+  display_PN_container: {
+    paddingLeft: 30,
+    paddingRight: 30,
+    marginTop: 20
+  },
+
+  list_label_container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+
+  label: {
+    fontSize: 15,
+    color: '#9F9F9F',
+    marginBottom: 10
+  },
+
+  view_all_text: {
+    fontSize: 15,
+    color: '#2666FA',
+  },
+
+  table_PN_dashboard_container: {
+    borderWidth: 0.5,
+    borderRadius: 12,
+    overflow: 'hidden',
   }
 
 })

@@ -1,18 +1,42 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity} from 'react-native';
+import Display_table_PN_list from '../components/Display_table_PN_list';
+import Add_form_PN_list from '../components/Add_form_PN_list'
 
 const Vehicles_list = () => {
   return (
-    <>
-        <View style={styles.container}>
-            <View style={styles.header}>
-            <Text style={styles.headerTxt}>Vehicles with Crimin...</Text>
-            <View style={styles.userContainer}> 
-                <Text style={styles.userTxt}>LTO</Text> 
-            </View>
-            </View>
+    <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTxt}>Vehicles with Crimin...</Text>
+          <View style={styles.userContainer}> 
+            <Text style={styles.userTxt}>LTO</Text> 
+          </View>
         </View>
-    </>
+        <View style={styles.search_bar_container}>
+          <View style={styles.search_bar}>
+            <View style={styles.search_bar_icon_container}>
+              <Image style={styles.search_bar_icon} source={require('../assets/searchIcon.png')} />
+            </View>
+            <TextInput style={styles.search_bar_textfield} placeholder='Search'/>
+          </View>
+        </View>
+        <View style={styles.display_PN_container}>
+          <View style={styles.display_table_PN_list_container}>
+            <Display_table_PN_list/>
+          </View>
+        </View>
+
+        <View style={styles.btn_container}>
+          <Pressable style={styles.addBtn} onPress={() => click_login()}>
+            <Text style={styles.btnText}>Add</Text>
+          </Pressable>
+        </View>
+        <View style={styles.addForm_popup}>
+          <Add_form_PN_list />
+        </View>
+    </View>
+    
+   
   )
 }
 
@@ -23,7 +47,7 @@ const styles = StyleSheet.create({
     },
   
     header: {
-      height: 115,
+      height: 90,
       backgroundColor: '#E4F1F8',
       paddingLeft: 30,
       paddingRight: 30,
@@ -33,7 +57,7 @@ const styles = StyleSheet.create({
     },
   
     headerTxt: {
-      marginTop: '5%',
+      marginTop: '10%',
       fontSize: 20,
       fontWeight: 'bold'
     },
@@ -46,13 +70,90 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       borderRadius: 8,
       elevation: 5,
-      marginTop: '5%',
+      marginTop: '10%',
     },
   
     userTxt: {
       fontSize: 13,
       fontWeight: '800'
     },
+
+    search_bar_container: {
+      paddingLeft: 30,
+      paddingRight: 30,
+      marginTop: 25,
+    },
+
+    search_bar: {
+      borderWidth: 1,
+      borderColor: 'rgba(0, 0, 0, 0.4)',
+      borderRadius: 10,
+      paddingLeft: 40,
+      paddingRight: 10,
+      height: 45,
+    },
+
+    search_bar_icon_container: {
+      position: 'absolute',
+      left: 0,
+      height: '100%',
+      justifyContent: 'center',
+    },
+
+    search_bar_icon: {
+      height: '60%',
+      marginLeft: 8
+    },
+
+    search_bar_textfield: {
+      fontSize: 16,
+      height: '100%',
+    },
+
+    display_PN_container: {
+      paddingLeft: 30,
+      paddingRight: 30,
+      marginTop: 20
+    },
+
+    display_table_PN_list_container: {
+      borderWidth: 0.5,
+      borderRadius: 12,
+      overflow: 'hidden',
+    },
+
+    btn_container: {
+      paddingLeft: 30,
+      paddingRight: 30,
+      marginTop: 15
+    },
+
+  addBtn: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 12,
+      paddingHorizontal: 32,
+      borderRadius: 4,
+      elevation: 3,
+      backgroundColor: '#2666FA',
+      
+  },
+
+  btnText: {
+      fontSize: 16,
+      lineHeight: 21,
+      fontWeight: 'bold',
+      letterSpacing: 0.25,
+      color: 'white',
+    },
+
+  addForm_popup:{
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    top: 90,
+    backgroundColor: '#FFFFFF'
+  }
 });  
 
 export default Vehicles_list

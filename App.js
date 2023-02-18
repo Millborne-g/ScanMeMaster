@@ -6,7 +6,8 @@ import { useState } from 'react';
 import Dashboard from './screens/Dashboard';
 import Login from './screens/Login';
 import Vehicles_list from './screens/Vehicles_list';
-import BottonNav from './components/BottonNav';
+import TabNavigator from './screens/TabNavigator';
+//import BottonNav from './components/BottonNav';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,20 +24,7 @@ export default function App({ navigation }) {
   return (
     <>
     {nav? 
-    <>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName={activeScreen}>
-          <Stack.Screen name='Dashboard' component={Dashboard} options={{
-            headerShown: false
-          }}/>
-          
-          <Stack.Screen name='Vehicles_list' component={Vehicles_list} options={{
-            headerShown: false
-          }}/>
-        </Stack.Navigator>
-      </NavigationContainer>
-      <BottonNav setActiveScreen={setActiveScreen}/>
-      </>
+      <TabNavigator />
       :
       <Login setNav={setNav}/>
     }
