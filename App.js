@@ -25,7 +25,7 @@ export default function App({ navigation }) {
   
   return (
     <>
-    <StatusBar style="auto" />
+    <StatusBar hidden = {false} backgroundColor = "#E4F1F8" translucent = {true} />
     {nav? 
       <TabNavigator user={user} setNav={setNav}/>
       :
