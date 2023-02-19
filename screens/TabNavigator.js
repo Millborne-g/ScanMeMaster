@@ -10,6 +10,8 @@ import Apprehended from './Apprehended';
 import App from '../App';
 import Notification from '../components/Notification';
 
+import Apprehended_notification from '../components/Apprehended_notification'
+
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({user,setNav}) => {
@@ -77,7 +79,11 @@ const TabNavigator = ({user,setNav}) => {
           }}/>
         </Tab.Navigator>
     </NavigationContainer>
-    {/**<Notification />*/}
+    
+    {/**<Notification />
+     * <Apprehended_notification />
+     * 
+    */}
     </>
   )
 }

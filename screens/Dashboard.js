@@ -25,9 +25,11 @@ const Dashboard = ({user, navigation}) => {
         <View style={styles.display_PN_container}>
           <View style={styles.list_label_container}>
             <Text style={styles.label}>Vehicles with Criminal Offense</Text>
+            {/**
             <TouchableOpacity onPress={()=>{navigation.navigate("Vehicles_List")}}>
               <Text style={styles.view_all_text}>View All</Text>
             </TouchableOpacity>
+             */}
           </View>
           
           <View style={styles.table_PN_dashboard_container}>

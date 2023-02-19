@@ -38,7 +38,10 @@ const Vehicles_list = ({user}) => {
             <Text style={styles.btnText}>Add</Text>
           </Pressable>
         </View>
-        <Edit_form_PN_list />
+        <View style={styles.addForm_popup}>
+          <Edit_form_PN_list />
+        </View>
+        
         {form &&
           <View style={styles.addForm_popup}>
             <Add_form_PN_list setForm={setForm}/>
