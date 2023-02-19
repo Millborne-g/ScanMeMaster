@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, StyleSheet, Text, View, Image, Touchable, TouchableOpacity, ScrollView } from 'react-native';
-import { color } from 'react-native-reanimated';
 import {Row, Rows, Table, TableWrapper} from 'react-native-table-component';
 
 const Display_detected_PN = () => {
@@ -16,6 +15,12 @@ const Display_detected_PN = () => {
     ["000-xxx", 'Crime'],
     ["000-xxx", 'Crime'],
     ["000-xxx", 'Crime'],
+    ["000-xxx", 'Crime'],
+    ["000-xxx", 'Crime'],
+    ["000-xxx", 'Crime'],
+    ["000-xxx", 'Crime'],
+    ["000-xxx", 'Crime'],
+
 
     ]
   return (
@@ -70,8 +75,7 @@ const Display_detected_PN = () => {
 
 const styles = StyleSheet.create({
     box_container: {
-        height: 290,
-        elevation: 15,
+        height: '100%',
     },
 })
 

@@ -73,7 +73,7 @@ const headers = ["Plate No.", 'Crime', ''];
 
 const styles = StyleSheet.create({
     box_container: {
-        height: 430,
+        height: '100%',
     },
 })
 

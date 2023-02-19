@@ -14,17 +14,21 @@ const Login = ({setNav, setUser}) => {
     const [isChecked, setChecked] = useState(false);
     const [viewPassword, setViewPassword]= useState(true);
     const [scaleValue] = useState(new Animated.Value(1));
-    const [password, setPassword] = useState();
+    const [password, setPassword] = useState('');
 
     const click_login = () =>{
         setChecked(false);
         try {
-            console.log(data[[selected-1]].value);
-            console.log(password);
-            let personnel = data[[selected-1]].value;
-            setUser(personnel);
-            setNav(true);
-            setPassword('');
+            if(password !== ''){
+                console.log(data[[selected-1]].value);
+                console.log(password);
+                let personnel = data[[selected-1]].value;
+                setUser(personnel);
+                setNav(true);
+                setPassword('');
+            } else{
+                alert("Invalid user and password")
+            }
         }
         catch(err) {
             alert("Invalid user and password")

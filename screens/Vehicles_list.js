@@ -118,7 +118,8 @@ const styles = StyleSheet.create({
     display_PN_container: {
       paddingLeft: 30,
       paddingRight: 30,
-      marginTop: 20
+      marginTop: 20,
+      height: '63%'
     },
 
     display_table_PN_list_container: {

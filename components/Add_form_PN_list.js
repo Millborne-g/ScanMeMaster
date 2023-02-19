@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
 
   form_container: {
-    height: 470,
+    height: '75%',
   },
 
   textfield_Container: {

@@ -25,6 +25,7 @@ export default function App({ navigation }) {
   
   return (
     <>
+    <StatusBar style="auto" />
     {nav? 
       <TabNavigator user={user} setNav={setNav}/>
       :
