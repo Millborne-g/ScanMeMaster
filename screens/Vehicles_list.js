@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity} from 'react-native';
 import Display_table_PN_list from '../components/Display_table_PN_list';
-import Add_form_PN_list from '../components/Add_form_PN_list'
+import Add_form_PN_list from '../components/Add_form_PN_list';
+import Edit_form_PN_list from '../components/Edit_form_PN_list';
 
 const Vehicles_list = ({user}) => {
   const [form, setForm] = useState(false);
@@ -29,10 +30,15 @@ const Vehicles_list = ({user}) => {
         </View>
 
         <View style={styles.btn_container}>
-          <Pressable style={styles.addBtn} onPress={() => setForm(true)}>
+          <Pressable style={styles.addBtn} onPress=
+            {user === 'LTO'?
+            () => setForm(true):
+            () => alert('Only LTO personnel can add Vehicle with Criminal Offense.')
+            }>
             <Text style={styles.btnText}>Add</Text>
           </Pressable>
         </View>
+        <Edit_form_PN_list />
         {form &&
           <View style={styles.addForm_popup}>
             <Add_form_PN_list setForm={setForm}/>

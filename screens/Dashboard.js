@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, View, Image, Touchable, TouchableOpacity } fr
 import Display_detected_PN from '../components/Display_detected_PN_dashboard';
 import Display_table_PN_dashboard from '../components/Display_table_PN_dashboard';
 
-const Dashboard = ({navigation,user}) => {
+const Dashboard = ({user, navigation}) => {
   const [dashboard, setDashboard] = useState(true);
   const [list, setList] = useState(false);
   const [archive, setArchive] = useState(false);
@@ -25,7 +25,7 @@ const Dashboard = ({navigation,user}) => {
         <View style={styles.display_PN_container}>
           <View style={styles.list_label_container}>
             <Text style={styles.label}>Vehicles with Criminal Offense</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>{navigation.navigate("Vehicles_List")}}>
               <Text style={styles.view_all_text}>View All</Text>
             </TouchableOpacity>
           </View>

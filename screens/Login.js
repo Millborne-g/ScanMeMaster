@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, Alert} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SelectList } from 'react-native-dropdown-select-list';
+
 
 const Login = ({setNav, setUser}) => {
     const data =[
@@ -16,27 +17,54 @@ const Login = ({setNav, setUser}) => {
     const [scaleValue] = useState(new Animated.Value(1));
     const [password, setPassword] = useState('');
 
-    const click_login = () =>{
+    const login_error = () =>{
+        alert("Invalid user or password.");
+    }
+
+    const dashboard = () =>{
+        
+        let personnel = data[[selected-1]].value;
+        setUser(personnel);
+        setNav(true);
+        setPassword('');
         setChecked(false);
+    }
+
+    const click_login = () =>{
         try {
             if(password !== ''){
-                console.log(data[[selected-1]].value);
-                console.log(password);
-                let personnel = data[[selected-1]].value;
-                setUser(personnel);
-                setNav(true);
-                setPassword('');
-            } else{
-                alert("Invalid user and password")
+                if(selected === 1){
+                    console.log(data[[selected-1]].value);
+                    console.log("password");
+                    if (password === 'lto123'){
+                        
+                        dashboard();
+                    }
+                    else{
+                        login_error();
+                    }
+                }
+                else if (selected === 2){
+                    if (password === 'hpg123'){
+                        dashboard();
+                    }
+                    else{
+                        login_error();
+                    }
+                }
+            } 
+            else{
+                login_error();
             }
         }
         catch(err) {
-            alert("Invalid user and password")
+            login_error();
         }
     }
 
   return (
     <View style={styles.container}>
+        
         {/*<Text>Login</Text>
         <Button title='click me' mode='contained' onPress={() => navigation.navigate('Dashboard')}/>
         */}
@@ -78,6 +106,7 @@ const Login = ({setNav, setUser}) => {
             </Pressable>
             
         </View>
+        
     </View>
   )
 }
