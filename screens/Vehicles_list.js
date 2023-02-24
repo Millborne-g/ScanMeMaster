@@ -15,6 +15,7 @@ const Vehicles_list = ({user}) => {
             <Text style={styles.userTxt}>{user}</Text> 
           </View>
         </View>
+        {/**
         <View style={styles.search_bar_container}>
           <View style={styles.search_bar}>
             <View style={styles.search_bar_icon_container}>
@@ -23,6 +24,7 @@ const Vehicles_list = ({user}) => {
             <TextInput style={styles.search_bar_textfield} placeholder='Search'/>
           </View>
         </View>
+         */}
         <View style={styles.display_PN_container}>
           <View style={styles.display_table_PN_list_container}>
             <Display_table_PN_list/>
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
       paddingLeft: 30,
       paddingRight: 30,
       marginTop: 20,
-      height: '63%'
+      height: '73%'
     },
 
     display_table_PN_list_container: {

@@ -2,24 +2,24 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, ScrollView} from 'react-native';
 import {Row, Rows, Table, TableWrapper} from 'react-native-table-component';
 
-const Display_table_PN_archive_list = () => {
+const Location_table = () => {
 const headers = ["Plate No.", 'Crime', ''];
-  const rows = [
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
+const rows = [
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime','Edit'],
     ]
   return (
     <View style={styles.box_container}>
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Display_table_PN_archive_list
+export default Location_table

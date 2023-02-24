@@ -5,18 +5,19 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import Dashboard from './Dashboard';
 import Vehicles_list from './Vehicles_list';
-import Archive from './Archive';
 import Apprehended from './Apprehended';
 import App from '../App';
 import Notification from '../components/Notification';
-
-import Apprehended_notification from '../components/Apprehended_notification'
+import Apprehended_notification from '../components/Apprehended_notification';
+import Recently_scanned_vehicle_location from '../components/Recently_scanned_vehicle_location';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({user,setNav}) => {
   const routeScreen = false;
   const tabRef = useRef(null);
+
+  const [viewApprehended, setviewApprehended] = useState(false);
   
   const click_Vehicle_List = (routeScreen) => {
     // Programmatically click the second tab
@@ -47,7 +48,7 @@ const TabNavigator = ({user,setNav}) => {
         }}
         
         >
-            <Tab.Screen name="Dashboard" children={()=><Dashboard user={user} click_Vehicle_List={click_Vehicle_List}/>} options={{
+            <Tab.Screen name="Dashboard" children={()=><Dashboard user={user} click_Vehicle_List={click_Vehicle_List} setviewApprehended={setviewApprehended}/>} options={{
             headerShown: false,
             tabBarIcon: ({color}) => (  
                 <MaterialCommunityIcons name="view-dashboard-outline" size={30} color={color} />
@@ -57,12 +58,6 @@ const TabNavigator = ({user,setNav}) => {
             headerShown: false,
             tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons name="playlist-edit" size={30} color={color} />
-              ),
-          }}/>
-            <Tab.Screen name="Archive" children={()=><Archive user={user}/>} options={{
-            headerShown: false,
-            tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons name="archive-eye-outline" size={30} color={color} />
               ),
           }}/>
             <Tab.Screen name="Apprehended" children={()=><Apprehended user={user}/>} options={{
@@ -79,6 +74,10 @@ const TabNavigator = ({user,setNav}) => {
           }}/>
         </Tab.Navigator>
     </NavigationContainer>
+    {viewApprehended &&
+        <Recently_scanned_vehicle_location setviewApprehended={setviewApprehended}/>
+    }
+    
     
     {/**<Notification />
      * <Apprehended_notification />

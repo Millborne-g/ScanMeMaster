@@ -2,26 +2,55 @@ import React from 'react'
 import { Button, StyleSheet, Text, View, Image, Touchable, TouchableOpacity, ScrollView } from 'react-native';
 import {Row, Rows, Table, TableWrapper} from 'react-native-table-component';
 
-const Display_detected_PN = () => {
+const Display_archive_table_PN_dashboard = ({setviewApprehended}) => {
 
-  const headers = ["Plate No.", 'Crime'];
+  const headers = ["Plate No.", 'Crime', 'Location'];
   const rows = [
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-    ["000-xxx", 'Crime'],
-
-
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text>View</Text>
+        </TouchableOpacity>
+    ]],
     ]
   return (
     <View style={styles.box_container}>
@@ -29,7 +58,7 @@ const Display_detected_PN = () => {
                 <Row
                     data={headers}
                     height={40}
-                    flexArr={[1,1]}
+                    flexArr={[1,1,1]}
                     
                     textStyle={{
                         paddingLeft: 10,
@@ -54,7 +83,7 @@ const Display_detected_PN = () => {
                     <Rows 
                         data={rows} 
                         height={50} 
-                        flexArr={[1,1]}
+                        flexArr={[1,1,1]}
                         textStyle={{
                             paddingLeft: 10,
                             fontSize: 15
@@ -79,4 +108,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Display_detected_PN
+export default Display_archive_table_PN_dashboard

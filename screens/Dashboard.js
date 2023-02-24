@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View, Image, Touchable, TouchableOpacity } from 'react-native';
 import Display_detected_PN from '../components/Display_detected_PN_dashboard';
-import Display_table_PN_dashboard from '../components/Display_table_PN_dashboard';
+import Display_archive_table_PN_dashboard from '../components/Display_archive_table_PN_dashboard';
+import Recently_scanned_vehicle_location from '../components/Recently_scanned_vehicle_location';
 
-const Dashboard = ({user, navigation}) => {
+const Dashboard = ({user, navigation, setviewApprehended}) => {
   const [dashboard, setDashboard] = useState(true);
   const [list, setList] = useState(false);
   const [archive, setArchive] = useState(false);
@@ -16,24 +17,25 @@ const Dashboard = ({user, navigation}) => {
             <Text style={styles.userTxt}>{user}</Text> 
           </View>
         </View>
-
         <View style={styles.display_PN_container}>
           <Text style={styles.label}>Recently Scanned Vehicle</Text>
           <Display_detected_PN/>
         </View >
 
         <View style={styles.display_PN_container}>
+          {/**
           <View style={styles.list_label_container}>
             <Text style={styles.label}>Vehicles with Criminal Offense</Text>
-            {/**
+            
             <TouchableOpacity onPress={()=>{navigation.navigate("Vehicles_List")}}>
               <Text style={styles.view_all_text}>View All</Text>
             </TouchableOpacity>
-             */}
+             
           </View>
+          */}
           
-          <View style={styles.table_PN_dashboard_container}>
-            <Display_table_PN_dashboard/>
+          <View style={styles.Display_archive_table_PN_dashboard_container}>
+            <Display_archive_table_PN_dashboard setviewApprehended={setviewApprehended}/>
           </View>
           
         </View >
@@ -112,11 +114,11 @@ const styles = StyleSheet.create({
     color: '#2666FA',
   },
 
-  table_PN_dashboard_container: {
+  Display_archive_table_PN_dashboard_container: {
     borderWidth: 0.5,
     borderRadius: 12,
     overflow: 'hidden',
-    height: '65%'
+    height: '70%'
   }
 
 })
