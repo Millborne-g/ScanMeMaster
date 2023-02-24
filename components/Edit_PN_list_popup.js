@@ -3,19 +3,37 @@ import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, 
 import Checkbox from 'expo-checkbox';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Notification = () => {
+const Edit_PN_list_popup = ({setEditList , setEditForm, user}) => {
+
+  const click_Apprehended_Delete = (text) =>{
+    alert(text);
+    setEditList(false);
+  }
   return (
     <View style={styles.notificationContainer}>
         <View style={styles.modal}>
-            <Image source={require('../assets/notifications.png')}/>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
-            <Text style={styles.plate_Number}>123-xxx</Text> 
-            <Text style={styles.crime_Label}>Criminal Offense:</Text> 
-            <Text style={styles.crime}>Carnap</Text> 
-            <Text style={styles.location_Label}>Location:</Text> 
-            <Text style={styles.location}>Lapasan zone 2</Text> 
+            <Text style={styles.plate_Number}>123-xxx</Text>
 
-            <Pressable style={styles.okBtn} onPress={()=>setviewApprehended(false)}>
+            <Pressable style={{...styles.Btn, ...styles.apprehendedBtn}} onPress={()=>click_Apprehended_Delete('Vehicle Apprehended!')}>
+                <Text style={styles.btnText}>Apprehended</Text>
+            </Pressable>
+            <Pressable style={{...styles.Btn, ...styles.updateBtn}} onPress={
+                user==='LTO'?
+                    ()=>setEditForm(true) :
+                    ()=> alert('Only LTO personnel can update Vehicle with Criminal Offense.')
+                }>
+                <Text style={styles.btnText}>Update</Text>
+            </Pressable>
+            <Pressable style={{...styles.Btn, ...styles.deleteBtn}} onPress={
+                user==='LTO'?
+                ()=>click_Apprehended_Delete('Vehicle Deleted Successfully!'):
+                ()=> alert('Only LTO personnel can delete Vehicle with Criminal Offense.')
+                }>
+                <Text style={styles.btnText}>Delete</Text>
+            </Pressable>
+
+            <Pressable style={styles.closeBtn} onPress={()=>setEditList(false)}>
                 <MaterialCommunityIcons name="close" size={45} />
             </Pressable>
         </View>
@@ -54,7 +72,7 @@ const styles = StyleSheet.create({
         fontSize: 48,
         fontWeight: 'bold',
         color: '#252727',
-        
+        marginBottom: '2%'
     },
 
     crime_Label:{
@@ -82,6 +100,20 @@ const styles = StyleSheet.create({
         
     },
 
+    Btn:{
+        width: '80%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: '#2666FA',
+
+        marginTop: '2%',
+        marginBottom: '2%',
+    },
+
     btnText: {
         fontSize: 16,
         lineHeight: 21,
@@ -90,12 +122,23 @@ const styles = StyleSheet.create({
         color: 'white',
     },
 
-    okBtn:{
+    apprehendedBtn:{
+        backgroundColor: '#2666FA'
+    },
+
+    updateBtn: {
+        backgroundColor: '#00915C'
+    },
+
+    deleteBtn:{
+        backgroundColor: '#FF546C'
+    },
+
+    closeBtn:{
         position: 'absolute',
         top: '2%',
         right: '2%'
     },
-
 })
 
-export default Notification
+export default Edit_PN_list_popup

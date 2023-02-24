@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, 
 import Display_table_PN_list from '../components/Display_table_PN_list';
 import Add_form_PN_list from '../components/Add_form_PN_list';
 import Edit_form_PN_list from '../components/Edit_form_PN_list';
+import Edit_PN_list from '../components/Edit_PN_list_popup';
 
-const Vehicles_list = ({user}) => {
-  const [form, setForm] = useState(false);
+const Vehicles_list = ({user,setForm,setEditList}) => {
   
   return (
     <View style={styles.container}>
@@ -27,7 +27,7 @@ const Vehicles_list = ({user}) => {
          */}
         <View style={styles.display_PN_container}>
           <View style={styles.display_table_PN_list_container}>
-            <Display_table_PN_list/>
+            <Display_table_PN_list setEditList={setEditList}/>
           </View>
         </View>
 
@@ -40,12 +40,6 @@ const Vehicles_list = ({user}) => {
             <Text style={styles.btnText}>Add</Text>
           </Pressable>
         </View>
-        
-        {form &&
-          <View style={styles.addForm_popup}>
-            <Add_form_PN_list setForm={setForm}/>
-          </View>
-        }
         
     </View>
     

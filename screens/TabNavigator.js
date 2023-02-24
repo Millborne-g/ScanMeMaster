@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,7 +10,11 @@ import Apprehended from './Apprehended';
 import App from '../App';
 import Notification from '../components/Notification';
 import Apprehended_notification from '../components/Apprehended_notification';
-import Recently_scanned_vehicle_location from '../components/Recently_scanned_vehicle_location';
+import Recently_scanned_vehicle_location_popup from '../components/Recently_scanned_vehicle_location_popup';
+import Add_form_PN_list from '../components/Add_form_PN_list';
+import Edit_PN_list_popup from '../components/Edit_PN_list_popup';
+import Edit_form_PN_list from '../components/Edit_form_PN_list';
+import Apprehended_view_popup from '../components/Apprehended_view_popup';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,6 +23,10 @@ const TabNavigator = ({user,setNav}) => {
   const tabRef = useRef(null);
 
   const [viewApprehended, setviewApprehended] = useState(false);
+  const [form, setForm] = useState(false);
+  const [editForm, setEditForm] = useState(false);
+  const [editList, setEditList] = useState(false);
+  const [showApprehendedDetails, setShowApprehendedDetails] = useState(false);
   
   const click_Vehicle_List = (routeScreen) => {
     // Programmatically click the second tab
@@ -54,13 +63,13 @@ const TabNavigator = ({user,setNav}) => {
                 <MaterialCommunityIcons name="view-dashboard-outline" size={30} color={color} />
               ),
           }}/>
-            <Tab.Screen name="Vehicles_List" children={()=><Vehicles_list user={user}/>}options={{
+            <Tab.Screen name="Vehicles_List" children={()=><Vehicles_list user={user} setForm={setForm} setEditList={setEditList}/>}options={{
             headerShown: false,
             tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons name="playlist-edit" size={30} color={color} />
               ),
           }}/>
-            <Tab.Screen name="Apprehended" children={()=><Apprehended user={user}/>} options={{
+            <Tab.Screen name="Apprehended" children={()=><Apprehended user={user} setShowApprehendedDetails={setShowApprehendedDetails}/>} options={{
             headerShown: false,
             tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons name="car-back" size={30} color={color} />
@@ -74,9 +83,31 @@ const TabNavigator = ({user,setNav}) => {
           }}/>
         </Tab.Navigator>
     </NavigationContainer>
+    
     {viewApprehended &&
-        <Recently_scanned_vehicle_location setviewApprehended={setviewApprehended}/>
+        <Recently_scanned_vehicle_location_popup setviewApprehended={setviewApprehended}/>
     }
+
+    {form &&
+        <View style={styles.addForm_popup}>
+          <Add_form_PN_list setForm={setForm}/>
+        </View>
+    }
+
+    {editList &&
+      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} />
+    }
+
+    {editForm &&
+      <View style={styles.addForm_popup}>
+        <Edit_form_PN_list setForm={setForm} setEditForm={setEditForm}/>
+      </View>
+    }
+
+    {showApprehendedDetails &&
+      <Apprehended_view_popup setShowApprehendedDetails={setShowApprehendedDetails}/>
+    }
+
     
     
     {/**<Notification />
@@ -86,5 +117,15 @@ const TabNavigator = ({user,setNav}) => {
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  addForm_popup:{
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    top: 90,
+    backgroundColor: '#FFFFFF'
+  }
+})
 
 export default TabNavigator

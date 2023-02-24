@@ -2,24 +2,76 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, ScrollView} from 'react-native';
 import {Row, Rows, Table, TableWrapper} from 'react-native-table-component';
 
-const Display_table_PN_list = () => {
+const Display_table_PN_list = ({setEditList}) => {
 const headers = ["Plate No.", 'Crime', ''];
   const rows = [
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
-    ["000-xxx", 'Crime','Edit'],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setEditList(true)}>
+            <Text style={styles.editText}>Edit</Text>
+        </TouchableOpacity>
+    ]],
+    
+    
     ]
   return (
     <View style={styles.box_container}>
@@ -75,6 +127,10 @@ const styles = StyleSheet.create({
     box_container: {
         height: '100%',
     },
+
+    editText: {
+        color: '#2666FA',
+    }
 })
 
 export default Display_table_PN_list

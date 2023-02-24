@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View, Image, Touchable, TouchableOpacity } from 'react-native';
 import Display_detected_PN from '../components/Display_detected_PN_dashboard';
 import Display_archive_table_PN_dashboard from '../components/Display_archive_table_PN_dashboard';
-import Recently_scanned_vehicle_location from '../components/Recently_scanned_vehicle_location';
+import Recently_scanned_vehicle_location from '../components/Recently_scanned_vehicle_location_popup';
 
 const Dashboard = ({user, navigation, setviewApprehended}) => {
   const [dashboard, setDashboard] = useState(true);
@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
     height: '70%'
-  }
+  },
+  
 
 })
 

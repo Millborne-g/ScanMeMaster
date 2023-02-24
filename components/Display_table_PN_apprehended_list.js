@@ -2,24 +2,81 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, ScrollView} from 'react-native';
 import {Row, Rows, Table, TableWrapper} from 'react-native-table-component';
 
-const Display_table_PN_apprehended_list = () => {
+const Display_table_PN_apprehended_list = ({setShowApprehendedDetails}) => {
 const headers = ["Plate No.", 'Crime', ''];
   const rows = [
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
-    ["000-xxx", 'Crime','View'],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    
+    
     ]
   return (
     <View style={styles.box_container}>
@@ -75,6 +132,10 @@ const styles = StyleSheet.create({
     box_container: {
         height: '100%',
     },
+
+    viewText: {
+        color: '#2666FA',
+    }
 })
 
 export default Display_table_PN_apprehended_list

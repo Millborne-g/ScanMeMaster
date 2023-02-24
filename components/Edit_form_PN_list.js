@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, 
 import { ScrollView } from 'react-native-gesture-handler';
 import { SelectList } from 'react-native-dropdown-select-list';
 
-const Edit_form_PN_list = () => {
+const Edit_form_PN_list = ({setEditForm}) => {
     const data =[
         {key:'1', value:'Carnap'},
         {key:'2', value:'Hit and Run'}
@@ -108,10 +108,14 @@ const Edit_form_PN_list = () => {
           </View>
     
           <View style={styles.btns_Container}>
-            <Pressable style={styles.saveBtn} onPress={() => alert("Vehicle saved!") }>
+            <Pressable style={styles.saveBtn} onPress={() => 
+              {
+                setEditForm(false);
+                alert("Vehicle saved!");
+              }}>
               <Text style={styles.btnText}>Update</Text>
             </Pressable>
-            <Pressable style={styles.cancelBtn} onPress={() => setForm(false) }>
+            <Pressable style={styles.cancelBtn} onPress={() => setEditForm(false) }>
               <Text style={styles.btnText}>Cancel</Text>
             </Pressable>
           </View>
@@ -142,7 +146,7 @@ const Edit_form_PN_list = () => {
       },
     
       form_container: {
-        height: '75%',
+        height: '77%',
       },
     
       textfield_Container: {

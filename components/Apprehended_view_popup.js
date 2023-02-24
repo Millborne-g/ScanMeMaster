@@ -3,19 +3,22 @@ import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, 
 import Checkbox from 'expo-checkbox';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Notification = () => {
+
+const Apprehended_view_popup = ({setShowApprehendedDetails}) => {
   return (
     <View style={styles.notificationContainer}>
         <View style={styles.modal}>
-            <Image source={require('../assets/notifications.png')}/>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
             <Text style={styles.plate_Number}>123-xxx</Text> 
             <Text style={styles.crime_Label}>Criminal Offense:</Text> 
             <Text style={styles.crime}>Carnap</Text> 
+            <Text style={styles.date_time_Label}>Date/Time:</Text> 
+            <Text style={styles.date_time}>02-05-23</Text> 
+            <Text style={styles.date_time}>8:15:30 am</Text> 
             <Text style={styles.location_Label}>Location:</Text> 
             <Text style={styles.location}>Lapasan zone 2</Text> 
 
-            <Pressable style={styles.okBtn} onPress={()=>setviewApprehended(false)}>
+            <Pressable style={styles.okBtn} onPress={()=>setShowApprehendedDetails(false)}>
                 <MaterialCommunityIcons name="close" size={45} />
             </Pressable>
         </View>
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
         fontSize: 48,
         fontWeight: 'bold',
         color: '#252727',
-        
+        marginBottom: '5%'
     },
 
     crime_Label:{
@@ -66,12 +69,24 @@ const styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
         color: '#252727',
-        
+        marginBottom: '5%'
+    },
+
+    date_time_Label:{
+        fontSize: 16,
+        color: '#9F9F9F'
+    },
+
+    date_time: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: '#252727',
     },
 
     location_Label:{
         fontSize: 16,
-        color: '#9F9F9F'
+        color: '#9F9F9F',
+        marginTop: '5%'
     },
 
     location:{
@@ -98,4 +113,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Notification
+export default Apprehended_view_popup

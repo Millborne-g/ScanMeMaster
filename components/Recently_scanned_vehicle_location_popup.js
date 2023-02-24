@@ -1,23 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, ScrollView} from 'react-native';
 import {Row, Rows, Table, TableWrapper} from 'react-native-table-component';
-import Location_table from './Location_table'
-const Recently_scanned_vehicle_location = ({setviewApprehended}) => {
-    const headers = ["Time", 'Location'];
-const rows = [
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
-    ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+const Recently_scanned_vehicle_location_popup = ({setviewApprehended}) => {
+    const headers = ["Date/Time", 'Location'];
+    const rows = [
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
+        ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
     ]
   return (
     <View style={styles.notificationContainer}>
@@ -72,7 +72,7 @@ const rows = [
             </View>
 
             <Pressable style={styles.okBtn} onPress={()=>setviewApprehended(false)}>
-                <Text style={styles.btnText}>Ok</Text>
+                <MaterialCommunityIcons name="close" size={45} />
             </Pressable>
         </View>
     </View>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#FFFFFF',
-        height: '70%',
+        height: '60%',
         width: 332,
         borderRadius: 10,
     },
@@ -139,14 +139,9 @@ const styles = StyleSheet.create({
     },
 
     okBtn:{
-        width: '80%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
-        elevation: 3,
-        backgroundColor: '#2666FA',
+        position: 'absolute',
+        top: '2%',
+        right: '2%'
     },
 
     btnText: {
@@ -158,13 +153,13 @@ const styles = StyleSheet.create({
     },
 
     location_table_container: {
-        height: '60%',
+        height: '65%',
         width: '80%',
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderRadius: 12,
         overflow: 'hidden',
         marginBottom: '5%'
     }
 
 })
-export default Recently_scanned_vehicle_location
+export default Recently_scanned_vehicle_location_popup

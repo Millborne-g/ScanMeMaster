@@ -108,7 +108,12 @@ const Add_form_PN_list = ({setForm}) => {
       </View>
 
       <View style={styles.btns_Container}>
-        <Pressable style={styles.saveBtn} onPress={() => alert("Vehicle saved!") }>
+        <Pressable style={styles.saveBtn} onPress={() => 
+        {
+          setForm(false);
+          alert("Vehicle saved!");
+        } 
+        }>
           <Text style={styles.btnText}>Save</Text>
         </Pressable>
         <Pressable style={styles.cancelBtn} onPress={() => setForm(false) }>
@@ -142,7 +147,7 @@ const styles = StyleSheet.create({
   },
 
   form_container: {
-    height: '75%',
+    height: '77%',
   },
 
   textfield_Container: {
@@ -203,7 +208,7 @@ const styles = StyleSheet.create({
   },
 
   btnText:{
-    fontSize: 16,
+      fontSize: 16,
       lineHeight: 21,
       fontWeight: 'bold',
       letterSpacing: 0.25,

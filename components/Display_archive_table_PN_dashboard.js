@@ -8,47 +8,62 @@ const Display_archive_table_PN_dashboard = ({setviewApprehended}) => {
   const rows = [
     ["000-xxx", 'Crime',[
         <TouchableOpacity onPress={()=>setviewApprehended(true)}>
-            <Text>View</Text>
+            <Text style={styles.viewText}>View</Text>
         </TouchableOpacity>
     ]],
     ["000-xxx", 'Crime',[
         <TouchableOpacity onPress={()=>setviewApprehended(true)}>
-            <Text>View</Text>
+            <Text style={styles.viewText}>View</Text>
         </TouchableOpacity>
     ]],
     ["000-xxx", 'Crime',[
         <TouchableOpacity onPress={()=>setviewApprehended(true)}>
-            <Text>View</Text>
+            <Text style={styles.viewText}>View</Text>
         </TouchableOpacity>
     ]],
     ["000-xxx", 'Crime',[
         <TouchableOpacity onPress={()=>setviewApprehended(true)}>
-            <Text>View</Text>
+            <Text style={styles.viewText}>View</Text>
         </TouchableOpacity>
     ]],
     ["000-xxx", 'Crime',[
         <TouchableOpacity onPress={()=>setviewApprehended(true)}>
-            <Text>View</Text>
+            <Text style={styles.viewText}>View</Text>
         </TouchableOpacity>
     ]],
     ["000-xxx", 'Crime',[
         <TouchableOpacity onPress={()=>setviewApprehended(true)}>
-            <Text>View</Text>
+            <Text style={styles.viewText}>View</Text>
         </TouchableOpacity>
     ]],
     ["000-xxx", 'Crime',[
         <TouchableOpacity onPress={()=>setviewApprehended(true)}>
-            <Text>View</Text>
+            <Text style={styles.viewText}>View</Text>
         </TouchableOpacity>
     ]],
     ["000-xxx", 'Crime',[
         <TouchableOpacity onPress={()=>setviewApprehended(true)}>
-            <Text>View</Text>
+            <Text style={styles.viewText}>View</Text>
         </TouchableOpacity>
     ]],
     ["000-xxx", 'Crime',[
         <TouchableOpacity onPress={()=>setviewApprehended(true)}>
-            <Text>View</Text>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
+    ]],
+    ["000-xxx", 'Crime',[
+        <TouchableOpacity onPress={()=>setviewApprehended(true)}>
+            <Text style={styles.viewText}>View</Text>
         </TouchableOpacity>
     ]],
     ]
@@ -106,6 +121,10 @@ const styles = StyleSheet.create({
     box_container: {
         height: '100%',
     },
+
+    viewText: {
+        color: '#2666FA',
+    }
 })
 
 export default Display_archive_table_PN_dashboard
