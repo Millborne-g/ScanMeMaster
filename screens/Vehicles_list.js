@@ -5,7 +5,11 @@ import Add_form_PN_list from '../components/Add_form_PN_list';
 import Edit_form_PN_list from '../components/Edit_form_PN_list';
 import Edit_PN_list from '../components/Edit_PN_list_popup';
 
-const Vehicles_list = ({user,setForm,setEditList}) => {
+import {db} from '../firebase';
+import {uid} from 'uid'; 
+import { onValue, ref, remove, set, update } from 'firebase/database';
+
+const Vehicles_list = ({user,setForm,setEditList,setPlateNumber}) => {
   
   return (
     <View style={styles.container}>
@@ -27,7 +31,7 @@ const Vehicles_list = ({user,setForm,setEditList}) => {
          */}
         <View style={styles.display_PN_container}>
           <View style={styles.display_table_PN_list_container}>
-            <Display_table_PN_list setEditList={setEditList}/>
+            <Display_table_PN_list setEditList={setEditList} setPlateNumber={setPlateNumber}/>
           </View>
         </View>
 

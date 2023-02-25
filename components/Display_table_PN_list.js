@@ -1,78 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, ScrollView} from 'react-native';
 import {Row, Rows, Table, TableWrapper} from 'react-native-table-component';
+import {db} from '../firebase';
+import {uid} from 'uid'; 
+import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Display_table_PN_list = ({setEditList}) => {
-const headers = ["Plate No.", 'Crime', ''];
-  const rows = [
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setEditList(true)}>
-            <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-    ]],
-    
-    
-    ]
+const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
+    const headers = ["Plate No.", 'Crime', ''];
+    const [list, setList] = useState([[]]);
+
+    const rowsDB = []
+
+    //read
+    useEffect(() => {
+        console.log('')
+        onValue(ref(db, `/Vehicle_with_criminal_offense`), (snapshot) => {
+          setList([]);
+          const data = snapshot.val();
+          if (data !== null) {
+            Object.values(data).map((list) => {
+              setList((oldArray) => [...oldArray, [list.plateNumber, list.criminalOffense, [
+                <TouchableOpacity onPress={()=>{
+                    setEditList(true);
+                    setPlateNumber(list.plateNumber)
+                    }}>
+                    <Text style={styles.editText}>Edit</Text>
+                </TouchableOpacity>
+            ]
+            ]]);
+              //console.log('test list '+list.plateNumber)
+            });
+          }
+        });
+      }, []);
+
+      //console.log(list)
   return (
     <View style={styles.box_container}>
         <Table>
@@ -102,7 +64,7 @@ const headers = ["Plate No.", 'Crime', ''];
                     flexDirection: 'row',
                     }}>
                     <Rows 
-                        data={rows} 
+                        data={list} 
                         height={50} 
                         flexArr={[1,1,1]}
                         textStyle={{

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, 
 import Checkbox from 'expo-checkbox';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Edit_PN_list_popup = ({setEditList , setEditForm, user}) => {
+const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense}) => {
 
   const click_Apprehended_Delete = (text) =>{
     alert(text);
@@ -13,7 +13,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user}) => {
     <View style={styles.notificationContainer}>
         <View style={styles.modal}>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
-            <Text style={styles.plate_Number}>123-xxx</Text>
+            <Text style={styles.plate_Number}>{plateNumber}</Text>
 
             <Pressable style={{...styles.Btn, ...styles.apprehendedBtn}} onPress={()=>click_Apprehended_Delete('Vehicle Apprehended!')}>
                 <Text style={styles.btnText}>Apprehended</Text>

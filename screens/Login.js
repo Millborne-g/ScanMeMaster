@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, Alert} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SelectList } from 'react-native-dropdown-select-list';
+
+import {db} from '../firebase';
+import {uid} from 'uid'; 
+import { onValue, ref, remove, set, update } from 'firebase/database';
 
 
 const Login = ({setNav, setUser}) => {
     const data =[
         {key:1, value:'LTO'},
         {key:2, value:'HPG'}
-    ]
+    ];
+
+    const [todo, setTodos] = useState("");
 
     const [selected, setSelected] = useState('');
     const [isChecked, setChecked] = useState(false);
@@ -62,6 +68,49 @@ const Login = ({setNav, setUser}) => {
         }
     }
 
+    //write
+    const submit_to_DB = () =>{
+        const uuid = uid();
+        const test = 'test';
+        set(ref(db, `/${uuid}`), {
+            test,
+            uuid,
+        });
+
+        alert('Saved to Database');
+    }
+
+    //read
+    useEffect(() => {
+        onValue(ref(db, `/Vehicle_with_criminal_offense`), (snapshot) => {
+          setTodos([]);
+          const data = snapshot.val();
+          if (data !== null) {
+            Object.values(data).map((todo) => {
+                console.log(todo.plateNumber)
+              setTodos((oldArray) => [...oldArray, todo]);
+            });
+          }
+        });
+      }, []);
+
+      //console.log(todo);
+
+      //delete
+    const handleDelete = () => {
+        remove(ref(db, `/${'b90e955ddb5'}`));
+    };
+
+     //update
+    const handleSubmitChange = () => {
+        const test = 'testchange';
+        update(ref(db, `/${'c04594823fe'}`), {
+        test,
+        uuid: 'c04594823fe',
+        });
+    };
+
+
   return (
     <View style={styles.container}>
         
@@ -101,7 +150,9 @@ const Login = ({setNav, setUser}) => {
             </TouchableOpacity>
             
 
-            <Pressable style={styles.loginBtn} onPress={() => click_login()}>
+            <Pressable style={styles.loginBtn} onPress={
+                () => click_login() //handleSubmitChange() //handleDelete()//submit_to_DB() //click_login()
+                }>
                 <Text style={styles.btnText}>Login</Text>
             </Pressable>
             
