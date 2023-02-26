@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, Alert} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,38 +7,63 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Notification = ({scannedPlateNumber,setNotification}) => {
+const Notification = ({scannedPlateNumberList, curLocList, curDateList, curTimeList, scannedCrimeList, setNotification, setScannedPlateNumberList, setCurLocList, setCurDateList, setCurTimeList, setScannedCrimeList}) => {
+
+    let curDateTime = curDateList[curDateList.length -1]+" "+curTimeList[curTimeList.length -1];
+    
+    // //read
+    // useEffect(() => {
+    //     console.log("Display last "+scannedPlateNumberList[scannedPlateNumberList.length - 1]);
+    //     //console.log('finding crime '+scannedPlateNumberList[scannedPlateNumberList.length - 1]);
+        
+    //     onValue(ref(db, `/Vehicle_with_criminal_offense/${scannedPlateNumberList[scannedPlateNumberList.length - 1]}`), (snapshot) => {
+    //       const data = snapshot.val();
+    //       console.log('finding crime inside '+data);
+    //       console.log("crime "+data.criminalOffense);
+    //       setCurCrime(data.criminalOffense);
+    //     });
+
+    //     //   setCurCrime(data.criminalOffense);
+    //     //   if (data !== null) {
+    //     //     if(data.plateNumber === curPlateNumber){
+    //     //         console.log("crime "+data.criminalOffense);
+    //     //         setCurCrime(data.criminalOffense);
+    //     //     }
+    //     //   }
+        
+    //   }, []);
 
     const handleSubmitChange = () => {
-        // onValue(ref(db, `/Scanned`), (snapshot) => {
-        //     const data = snapshot.val();
-        //     Object.values(data).map((scanPlateNumber) => {
-        //         if(scanPlateNumber.PlateNumber === scannedPlateNumber){
-        //             console.log("found yah")
-        //             update(ref(db, `/Scanned/${scanPlateNumber.Date} `+ `${scanPlateNumber.Time}`), {
-        //                 Notification : "off"
-        //             });
-        //         }
-        //     });
-        // })
-
-       setNotification(false);
+        update(ref(db, `/Scanned/${curDateTime}`), {
+            Notification : "off"
+        });
+        setScannedPlateNumberList([]);
+        setScannedCrimeList([]);
+        setCurLocList([]);
+        setNotification(false);
       };
   return (
     <View style={styles.notificationContainer}>
-        <View style={styles.modal}>
-            <Image source={require('../assets/notifications.png')}/>
-            <Text style={styles.plate_Number_Label}>Plate number:</Text> 
-            <Text style={styles.plate_Number}>{scannedPlateNumber}</Text> 
-            <Text style={styles.crime_Label}>Criminal Offense:</Text> 
-            <Text style={styles.crime}>Carnap</Text> 
-            <Text style={styles.location_Label}>Location:</Text> 
-            <Text style={styles.location}>Lapasan zone 2</Text> 
+        {scannedPlateNumberList.map((item)=>{
+            //setCurPlateNumber(item);
+            return(
+                
+                <View style={styles.modal}>
+                    <Image source={require('../assets/notifications.png')}/>
+                    <Text style={styles.plate_Number_Label}>Plate number:</Text> 
+                    <Text style={styles.plate_Number}>{item}</Text> 
+                    <Text style={styles.crime_Label}>Criminal Offense:</Text> 
+                    <Text style={styles.crime}>{scannedCrimeList[scannedCrimeList.length -1]}</Text> 
+                    <Text style={styles.location_Label}>Location:</Text> 
+                    <Text style={styles.location}>{curLocList[curLocList.length - 1]}</Text> 
 
-            <Pressable style={styles.okBtn} onPress={()=>handleSubmitChange()}>
-                <MaterialCommunityIcons name="close" size={45} />
-            </Pressable>
-        </View>
+                    <Pressable style={styles.okBtn} onPress={()=>handleSubmitChange()}>
+                        <MaterialCommunityIcons name="close" size={45} />
+                    </Pressable>
+                </View>
+            )
+        })}
+        
     </View>
   )
 }
@@ -62,7 +87,9 @@ const styles = StyleSheet.create({
         width: 332,
         borderRadius: 10,
         paddingBottom: 20,
-        paddingTop: 20
+        paddingTop: 20,
+        position: 'absolute',
+        margin: 'auto',
     },
 
     plate_Number_Label:{

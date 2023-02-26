@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View, Image, Touchable, TouchableOpacity } from 'react-native';
-import Display_detected_PN from '../components/Display_detected_PN_dashboard';
+import Display_detected_PN_dashboard from '../components/Display_detected_PN_dashboard';
 import Display_archive_table_PN_dashboard from '../components/Display_archive_table_PN_dashboard';
 import Recently_scanned_vehicle_location from '../components/Recently_scanned_vehicle_location_popup';
 
-const Dashboard = ({user, navigation, setviewApprehended}) => {
+const Dashboard = ({user, click_Vehicle_List, setViewLocArchive,setScannedPlateNumberDateTimeLoc}) => {
   const [dashboard, setDashboard] = useState(true);
   const [list, setList] = useState(false);
   const [archive, setArchive] = useState(false);
@@ -19,7 +19,7 @@ const Dashboard = ({user, navigation, setviewApprehended}) => {
         </View>
         <View style={styles.display_PN_container}>
           <Text style={styles.label}>Recently Scanned Vehicle</Text>
-          <Display_detected_PN/>
+          <Display_detected_PN_dashboard />
         </View >
 
         <View style={styles.display_PN_container}>
@@ -33,9 +33,9 @@ const Dashboard = ({user, navigation, setviewApprehended}) => {
              
           </View>
           */}
-          
           <View style={styles.Display_archive_table_PN_dashboard_container}>
-            <Display_archive_table_PN_dashboard setviewApprehended={setviewApprehended}/>
+          
+            <Display_archive_table_PN_dashboard setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc}/>
           </View>
           
         </View >

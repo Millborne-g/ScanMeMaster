@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, ScrollView} from 'react-native';
 import {Row, Rows, Table, TableWrapper} from 'react-native-table-component';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-const Recently_scanned_vehicle_location_popup = ({setviewApprehended}) => {
+
+import {db} from '../firebase';
+import {uid} from 'uid'; 
+import { onValue, ref, remove, set, update } from 'firebase/database';
+
+const Recently_scanned_vehicle_location_popup = ({setViewLocArchive, scannedPlateNumberDateTimeLoc}) => {
     const headers = ["Date/Time", 'Location'];
     const rows = [
         ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
@@ -19,11 +24,29 @@ const Recently_scanned_vehicle_location_popup = ({setviewApprehended}) => {
         ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
         ['02-05-23\n8:15:30 am', 'Lapasan Zone 2'],
     ]
+
+    const [dateTimeLocRow, setDateTimeLocRow] = useState();
+    useEffect(() => {
+        onValue(ref(db, `/Scanned`), (snapshot) => {
+        setDateTimeLocRow([]);
+        const data = snapshot.val();
+        if (data !== null) {
+            Object.values(data).map((scanned) => {
+                console.log(scanned.PlateNumber)
+
+                if(scanned.PlateNumber === scannedPlateNumberDateTimeLoc){
+                    setDateTimeLocRow((oldArray) => [...oldArray, [scanned.Date+'\n'+scanned.Time, scanned.Location]]);
+                }
+            })
+            
+        }
+        });
+    }, []);
   return (
     <View style={styles.notificationContainer}>
         <View style={styles.modal}>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
-            <Text style={styles.plate_Number}>123-xxx</Text>  
+            <Text style={styles.plate_Number}>{scannedPlateNumberDateTimeLoc}</Text>  
 
             <View style={styles.location_table_container}>
                 <Table>
@@ -53,7 +76,7 @@ const Recently_scanned_vehicle_location_popup = ({setviewApprehended}) => {
                             flexDirection: 'row',
                             }}>
                             <Rows 
-                                data={rows} 
+                                data={dateTimeLocRow} 
                                 height={50} 
                                 flexArr={[1,1]}
                                 textStyle={{
@@ -71,7 +94,7 @@ const Recently_scanned_vehicle_location_popup = ({setviewApprehended}) => {
                 </ScrollView>
             </View>
 
-            <Pressable style={styles.okBtn} onPress={()=>setviewApprehended(false)}>
+            <Pressable style={styles.okBtn} onPress={()=>setViewLocArchive(false)}>
                 <MaterialCommunityIcons name="close" size={45} />
             </Pressable>
         </View>

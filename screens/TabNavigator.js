@@ -28,15 +28,25 @@ const TabNavigator = ({user,setNav}) => {
   const [plateNumber, setPlateNumber] = useState('')
   const [criminalOffense, setCriminalOffense] = useState('')
 
-  const [viewApprehended, setviewApprehended] = useState(false);
+  const [viewLocArchive, setViewLocArchive] = useState(false);
   const [form, setForm] = useState(false);
   const [editForm, setEditForm] = useState(false);
   const [editList, setEditList] = useState(false);
   const [showApprehendedDetails, setShowApprehendedDetails] = useState(false);
   const [notification, setNotification] = useState(false);
 
-  const [scannedPlateNumber, setScannedPlateNumber] = useState([]);
-  
+  const [scannedPlateNumber, setScannedPlateNumber] = useState('');
+
+  //Scanned Popup Notification
+  const [scannedPlateNumberList, setScannedPlateNumberList] = useState([]);
+  const [scannedCrimeList, setScannedCrimeList] = useState([]);
+  const [curLocList, setCurLocList] = useState([]);
+  const [curDateList, setCurDateList] = useState([]);
+  const [curTimeList, setCurTimeList] = useState([]);
+
+  //Scanned Popup Notification
+  const [scannedPlateNumberDateTimeLoc, setScannedPlateNumberDateTimeLoc] = useState('');
+
   const click_Vehicle_List = (routeScreen) => {
     // Programmatically click the second tab
     
@@ -49,7 +59,9 @@ const TabNavigator = ({user,setNav}) => {
 
   //read
   useEffect(() => {
-    console.log('')
+    console.log('');
+    let PN = '';
+    //Scanned
     onValue(ref(db, `/Scanned`), (snapshot) => {
       //setList([]);
       const data = snapshot.val();
@@ -58,23 +70,25 @@ const TabNavigator = ({user,setNav}) => {
           if(scanPlateNumber.Notification === 'on'){
             console.log("scanned "+scannedPlateNumber);
             setNotification(true);
-            setScannedPlateNumber([...scannedPlateNumber, scanPlateNumber.PlateNumber]);
+            setScannedPlateNumber(scanPlateNumber.PlateNumber);
+            onValue(ref(db, `/Vehicle_with_criminal_offense/${scanPlateNumber.PlateNumber}`), (snapshot) => {
+              const data = snapshot.val();
+              if (data !== null) {
+                setScannedCrimeList((oldArray) => [...oldArray, data.criminalOffense]);
+            }
+            });
+            setScannedPlateNumberList((oldArray) => [...oldArray,scanPlateNumber.PlateNumber]);
+            setCurLocList((oldArray) => [...oldArray,scanPlateNumber.Location]);
+            setCurDateList((oldArray) => [...oldArray,scanPlateNumber.Date]);
+            setCurTimeList((oldArray) => [...oldArray,scanPlateNumber.Time])
+            console.log("scanned "+scannedPlateNumber);
           }
-          
-        //   setList((oldArray) => [...oldArray, [list.plateNumber, list.criminalOffense, [
-        //     <TouchableOpacity onPress={()=>{
-        //         setEditList(true);
-        //         setPlateNumber(list.plateNumber)
-        //         }}>
-        //         <Text style={styles.editText}>Edit</Text>
-        //     </TouchableOpacity>
-        // ]
-        // ]]);
-          //console.log('test list '+list.plateNumber)
         });
       }
     });
   }, []);
+
+  console.log("crime "+scannedCrimeList[scannedCrimeList.length -1]+ " PN "+scannedPlateNumberList[scannedPlateNumberList-1])
 
   return (
     <>
@@ -95,7 +109,7 @@ const TabNavigator = ({user,setNav}) => {
         }}
         
         >
-            <Tab.Screen name="Dashboard" children={()=><Dashboard user={user} click_Vehicle_List={click_Vehicle_List} setviewApprehended={setviewApprehended}/>} options={{
+            <Tab.Screen name="Dashboard" children={()=><Dashboard user={user} click_Vehicle_List={click_Vehicle_List} setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc}/>} options={{
             headerShown: false,
             tabBarIcon: ({color}) => (  
                 <MaterialCommunityIcons name="view-dashboard-outline" size={30} color={color} />
@@ -122,8 +136,8 @@ const TabNavigator = ({user,setNav}) => {
         </Tab.Navigator>
     </NavigationContainer>
     
-    {viewApprehended &&
-        <Recently_scanned_vehicle_location_popup setviewApprehended={setviewApprehended}/>
+    {viewLocArchive &&
+        <Recently_scanned_vehicle_location_popup setViewLocArchive={setViewLocArchive} scannedPlateNumberDateTimeLoc={scannedPlateNumberDateTimeLoc}/>
     }
 
     {form &&
@@ -146,13 +160,20 @@ const TabNavigator = ({user,setNav}) => {
       <Apprehended_view_popup setShowApprehendedDetails={setShowApprehendedDetails}/>
     }
 
+    {/* {
+    scannedPlateNumberList.map((item, index) =>{
+        console.log("display "+scannedPlateNumberList[0]);
+        <Notification key={index} scannedPlateNumberList={item} setNotification={setNotification} />
+    })
+    } */}
+
+    {console.log(notification)}
     {notification &&
-      <Notification scannedPlateNumber={scannedPlateNumber[0]} setNotification={setNotification} />
-      // scannedPlateNumber.map((item, index) =>{
-      //   console.log("display");
-      //   <Notification scannedPlateNumber={scannedPlateNumber[0]} />
-      // })
+      <Notification scannedPlateNumberList={scannedPlateNumberList} curLocList={curLocList} curDateList={curDateList} curTimeList={curTimeList} scannedCrimeList={scannedCrimeList} setNotification={setNotification} setScannedPlateNumberList={setScannedPlateNumberList} setCurLocList={setCurLocList} setCurDateList={setCurDateList} setCurTimeList={setCurTimeList} setScannedCrimeList={setScannedCrimeList}/>
+      // <Notification scannedPlateNumber={scannedPlateNumber} setNotification={setNotification} />
     }
+
+    {console.log("Scanned List "+scannedPlateNumberList[scannedPlateNumberList.length -1])}
     
     
 
