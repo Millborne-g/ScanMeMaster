@@ -67,7 +67,8 @@ const TabNavigator = ({user,setNav}) => {
       const data = snapshot.val();
       if (data !== null) {
         Object.values(data).map((scanPlateNumber) => {
-          if(scanPlateNumber.Notification === 'on'){
+          console.log('scanPlateNumber.Apprehended '+scanPlateNumber.Apprehended)
+          if(scanPlateNumber.Notification === 'on' && scanPlateNumber.Apprehended === "no"){
             console.log("scanned "+scannedPlateNumber);
             setNotification(true);
             setScannedPlateNumber(scanPlateNumber.PlateNumber);
@@ -147,7 +148,7 @@ const TabNavigator = ({user,setNav}) => {
     }
 
     {editList &&
-      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber}/>
+      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber}/>
     }
 
     {editForm &&

@@ -1,21 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, Alert} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense}) => {
+import {db} from '../firebase';
+import {uid} from 'uid'; 
+import { onValue, ref, remove, set, update } from 'firebase/database';
 
-  const click_Apprehended_Delete = (text) =>{
+const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber}) => {
+
+  const click_Delete = (text) =>{
     alert(text);
     setEditList(false);
+    let deleteScanned = [];
+    onValue(ref(db, `/Scanned`), (snapshot) => {
+        const data = snapshot.val();
+        if (data !== null) {
+            Object.values(data).map((scanned) => {
+                let crime = '';
+                console.log('scanned.PlateNumber '+scanned.PlateNumber);
+                if(scanned.PlateNumber === plateNumber){
+                    deleteScanned.push(scanned.Date+' '+scanned.Time);
+                }
+            });
+        }
+    });
+    deleteScanned.map((item)=>{
+        remove(ref(db, `/Scanned/${item}`));
+    })
+    
+    remove(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`));
+    setPlateNumber('');
+    
   }
+
+  const click_Apprehend = (text) =>{
+    alert(text);
+    setEditList(false);
+    let appScanned = [];
+    onValue(ref(db, `/Scanned`), (snapshot) => {
+        const data = snapshot.val();
+        if (data !== null) {
+            Object.values(data).map((scanned) => {
+                let crime = '';
+                console.log('scanned.PlateNumber '+scanned.PlateNumber);
+                if(scanned.PlateNumber === plateNumber){
+                    console.log('scanned.Date scanned.Time '+ scanned.Date+' '+scanned.Time)
+                    appScanned.push(scanned.Date+' '+scanned.Time);
+                }
+            });
+        }
+    });
+
+    console.log('apprehendScanned '+appScanned);
+
+    appScanned.map((item)=>{
+        update(ref(db, `/Scanned/${item}`), {
+            Apprehended: 'yes',
+        });
+    })
+    
+    update(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`), {
+        apprehended: 'yes',
+    });
+  }
+
   return (
     <View style={styles.notificationContainer}>
         <View style={styles.modal}>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
             <Text style={styles.plate_Number}>{plateNumber}</Text>
-
-            <Pressable style={{...styles.Btn, ...styles.apprehendedBtn}} onPress={()=>click_Apprehended_Delete('Vehicle Apprehended!')}>
+            <Pressable style={{...styles.Btn, ...styles.apprehendedBtn}} onPress={()=>click_Apprehend('Vehicle Apprehended!')} >
                 <Text style={styles.btnText}>Apprehended</Text>
             </Pressable>
             <Pressable style={{...styles.Btn, ...styles.updateBtn}} onPress={
@@ -27,7 +82,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
             </Pressable>
             <Pressable style={{...styles.Btn, ...styles.deleteBtn}} onPress={
                 user==='LTO'?
-                ()=>click_Apprehended_Delete('Vehicle Deleted Successfully!'):
+                ()=> click_Delete('Vehicle Deleted Successfully!'):
                 ()=> alert('Only LTO personnel can delete Vehicle with Criminal Offense.')
                 }>
                 <Text style={styles.btnText}>Delete</Text>

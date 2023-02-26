@@ -7,7 +7,7 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 
 const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
     const headers = ["Plate No.", 'Crime', ''];
-    const [list, setList] = useState([[]]);
+    const [list, setList] = useState([]);
 
     const rowsDB = []
 
@@ -19,15 +19,18 @@ const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
           const data = snapshot.val();
           if (data !== null) {
             Object.values(data).map((list) => {
-              setList((oldArray) => [...oldArray, [list.plateNumber, list.criminalOffense, [
-                <TouchableOpacity onPress={()=>{
-                    setEditList(true);
-                    setPlateNumber(list.plateNumber)
-                    }}>
-                    <Text style={styles.editText}>Edit</Text>
-                </TouchableOpacity>
-            ]
-            ]]);
+                if(list.apprehended === "no"){
+                    setList((oldArray) => [...oldArray, [list.plateNumber, list.criminalOffense, [
+                        <TouchableOpacity onPress={()=>{
+                            setEditList(true);
+                            setPlateNumber(list.plateNumber)
+                            }}>
+                            <Text style={styles.editText}>Edit</Text>
+                        </TouchableOpacity>
+                    ]
+                    ]]);
+                }
+              
               //console.log('test list '+list.plateNumber)
             });
           }

@@ -57,9 +57,13 @@ const Add_form_PN_list = ({setForm}) => {
   const addSubmit = () =>{
     try{
       let CO = crime[[selected-1]].value;
+      let apprehended = 'no';
       setCriminalOffense(CO);
-      if (plateNumber === '' || criminalOffense === '' || mvFileNumber === '' || make === '' || series === '' || bodyType === '' || bodyNumber === '' || yearModel === '' || fuel === '' || engineNumber === '' || chassisNumber === '' || denomination === '' || pistonDisplacement === '' || numberOfCylinders === '' || grossWT === '' || netWT === '' || shippingWT === '' || netCapacity === '' || completeOwnerName === '' || completeAddress === '' || ORNumber === '' || ORDate === ''){
+      if (plateNumber === '' || mvFileNumber === '' || make === '' || series === '' || bodyType === '' || bodyNumber === '' || yearModel === '' || fuel === '' || engineNumber === '' || chassisNumber === '' || denomination === '' || pistonDisplacement === '' || numberOfCylinders === '' || grossWT === '' || netWT === '' || shippingWT === '' || netCapacity === '' || completeOwnerName === '' || completeAddress === '' || ORNumber === '' || ORDate === ''){
+        console.log("yow ")
         alert("Please fill out all fields!");
+        console.log(plateNumber+' | '+criminalOffense+' | '+mvFileNumber+' | '+make+' | '+series+' | '+bodyType+' | '+bodyNumber+' | '+yearModel+' | '+fuel+' | '+engineNumber+' | '+chassisNumber+' | '+denomination+' | '+pistonDisplacement+' | '+numberOfCylinders+' | '+grossWT+' | '+netWT+' | '+shippingWT+' | '+netCapacity+' | '+completeOwnerName+' | '+completeAddress+' | '+ORNumber+' | '+ORDate)
+        
       }
       else {
         let isPlateNumberExist = checkPlateNumberExist(plateNumber);
@@ -70,6 +74,7 @@ const Add_form_PN_list = ({setForm}) => {
           set(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`), {
             plateNumber, 
             criminalOffense: CO, 
+            apprehended,
             mvFileNumber, 
             make, 
             series, 
@@ -120,6 +125,7 @@ const Add_form_PN_list = ({setForm}) => {
         } 
         
         else{
+          
           alert("Vehicle already exist!");
         }
 
@@ -127,6 +133,7 @@ const Add_form_PN_list = ({setForm}) => {
       }
 
     }catch(err){
+      console.log(err);
       alert("Please fill out all fields!");
     }
     

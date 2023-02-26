@@ -15,9 +15,9 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
         let exist = '';
         let count = 0;
         onValue(ref(db, `/Scanned`), (snapshot) => {
-        setArchiveRow([]);
         count = 0;
         const data = snapshot.val();
+        setArchiveRow([]);
         if (data !== null) {
             Object.values(data).map((scanned) => {
                 let crime = '';
@@ -27,7 +27,8 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                         crime = data.criminalOffense;
                   }
                   });
-                   if(count === 0){
+                  if(scanned.Apprehended === "no"){
+                    if(count === 0){
                         setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, crime, [
                             <TouchableOpacity onPress={()=>{
                                 setViewLocArchive(true);
@@ -53,6 +54,8 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                        ]]);
                   }
                   prevDataRef.current = scanned.PlateNumber;
+                  }
+                   
 
             })
             

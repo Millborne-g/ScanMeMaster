@@ -10,28 +10,6 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 const Notification = ({scannedPlateNumberList, curLocList, curDateList, curTimeList, scannedCrimeList, setNotification, setScannedPlateNumberList, setCurLocList, setCurDateList, setCurTimeList, setScannedCrimeList}) => {
 
     let curDateTime = curDateList[curDateList.length -1]+" "+curTimeList[curTimeList.length -1];
-    
-    // //read
-    // useEffect(() => {
-    //     console.log("Display last "+scannedPlateNumberList[scannedPlateNumberList.length - 1]);
-    //     //console.log('finding crime '+scannedPlateNumberList[scannedPlateNumberList.length - 1]);
-        
-    //     onValue(ref(db, `/Vehicle_with_criminal_offense/${scannedPlateNumberList[scannedPlateNumberList.length - 1]}`), (snapshot) => {
-    //       const data = snapshot.val();
-    //       console.log('finding crime inside '+data);
-    //       console.log("crime "+data.criminalOffense);
-    //       setCurCrime(data.criminalOffense);
-    //     });
-
-    //     //   setCurCrime(data.criminalOffense);
-    //     //   if (data !== null) {
-    //     //     if(data.plateNumber === curPlateNumber){
-    //     //         console.log("crime "+data.criminalOffense);
-    //     //         setCurCrime(data.criminalOffense);
-    //     //     }
-    //     //   }
-        
-    //   }, []);
 
     const handleSubmitChange = () => {
         update(ref(db, `/Scanned/${curDateTime}`), {

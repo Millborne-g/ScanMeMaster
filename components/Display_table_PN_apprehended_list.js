@@ -1,83 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, ScrollView} from 'react-native';
 import {Row, Rows, Table, TableWrapper} from 'react-native-table-component';
+import {db} from '../firebase';
+import {uid} from 'uid'; 
+import { onValue, ref, remove, set, update } from 'firebase/database';
 
 const Display_table_PN_apprehended_list = ({setShowApprehendedDetails}) => {
 const headers = ["Plate No.", 'Crime', ''];
-  const rows = [
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    ["000-xxx", 'Crime',[
-        <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
-            <Text style={styles.viewText}>View</Text>
-        </TouchableOpacity>
-    ]],
-    
-    
-    ]
+const [list, setList] = useState([]);
+
+const rowsDB = []
+
+//read
+useEffect(() => {
+    console.log('')
+    onValue(ref(db, `/Vehicle_with_criminal_offense`), (snapshot) => {
+      setList([]);
+      const data = snapshot.val();
+      if (data !== null) {
+        Object.values(data).map((list) => {
+            if(list.apprehended === "yes"){
+                setList((oldArray) => [...oldArray, [list.plateNumber, list.criminalOffense, [
+                    <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+                        <Text style={styles.viewText}>View</Text>
+                    </TouchableOpacity>
+                ]
+                ]]);
+            }
+          
+          //console.log('test list '+list.plateNumber)
+        });
+      }
+    });
+  }, []);
+
   return (
     <View style={styles.box_container}>
         <Table>
@@ -107,7 +63,7 @@ const headers = ["Plate No.", 'Crime', ''];
                     flexDirection: 'row',
                     }}>
                     <Rows 
-                        data={rows} 
+                        data={list} 
                         height={50} 
                         flexArr={[1,1,1]}
                         textStyle={{
