@@ -14,7 +14,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
     useEffect(() => {
         let exist = '';
         let count = 0;
-        onValue(ref(db, `/Scanned`), (snapshot) => {
+        onValue(ref(db, `/ScannedPlateNmber`), (snapshot) => {
         count = 0;
         const data = snapshot.val();
         setArchiveRow([]);
@@ -28,33 +28,77 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                   }
                   });
                   if(scanned.Apprehended === "no"){
-                    if(count === 0){
-                        setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, crime, [
-                            <TouchableOpacity onPress={()=>{
-                                setViewLocArchive(true);
-                                setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
-                                }
-                                }> 
-                                <Text style={styles.viewText}>View</Text>
-                            </TouchableOpacity>
-                                ]
-                        ]]);
-                        count++
-                   }
-                  else if(prevDataRef.current === null || prevDataRef.current !== scanned.PlateNumber){
-                    setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, crime, [
-                        <TouchableOpacity onPress={()=>{
-                            setViewLocArchive(true);
-                            setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
-                            }
-                            }> 
-                            <Text style={styles.viewText}>View</Text>
-                        </TouchableOpacity>
-                            ]
-                       ]]);
-                  }
-                  prevDataRef.current = scanned.PlateNumber;
-                  }
+                  setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, crime, [
+                    <TouchableOpacity onPress={()=>{
+                        setViewLocArchive(true);
+                        setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
+                        }
+                        }> 
+                        <Text style={styles.viewText}>View</Text>
+                    </TouchableOpacity>
+                        ]
+                   ]]);
+                }
+
+                  //Naay ga doble if e display
+                //   if(scanned.Apprehended === "no"){
+                //     console.log(archiveRow.length)
+                //     if(archiveRow.length === 0){
+                //         setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, crime, [
+                //             <TouchableOpacity onPress={()=>{
+                //                 setViewLocArchive(true);
+                //                 setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
+                //                 }
+                //                 }> 
+                //                 <Text style={styles.viewText}>View</Text>
+                //             </TouchableOpacity>
+                //                 ]
+                //            ]]);
+                //     }
+                //     else{
+                //         archiveRow.map((item)=>{
+                //             if(item[0]!==scanned.PlateNumber){
+                //                 console.log('item ds'+ item[0]);
+                //                 setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, crime, [
+                //                     <TouchableOpacity onPress={()=>{
+                //                         setViewLocArchive(true);
+                //                         setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
+                //                         }
+                //                         }> 
+                //                         <Text style={styles.viewText}>View</Text>
+                //                     </TouchableOpacity>
+                //                         ]
+                //                    ]]);
+                //             }
+                //         })
+                        
+                //     }
+                    
+                //         //const isValueExists = archiveRow.find((row) => row.includes(scanned.PlateNumber)) !== undefined;
+                //         //const isValueExists = archiveRow.find((row) => JSON.stringify(row) === JSON.stringify(scanned.PlateNumber)) !== undefined;
+                // //         let isValueExists = false;
+                // //             archiveRow.map((item) =>{
+                // //                 console.log('item '+item[0])
+                // //                 if(item[0] === scanned.PlateNumber){
+                // //                     isValueExists = true;
+                // //                 }
+                // //             });
+                // //         console.log('scanned.PlateNumber '+isValueExists);
+                // //         if (isValueExists === true) {
+                // //             setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, crime, [
+                // //                 <TouchableOpacity onPress={()=>{
+                // //                     setViewLocArchive(true);
+                // //                     setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
+                // //                     }
+                // //                     }> 
+                // //                     <Text style={styles.viewText}>View</Text>
+                // //                 </TouchableOpacity>
+                // //                     ]
+                // //                ]]);
+                // //           }
+                    
+                // //   prevDataRef.current = scanned.PlateNumber;
+                //   }
                    
 
             })
