@@ -7,7 +7,7 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber}) => {
+const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber}) => {
 
   const click_Delete = (text) =>{
     alert(text);
@@ -32,6 +32,11 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
     remove(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`));
     setPlateNumber('');
     
+  }
+
+  const click_Edit = () =>{
+    setEditForm(true);
+    setEditPlateNumber(plateNumber);
   }
 
   const click_Apprehend = (text) =>{
@@ -75,10 +80,10 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
             </Pressable>
             <Pressable style={{...styles.Btn, ...styles.updateBtn}} onPress={
                 user==='LTO'?
-                    ()=>setEditForm(true) :
-                    ()=> alert('Only LTO personnel can update Vehicle with Criminal Offense.')
+                    ()=>click_Edit() :
+                    ()=>alert('Only LTO personnel can edit Vehicle with Criminal Offense.')
                 }>
-                <Text style={styles.btnText}>Update</Text>
+                <Text style={styles.btnText}>Edit</Text>
             </Pressable>
             <Pressable style={{...styles.Btn, ...styles.deleteBtn}} onPress={
                 user==='LTO'?

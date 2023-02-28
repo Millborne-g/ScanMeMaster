@@ -25,7 +25,7 @@ const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
                             setEditList(true);
                             setPlateNumber(list.plateNumber)
                             }}>
-                            <Text style={styles.editText}>Edit</Text>
+                            <Text style={styles.editText}>Update</Text>
                         </TouchableOpacity>
                     ]
                     ]]);

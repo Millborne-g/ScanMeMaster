@@ -47,6 +47,9 @@ const TabNavigator = ({user,setNav}) => {
   //Scanned Popup Notification
   const [scannedPlateNumberDateTimeLoc, setScannedPlateNumberDateTimeLoc] = useState('');
 
+  //Edit plate number popup
+  const [editPlateNumber, setEditPlateNumber] = useState('');
+
   const click_Vehicle_List = (routeScreen) => {
     // Programmatically click the second tab
     
@@ -148,12 +151,12 @@ const TabNavigator = ({user,setNav}) => {
     }
 
     {editList &&
-      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber}/>
+      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber} setEditPlateNumber={setEditPlateNumber}/>
     }
 
     {editForm &&
       <View style={styles.addForm_popup}>
-        <Edit_form_PN_list setForm={setForm} setEditForm={setEditForm} />
+        <Edit_form_PN_list setForm={setForm} setEditForm={setEditForm} editPlateNumber={editPlateNumber}/>
       </View>
     }
 

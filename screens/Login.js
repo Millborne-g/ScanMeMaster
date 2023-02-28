@@ -126,8 +126,9 @@ const Login = ({setNav, setUser}) => {
         </View>
         <View style={styles.textFieldContainer}>
             <Text style={styles.userLabel}>*User</Text>
-            <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} />
-            <View style={styles.dropdownStyle}></View>
+            <View style={styles.selectContainer}>
+                <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} />
+            </View>
             <Text style={styles.passwordLabel}>*Password</Text>
             <View style={styles.passwordTextfieldContainer}>
                 <TextInput style={styles.passwordTextfield} placeholder='Password' secureTextEntry={viewPassword} value={password} onChangeText={(e)=>setPassword(e)}/>
@@ -196,8 +197,9 @@ const styles = StyleSheet.create({
         fontSize: 10,
     },
 
-    dropdownStyle: {
-        marginBottom: 20
+    selectContainer:{
+        //height: 55,
+        marginBottom: 15
     },
 
     passwordLabel: {
@@ -205,7 +207,7 @@ const styles = StyleSheet.create({
     },
 
     passwordTextfieldContainer:{
-        marginBottom: 20
+        marginBottom: 20,
     },
 
     passwordTextfield: {

@@ -153,7 +153,7 @@ const Add_form_PN_list = ({setForm}) => {
           </View>
           <View style={styles.select_crime}>
             <Text style={styles.textfield_Label}>Criminal Offense:</Text>
-            <SelectList data={crime} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} />
+            <SelectList data={crime} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} dropdownStyles={{backgroundColor: '#FFFFFF', zIndex: 1}}/>
           </View>
           <View style={styles.textfield_Container}>
             <Text style={styles.textfield_Label}>MV File Number:</Text>
@@ -301,6 +301,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     marginTop: 13,
+    height: 65,
   },
 
   btns_Container:{
