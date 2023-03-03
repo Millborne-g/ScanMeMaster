@@ -5,11 +5,13 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Display_table_PN_apprehended_list = ({setShowApprehendedDetails}) => {
+const Display_table_PN_apprehended_list = ({setShowApprehendedDetails, setViewPlateNumber}) => {
 const headers = ["Plate No.", 'Crime', ''];
 const [list, setList] = useState([]);
 
-const rowsDB = []
+const [plateNumber, setPlateNumber] = useState('')
+
+const rowsDB = [];
 
 //read
 useEffect(() => {
@@ -20,8 +22,12 @@ useEffect(() => {
       if (data !== null) {
         Object.values(data).map((list) => {
             if(list.apprehended === "yes"){
+                setPlateNumber(list.plateNumber);
                 setList((oldArray) => [...oldArray, [list.plateNumber, list.criminalOffense, [
-                    <TouchableOpacity onPress={()=>setShowApprehendedDetails(true)}>
+                    <TouchableOpacity onPress={()=>{
+                        setViewPlateNumber(list.plateNumber);
+                        setShowApprehendedDetails(true);
+                    }}>
                         <Text style={styles.viewText}>View</Text>
                     </TouchableOpacity>
                 ]

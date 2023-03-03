@@ -16,16 +16,19 @@ const Display_detected_PN = () => {
         const data = snapshot.val();
         if (data !== null) {
             Object.values(data).map((scanned) => {
-                setScannedPlateNumberList(scanned.PlateNumber);
-                onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
-                    const data = snapshot.val();
-                    if (data !== null) {
-                        setScannedCrimeList(data.criminalOffense);
-                  }
-                  });
-                  setCurLocList(scanned.Location);
-                  setCurDateList(scanned.Date);
-                  setCurTimeList(scanned.Time);
+                if(scanned.Apprehended === 'no'){
+                    setScannedPlateNumberList(scanned.PlateNumber);
+                    onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
+                        const data = snapshot.val();
+                        if (data !== null) {
+                            setScannedCrimeList(data.criminalOffense);
+                      }
+                      });
+                      setCurLocList(scanned.Location);
+                      setCurDateList(scanned.Date);
+                      setCurTimeList(scanned.Time);
+                }
+                
             });
         }
         });

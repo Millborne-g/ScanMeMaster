@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, Alert} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import Checkbox from 'expo-checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -125,23 +126,25 @@ const Login = ({setNav, setUser}) => {
             <Text style={styles.subHeader}>Please Login to continue.</Text>
         </View>
         <View style={styles.textFieldContainer}>
-            <Text style={styles.userLabel}>*User</Text>
-            <View style={styles.selectContainer}>
-                <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} />
-            </View>
-            <Text style={styles.passwordLabel}>*Password</Text>
-            <View style={styles.passwordTextfieldContainer}>
-                <TextInput style={styles.passwordTextfield} placeholder='Password' secureTextEntry={viewPassword} value={password} onChangeText={(e)=>setPassword(e)}/>
-                <TouchableOpacity style={styles.eyeIconContainer} onPress={() => setViewPassword(!viewPassword)}>
-                    <View>
-                        {viewPassword? 
-                            <Image source={require('../assets/password-hidden.png')}/>:
-                            <Image source={require('../assets/password-view.png')}/>
-                        }
-                    </View>
-                </TouchableOpacity>
-                
-            </View>
+            <ScrollView>
+                <Text style={styles.userLabel}>*User</Text>
+                <View style={styles.selectContainer}>
+                    <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} inputStyles={{height: 25, marginTop: '2%'}} dropdownStyles={{backgroundColor: '#FFFFFF', height: 90, zIndex: 2}}/>
+                </View>
+                <Text style={styles.passwordLabel}>*Password</Text>
+                <View style={styles.passwordTextfieldContainer}>
+                    <TextInput style={styles.passwordTextfield} placeholder='Password' secureTextEntry={viewPassword} value={password} onChangeText={(e)=>setPassword(e)}/>
+                    <TouchableOpacity style={styles.eyeIconContainer} onPress={() => setViewPassword(!viewPassword)}>
+                        <View>
+                            {viewPassword? 
+                                <Image source={require('../assets/password-view.png')}/>:
+                                <Image source={require('../assets/password-hidden.png')}/>
+                            }
+                        </View>
+                    </TouchableOpacity>
+                    
+                </View>
+            </ScrollView>
             
             <TouchableOpacity onPress={() => setChecked(!isChecked)}>
                 <View style={styles.rememberMeContainer}>
@@ -198,8 +201,8 @@ const styles = StyleSheet.create({
     },
 
     selectContainer:{
-        //height: 55,
-        marginBottom: 15
+        height: 55,
+        marginBottom: 20
     },
 
     passwordLabel: {
@@ -231,7 +234,7 @@ const styles = StyleSheet.create({
 
     rememberMeContainer: {
         flexDirection: 'row',
-        marginBottom: 25
+        marginBottom: 25,
     },
 
     checbox: {

@@ -1,22 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, Alert} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {db} from '../firebase';
+import {uid} from 'uid'; 
+import { onValue, ref, remove, set, update } from 'firebase/database';
 
 
-const Apprehended_view_popup = ({setShowApprehendedDetails}) => {
+const Apprehended_view_popup = ({setShowApprehendedDetails, viewPlateNumber, setViewPlateNumberDetails}) => {
+    const [plateNumber ,setPlateNumber] = useState('')
+    const [crime ,setCrime] = useState('')
+    const [date ,setDate] = useState('')
+    const [time ,setTime] = useState('')
+    const [locaton ,setLocaton] = useState('')
+
+    //read
+    useEffect(() => {
+        onValue(ref(db, `/Vehicle_with_criminal_offense/${viewPlateNumber}`), (snapshot) => {
+          const data = snapshot.val();
+          setCrime(data.criminalOffense)
+          console.log("viewPlateNumber "+data.criminalOffense);
+          onValue(ref(db, `/Scanned`), (snapshot) => {
+            const data = snapshot.val();
+            if (data !== null) {
+              Object.values(data).map((viewed) => {
+                if(viewed.PlateNumber === viewPlateNumber){
+                    setDate(viewed.Date);
+                    setTime(viewed.Time)
+                    setLocaton(viewed.Location);
+                }
+              });
+            }
+          });
+        });
+      }, []);
   return (
     <View style={styles.notificationContainer}>
         <View style={styles.modal}>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
-            <Text style={styles.plate_Number}>123-xxx</Text> 
+            <Text style={styles.plate_Number}>{viewPlateNumber}</Text> 
             <Text style={styles.crime_Label}>Criminal Offense:</Text> 
-            <Text style={styles.crime}>Carnap</Text> 
+            <Text style={styles.crime}>{crime}</Text> 
             <Text style={styles.date_time_Label}>Date/Time:</Text> 
-            <Text style={styles.date_time}>02-05-23</Text> 
-            <Text style={styles.date_time}>8:15:30 am</Text> 
+            <Text style={styles.date_time}>{date}</Text> 
+            <Text style={styles.date_time}>{time}</Text> 
             <Text style={styles.location_Label}>Location:</Text> 
-            <Text style={styles.location}>Lapasan zone 2</Text> 
+            <Text style={styles.location}>{locaton}</Text> 
+
+            <Pressable style={styles.Btn} onPress={()=>setViewPlateNumberDetails(true)}>
+                <Text style={styles.btnText}>View More</Text>
+            </Pressable>
 
             <Pressable style={styles.okBtn} onPress={()=>setShowApprehendedDetails(false)}>
                 <MaterialCommunityIcons name="close" size={45} />
@@ -95,6 +128,27 @@ const styles = StyleSheet.create({
         color: '#252727',
         marginBottom: 20
         
+    },
+
+    btnText: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+    },
+
+    Btn:{
+        width: '80%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: '#2666FA',
+        marginTop: '2%',
+        marginBottom: '2%',
     },
 
     btnText: {

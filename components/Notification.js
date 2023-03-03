@@ -25,7 +25,6 @@ const Notification = ({scannedPlateNumberList, curLocList, curDateList, curTimeL
         {scannedPlateNumberList.map((item)=>{
             //setCurPlateNumber(item);
             return(
-                
                 <View style={styles.modal}>
                     <Image source={require('../assets/notifications.png')}/>
                     <Text style={styles.plate_Number_Label}>Plate number:</Text> 

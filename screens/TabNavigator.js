@@ -15,6 +15,7 @@ import Add_form_PN_list from '../components/Add_form_PN_list';
 import Edit_PN_list_popup from '../components/Edit_PN_list_popup';
 import Edit_form_PN_list from '../components/Edit_form_PN_list';
 import Apprehended_view_popup from '../components/Apprehended_view_popup';
+import View_apprehended_details_PN_apprehended from '../components/View_apprehended_details_PN_apprehended';
 
 import {db} from '../firebase';
 import {uid} from 'uid'; 
@@ -49,6 +50,10 @@ const TabNavigator = ({user,setNav}) => {
 
   //Edit plate number popup
   const [editPlateNumber, setEditPlateNumber] = useState('');
+
+  //View Apprehend plate number popup
+  const [viewPlateNumber, setViewPlateNumber] = useState('');
+  const [viewPlateNumberDetails, setViewPlateNumberDetails] = useState(false);
 
   const click_Vehicle_List = (routeScreen) => {
     // Programmatically click the second tab
@@ -125,7 +130,7 @@ const TabNavigator = ({user,setNav}) => {
                 <MaterialCommunityIcons name="playlist-edit" size={30} color={color} />
               ),
           }}/>
-            <Tab.Screen name="Apprehended" children={()=><Apprehended user={user} setShowApprehendedDetails={setShowApprehendedDetails}/>} options={{
+            <Tab.Screen name="Apprehended" children={()=><Apprehended user={user} setShowApprehendedDetails={setShowApprehendedDetails} setViewPlateNumber={setViewPlateNumber}/>} options={{
             headerShown: false,
             tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons name="car-back" size={30} color={color} />
@@ -161,7 +166,13 @@ const TabNavigator = ({user,setNav}) => {
     }
 
     {showApprehendedDetails &&
-      <Apprehended_view_popup setShowApprehendedDetails={setShowApprehendedDetails}/>
+      <Apprehended_view_popup setShowApprehendedDetails={setShowApprehendedDetails} viewPlateNumber={viewPlateNumber} setViewPlateNumberDetails={setViewPlateNumberDetails}/>
+    }
+
+    {viewPlateNumberDetails &&
+      <View style={styles.addForm_popup}>
+        <View_apprehended_details_PN_apprehended viewPlateNumber={viewPlateNumber} setViewPlateNumberDetails={setViewPlateNumberDetails}/>
+      </View>
     }
 
     {/* {
@@ -171,11 +182,14 @@ const TabNavigator = ({user,setNav}) => {
     })
     } */}
 
-    {console.log(notification)}
     {notification &&
       <Notification scannedPlateNumberList={scannedPlateNumberList} curLocList={curLocList} curDateList={curDateList} curTimeList={curTimeList} scannedCrimeList={scannedCrimeList} setNotification={setNotification} setScannedPlateNumberList={setScannedPlateNumberList} setCurLocList={setCurLocList} setCurDateList={setCurDateList} setCurTimeList={setCurTimeList} setScannedCrimeList={setScannedCrimeList}/>
       // <Notification scannedPlateNumber={scannedPlateNumber} setNotification={setNotification} />
     }
+    
+    
+
+    
 
     {console.log("Scanned List "+scannedPlateNumberList[scannedPlateNumberList.length -1])}
     

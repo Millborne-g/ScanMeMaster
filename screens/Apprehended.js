@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, View, Image, Pressable, Touchable, TouchableO
 
 import Display_table_PN_apprehended_list from '../components/Display_table_PN_apprehended_list';
 
-const Archive = ({user,setShowApprehendedDetails}) => {
+const Archive = ({user,setShowApprehendedDetails, setViewPlateNumber}) => {
   return (
     <View style={styles.container}>
         <View style={styles.header}>
@@ -24,7 +24,7 @@ const Archive = ({user,setShowApprehendedDetails}) => {
         */}
         <View style={styles.display_PN_container}>
           <View style={styles.display_table_PN_list_container}>
-            <Display_table_PN_apprehended_list setShowApprehendedDetails={setShowApprehendedDetails}/>
+            <Display_table_PN_apprehended_list setShowApprehendedDetails={setShowApprehendedDetails} setViewPlateNumber={setViewPlateNumber}/>
           </View>
         </View>
         
