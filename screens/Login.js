@@ -69,47 +69,47 @@ const Login = ({setNav, setUser}) => {
         }
     }
 
-    //write
-    const submit_to_DB = () =>{
-        const uuid = uid();
-        const test = 'test';
-        set(ref(db, `/${uuid}`), {
-            test,
-            uuid,
-        });
+    // //write
+    // const submit_to_DB = () =>{
+    //     const uuid = uid();
+    //     const test = 'test';
+    //     set(ref(db, `/${uuid}`), {
+    //         test,
+    //         uuid,
+    //     });
 
-        alert('Saved to Database');
-    }
+    //     alert('Saved to Database');
+    // }
 
-    //read
-    useEffect(() => {
-        onValue(ref(db, `/Vehicle_with_criminal_offense`), (snapshot) => {
-          setTodos([]);
-          const data = snapshot.val();
-          if (data !== null) {
-            Object.values(data).map((todo) => {
-                console.log(todo.plateNumber)
-              setTodos((oldArray) => [...oldArray, todo]);
-            });
-          }
-        });
-      }, []);
+    // //read
+    // useEffect(() => {
+    //     onValue(ref(db, `/Vehicle_with_criminal_offense`), (snapshot) => {
+    //       setTodos([]);
+    //       const data = snapshot.val();
+    //       if (data !== null) {
+    //         Object.values(data).map((todo) => {
+    //             console.log(todo.plateNumber)
+    //           setTodos((oldArray) => [...oldArray, todo]);
+    //         });
+    //       }
+    //     });
+    //   }, []);
 
-      //console.log(todo);
+    //   //console.log(todo);
 
-      //delete
-    const handleDelete = () => {
-        remove(ref(db, `/${'b90e955ddb5'}`));
-    };
+    //   //delete
+    // const handleDelete = () => {
+    //     remove(ref(db, `/${'b90e955ddb5'}`));
+    // };
 
-     //update
-    const handleSubmitChange = () => {
-        const test = 'testchange';
-        update(ref(db, `/${'c04594823fe'}`), {
-        test,
-        uuid: 'c04594823fe',
-        });
-    };
+    //  //update
+    // const handleSubmitChange = () => {
+    //     const test = 'testchange';
+    //     update(ref(db, `/${'c04594823fe'}`), {
+    //     test,
+    //     uuid: 'c04594823fe',
+    //     });
+    // };
 
 
   return (
@@ -129,7 +129,7 @@ const Login = ({setNav, setUser}) => {
             <ScrollView>
                 <Text style={styles.userLabel}>*User</Text>
                 <View style={styles.selectContainer}>
-                    <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} inputStyles={{height: 25, marginTop: '2%'}} dropdownStyles={{backgroundColor: '#FFFFFF', height: 90, zIndex: 2}}/>
+                    <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} inputStyles={{height: 23, marginTop: '2%'}} dropdownStyles={{backgroundColor: '#FFFFFF', height: 90, zIndex: 2}}/>
                 </View>
                 <Text style={styles.passwordLabel}>*Password</Text>
                 <View style={styles.passwordTextfieldContainer}>

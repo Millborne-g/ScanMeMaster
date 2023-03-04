@@ -203,7 +203,8 @@ const View_apprehended_details_PN_apprehended = ({viewPlateNumber, setViewPlateN
       },
     
       form_container: {
-        height: '77%',
+        height: '75%',
+        marginBottom: 5
       },
     
       textfield_Container: {
@@ -239,7 +240,7 @@ const View_apprehended_details_PN_apprehended = ({viewPlateNumber, setViewPlateN
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 15
+        marginTop: 10,
       },
     
       saveBtn: {
