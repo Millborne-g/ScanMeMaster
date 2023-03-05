@@ -27,7 +27,6 @@ const Login = ({setNav, setUser}) => {
     const [viewPassword, setViewPassword]= useState(true);
     const [scaleValue] = useState(new Animated.Value(1));
     const [password, setPassword] = useState('');
-
     const [isInternetConnected, setIsInternetConnected] = useState(false);
 
     const storeData = async () => {
@@ -65,7 +64,6 @@ const Login = ({setNav, setUser}) => {
 
     const login_error = () =>{
         alert("Invalid user or password.");
-        getData();
     }
 
     useEffect(()=>{
@@ -97,6 +95,9 @@ const Login = ({setNav, setUser}) => {
                         
                         console.log("password");
                         if (password === 'lto123'){
+                            if(isChecked === true){
+                                storeData();
+                            }
                             dashboard();
                         }
                         else{
@@ -105,6 +106,9 @@ const Login = ({setNav, setUser}) => {
                     }
                     else if (selected === 2){
                         if (password === 'hpg123'){
+                            if(isChecked === true){
+                                storeData();
+                            }
                             dashboard();
                         }
                         else{
@@ -112,9 +116,7 @@ const Login = ({setNav, setUser}) => {
                         }
                     }
                     console.log('is checked '+ isChecked);
-                    if(isChecked === true){
-                        storeData();
-                    }
+                    
                 } 
                 else{
                     alert('Please connect to the internet.');
@@ -189,7 +191,7 @@ const Login = ({setNav, setUser}) => {
             <ScrollView>
                 <Text style={styles.userLabel}>*User</Text>
                 <View style={styles.selectContainer}>
-                    <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} inputStyles={{/*height: 23,*/ marginTop: '2%'}} defaultOption={data[selectedUser]} dropdownStyles={{backgroundColor: '#FFFFFF', height: 90, zIndex: 2,}}/>
+                    <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} inputStyles={{/*height: 23,*/ marginTop: '1%'}} defaultOption={data[selectedUser]} dropdownStyles={{backgroundColor: '#FFFFFF', height: 90, zIndex: 2,}}/>
                 </View>
                 <Text style={styles.passwordLabel}>*Password</Text>
                 <View style={styles.passwordTextfieldContainer}>
@@ -262,7 +264,7 @@ const styles = StyleSheet.create({
 
     selectContainer:{
         height: 55,
-        marginBottom: 20
+        marginBottom: 10
     },
 
     passwordLabel: {

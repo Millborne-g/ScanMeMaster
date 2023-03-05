@@ -20,6 +20,7 @@ import View_apprehended_details_PN_apprehended from '../components/View_apprehen
 import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
+import { Audio } from 'expo-av';
 
 const Tab = createBottomTabNavigator();
 
@@ -55,6 +56,20 @@ const TabNavigator = ({user,setNav}) => {
   const [viewPlateNumber, setViewPlateNumber] = useState('');
   const [viewPlateNumberDetails, setViewPlateNumberDetails] = useState(false);
 
+  const [sound, setSound] = useState();
+  const [soundCount, setSoundCount] = useState(0)
+
+  async function playSound() {
+      console.log('Loading Sound');
+      const { sound } = await Audio.Sound.createAsync( require('../assets/notification.mp3')
+      );
+      setSound(sound);
+
+      console.log('Playing Sound');
+      await sound.playAsync();
+
+  }
+
   const click_Vehicle_List = (routeScreen) => {
     // Programmatically click the second tab
     
@@ -78,6 +93,11 @@ const TabNavigator = ({user,setNav}) => {
           console.log('scanPlateNumber.Apprehended '+scanPlateNumber.Apprehended)
           if(scanPlateNumber.Notification === 'on' && scanPlateNumber.Apprehended === "no"){
             console.log("scanned "+scannedPlateNumber);
+            if(scanPlateNumber.Notification === 'on'){
+              setTimeout(function() {
+                playSound();
+              }, 1000);
+            }
             setNotification(true);
             setScannedPlateNumber(scanPlateNumber.PlateNumber);
             onValue(ref(db, `/Vehicle_with_criminal_offense/${scanPlateNumber.PlateNumber}`), (snapshot) => {

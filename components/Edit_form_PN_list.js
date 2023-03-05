@@ -5,6 +5,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
+import NetInfo from "@react-native-community/netinfo";
 
 const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
     const crime =[
@@ -38,7 +39,7 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
       const [ORNumber, setORNumber] = useState('');
       const [ORDate, setORDate] = useState('');
       const [apprehended, setApprehended] = useState('');
-
+      const [isInternetConnected, setIsInternetConnected] = useState(false);
       //read
     useEffect(() => {
       console.log('fgd')
@@ -76,83 +77,94 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
           setApprehended(data.apprehended)
         }
       });
+
+      NetInfo.addEventListener(state => {
+        console.log("Connection type", state.type);
+        console.log("Is connected?", state.isConnected);
+        setIsInternetConnected(state.isConnected);
+      });
     }, []);
 
     const Save_Edit_Submit = () =>{
-      try{
-        let CO = crime[[selected-1]].value;
-        //let apprehended = 'no';
-        setCriminalOffense(CO);
-        if (plateNumber === '' || mvFileNumber === '' || make === '' || series === '' || bodyType === '' || bodyNumber === '' || yearModel === '' || fuel === '' || engineNumber === '' || chassisNumber === '' || denomination === '' || pistonDisplacement === '' || numberOfCylinders === '' || grossWT === '' || netWT === '' || shippingWT === '' || netCapacity === '' || completeOwnerName === '' || completeAddress === '' || ORNumber === '' || ORDate === ''){
-          console.log("yow ")
+      if(isInternetConnected === true){
+        try{
+          let CO = crime[[selected-1]].value;
+          //let apprehended = 'no';
+          setCriminalOffense(CO);
+          if (plateNumber === '' || mvFileNumber === '' || make === '' || series === '' || bodyType === '' || bodyNumber === '' || yearModel === '' || fuel === '' || engineNumber === '' || chassisNumber === '' || denomination === '' || pistonDisplacement === '' || numberOfCylinders === '' || grossWT === '' || netWT === '' || shippingWT === '' || netCapacity === '' || completeOwnerName === '' || completeAddress === '' || ORNumber === '' || ORDate === ''){
+            console.log("yow ")
+            alert("Please fill out all fields!");
+            console.log(plateNumber+' | '+criminalOffense+' | '+mvFileNumber+' | '+make+' | '+series+' | '+bodyType+' | '+bodyNumber+' | '+yearModel+' | '+fuel+' | '+engineNumber+' | '+chassisNumber+' | '+denomination+' | '+pistonDisplacement+' | '+numberOfCylinders+' | '+grossWT+' | '+netWT+' | '+shippingWT+' | '+netCapacity+' | '+completeOwnerName+' | '+completeAddress+' | '+ORNumber+' | '+ORDate)
+            
+          }
+          else {
+            set(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`), {
+              plateNumber, 
+              criminalOffense: CO, 
+              apprehended,
+              mvFileNumber, 
+              make, 
+              series, 
+              bodyType, 
+              bodyNumber, 
+              yearModel, 
+              fuel, 
+              engineNumber, 
+              chassisNumber,
+              denomination, 
+              pistonDisplacement, 
+              numberOfCylinders, 
+              grossWT, 
+              netWT, 
+              shippingWT, 
+              netCapacity, 
+              completeOwnerName, 
+              completeAddress,
+              ORNumber,
+              ORDate
+            });
+
+            update(ref(db, `/ScannedPlateNmber/${plateNumber}`), {
+              CriminalOffense: CO,
+            });
+
+            setPlateNumber('');
+            setCriminalOffense('');
+            setMvFileNumber('');
+            setMake(''); 
+            setSeries(''); 
+            setBodyType('');
+            setBodyNumber('');
+            setYearModel(''); 
+            setFuel('');
+            setEngineNumber(''); 
+            setChassisNumber('');
+            setDenomination('');
+            setPistonDisplacement(''); 
+            setNumberOfCylinders(''); 
+            setGrossWT(''); 
+            setNetWT(''); 
+            setShippingWT(''); 
+            setNetCapacity(''); 
+            setCompleteOwnerName(''); 
+            setCompleteAddress('');
+            setORNumber('');
+            setORDate('');
+            
+            setEditForm(false);
+            setEditList(false);
+            
+            alert("Vehicle saved!");
+            
+          }
+    
+        }catch(err){
+          console.log('Errorrr '+err);
           alert("Please fill out all fields!");
-          console.log(plateNumber+' | '+criminalOffense+' | '+mvFileNumber+' | '+make+' | '+series+' | '+bodyType+' | '+bodyNumber+' | '+yearModel+' | '+fuel+' | '+engineNumber+' | '+chassisNumber+' | '+denomination+' | '+pistonDisplacement+' | '+numberOfCylinders+' | '+grossWT+' | '+netWT+' | '+shippingWT+' | '+netCapacity+' | '+completeOwnerName+' | '+completeAddress+' | '+ORNumber+' | '+ORDate)
-          
         }
-        else {
-          set(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`), {
-            plateNumber, 
-            criminalOffense: CO, 
-            apprehended,
-            mvFileNumber, 
-            make, 
-            series, 
-            bodyType, 
-            bodyNumber, 
-            yearModel, 
-            fuel, 
-            engineNumber, 
-            chassisNumber,
-            denomination, 
-            pistonDisplacement, 
-            numberOfCylinders, 
-            grossWT, 
-            netWT, 
-            shippingWT, 
-            netCapacity, 
-            completeOwnerName, 
-            completeAddress,
-            ORNumber,
-            ORDate
-          });
-
-          update(ref(db, `/ScannedPlateNmber/${plateNumber}`), {
-            CriminalOffense: CO,
-          });
-
-          setPlateNumber('');
-          setCriminalOffense('');
-          setMvFileNumber('');
-          setMake(''); 
-          setSeries(''); 
-          setBodyType('');
-          setBodyNumber('');
-          setYearModel(''); 
-          setFuel('');
-          setEngineNumber(''); 
-          setChassisNumber('');
-          setDenomination('');
-          setPistonDisplacement(''); 
-          setNumberOfCylinders(''); 
-          setGrossWT(''); 
-          setNetWT(''); 
-          setShippingWT(''); 
-          setNetCapacity(''); 
-          setCompleteOwnerName(''); 
-          setCompleteAddress('');
-          setORNumber('');
-          setORDate('');
-          
-          setEditForm(false);
-          setEditList(false);
-          
-          alert("Vehicle saved!");
-          
-        }
-  
-      }catch(err){
-        console.log('Errorrr '+err);
-        alert("Please fill out all fields!");
+      } 
+      else{
+          alert('Please connect to the internet.');
       }
       
         
