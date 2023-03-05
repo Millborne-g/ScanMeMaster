@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity} from 'react-native';
 import Display_table_PN_list from '../components/Display_table_PN_list';
 import Add_form_PN_list from '../components/Add_form_PN_list';
@@ -8,9 +8,9 @@ import Edit_PN_list from '../components/Edit_PN_list_popup';
 import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
+import NetInfo from "@react-native-community/netinfo";
 
 const Vehicles_list = ({user,setForm,setEditList,setPlateNumber}) => {
-  
   return (
     <View style={styles.container}>
         <View style={styles.header}>

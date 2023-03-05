@@ -6,68 +6,91 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
+import NetInfo from "@react-native-community/netinfo";
 
 const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber}) => {
-
+    const [isInternetConnected, setIsInternetConnected] = useState(false);
+  
+    useEffect(()=>{
+      NetInfo.addEventListener(state => {
+          console.log("Connection type", state.type);
+          console.log("Is connected?", state.isConnected);
+          setIsInternetConnected(state.isConnected);
+      });
+    },[])
   const click_Delete = (text) =>{
-    alert(text);
-    setEditList(false);
-    let deleteScanned = [];
-    onValue(ref(db, `/Scanned`), (snapshot) => {
-        const data = snapshot.val();
-        if (data !== null) {
-            Object.values(data).map((scanned) => {
-                let crime = '';
-                console.log('scanned.PlateNumber '+scanned.PlateNumber);
-                if(scanned.PlateNumber === plateNumber){
-                    deleteScanned.push(scanned.Date+' '+scanned.Time);
-                }
-            });
-        }
-    });
-    deleteScanned.map((item)=>{
-        remove(ref(db, `/Scanned/${item}`));
-    })
-    
-    remove(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`));
-    setPlateNumber('');
-    
+    if(isInternetConnected === true){
+        alert(text);
+        setEditList(false);
+        let deleteScanned = [];
+        onValue(ref(db, `/Scanned`), (snapshot) => {
+            const data = snapshot.val();
+            if (data !== null) {
+                Object.values(data).map((scanned) => {
+                    let crime = '';
+                    console.log('scanned.PlateNumber '+scanned.PlateNumber);
+                    if(scanned.PlateNumber === plateNumber){
+                        deleteScanned.push(scanned.Date+' '+scanned.Time);
+                    }
+                });
+            }
+        });
+        deleteScanned.map((item)=>{
+            remove(ref(db, `/Scanned/${item}`));
+        })
+        
+        remove(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`));
+        setPlateNumber('');
+    }
+    else{
+        alert('Please connect to the internet.');
+    }
   }
 
   const click_Edit = () =>{
-    setEditForm(true);
-    setEditPlateNumber(plateNumber);
+    if(isInternetConnected === true){
+        setEditForm(true);
+        setEditPlateNumber(plateNumber);
+    }
+    else{
+        alert('Please connect to the internet.');
+    }
   }
 
   const click_Apprehend = (text) =>{
-    alert(text);
-    setEditList(false);
-    let appScanned = [];
-    onValue(ref(db, `/Scanned`), (snapshot) => {
-        const data = snapshot.val();
-        if (data !== null) {
-            Object.values(data).map((scanned) => {
-                let crime = '';
-                console.log('scanned.PlateNumber '+scanned.PlateNumber);
-                if(scanned.PlateNumber === plateNumber){
-                    console.log('scanned.Date scanned.Time '+ scanned.Date+' '+scanned.Time)
-                    appScanned.push(scanned.Date+' '+scanned.Time);
-                }
-            });
-        }
-    });
-
-    console.log('apprehendScanned '+appScanned);
-
-    appScanned.map((item)=>{
-        update(ref(db, `/Scanned/${item}`), {
-            Apprehended: 'yes',
+    if(isInternetConnected === true){
+        alert(text);
+        setEditList(false);
+        let appScanned = [];
+        onValue(ref(db, `/Scanned`), (snapshot) => {
+            const data = snapshot.val();
+            if (data !== null) {
+                Object.values(data).map((scanned) => {
+                    let crime = '';
+                    console.log('scanned.PlateNumber '+scanned.PlateNumber);
+                    if(scanned.PlateNumber === plateNumber){
+                        console.log('scanned.Date scanned.Time '+ scanned.Date+' '+scanned.Time)
+                        appScanned.push(scanned.Date+' '+scanned.Time);
+                    }
+                });
+            }
         });
-    })
-    remove(ref(db, `/ScannedPlateNmber/${plateNumber}`));
-    update(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`), {
-        apprehended: 'yes',
-    });
+
+        console.log('apprehendScanned '+appScanned);
+
+        appScanned.map((item)=>{
+            update(ref(db, `/Scanned/${item}`), {
+                Apprehended: 'yes',
+            });
+        })
+        remove(ref(db, `/ScannedPlateNmber/${plateNumber}`));
+        update(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`), {
+            apprehended: 'yes',
+        });
+    }
+    else{
+        alert('Please connect to the internet.');
+    }
   }
 
   return (

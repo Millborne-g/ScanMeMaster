@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, StyleSheet, Text, View, Image, Pressable, Touchable, TouchableOpacity, TextInput } from 'react-native';
-
+import NetInfo from "@react-native-community/netinfo";
 import Display_table_PN_apprehended_list from '../components/Display_table_PN_apprehended_list';
 
 const Archive = ({user,setShowApprehendedDetails, setViewPlateNumber}) => {
+  const [isInternetConnected, setIsInternetConnected] = useState(false)
+  useEffect(()=>{
+    NetInfo.addEventListener(state => {
+        console.log("Connection type", state.type);
+        console.log("Is connected?", state.isConnected);
+        setIsInternetConnected(state.isConnected);
+    });
+    if(isInternetConnected === false){
+      console.log('isInternetConnected '+isInternetConnected);
+    }
+  },[])
   return (
     <View style={styles.container}>
         <View style={styles.header}>

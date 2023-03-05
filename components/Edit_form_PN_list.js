@@ -6,7 +6,7 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Edit_form_PN_list = ({setEditForm,editPlateNumber}) => {
+const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
     const crime =[
         {key:1, value:'Carnap'},
         {key:2, value:'Hit and Run'}
@@ -116,6 +116,10 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber}) => {
             ORDate
           });
 
+          update(ref(db, `/ScannedPlateNmber/${plateNumber}`), {
+            CriminalOffense: CO,
+          });
+
           setPlateNumber('');
           setCriminalOffense('');
           setMvFileNumber('');
@@ -140,6 +144,8 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber}) => {
           setORDate('');
           
           setEditForm(false);
+          setEditList(false);
+          
           alert("Vehicle saved!");
           
         }

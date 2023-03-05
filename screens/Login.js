@@ -8,6 +8,8 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
+import NetInfo from "@react-native-community/netinfo";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Login = ({setNav, setUser}) => {
@@ -19,14 +21,62 @@ const Login = ({setNav, setUser}) => {
     const [todo, setTodos] = useState("");
 
     const [selected, setSelected] = useState('');
+    const [selectedUser, setSelectedUser] = useState(0);
+    const [rememberMeData, setRememberMeData] = useState(false);
     const [isChecked, setChecked] = useState(false);
     const [viewPassword, setViewPassword]= useState(true);
     const [scaleValue] = useState(new Animated.Value(1));
     const [password, setPassword] = useState('');
 
+    const [isInternetConnected, setIsInternetConnected] = useState(false);
+
+    const storeData = async () => {
+        try {
+          const CO = data[[selected-1]].value;
+          
+          await AsyncStorage.setItem('username', CO);
+          await AsyncStorage.setItem('password', password);
+        } catch (e) {
+          // saving error
+        }
+      }
+
+      const getData = async () => {
+        try {
+          const savedUsername = await AsyncStorage.getItem('username');
+          const savedPassword = await AsyncStorage.getItem('password');
+          if(savedUsername !== null && savedPassword !== null) {
+            console.log('data[0].value '+data[0].value);
+            console.log('savedPassword '+savedPassword);
+            console.log('savedUsername '+savedUsername);
+            if(savedUsername === data[0].value){
+                setSelectedUser(0)
+            }
+            else{
+                setSelectedUser(1)
+            }
+            setPassword(savedPassword);
+            setRememberMeData(true);
+          }
+        } catch(e) {
+          console.log('e '+ e)
+        }
+      }
+
     const login_error = () =>{
         alert("Invalid user or password.");
+        getData();
     }
+
+    useEffect(()=>{
+        NetInfo.addEventListener(state => {
+            console.log("Connection type", state.type);
+            console.log("Is connected?", state.isConnected);
+            setIsInternetConnected(state.isConnected);
+        });
+        console.log('isInternetConnected '+isInternetConnected);
+        getData()
+    },[])
 
     const dashboard = () =>{
         
@@ -39,25 +89,35 @@ const Login = ({setNav, setUser}) => {
 
     const click_login = () =>{
         try {
+            
             if(password !== ''){
-                if(selected === 1){
-                    console.log(data[[selected-1]].value);
-                    console.log("password");
-                    if (password === 'lto123'){
+                if(isInternetConnected === true){
+                    console.log('data[[selected-1]].value '+data[[selected-1]].value);
+                    if(selected === 1){
                         
-                        dashboard();
+                        console.log("password");
+                        if (password === 'lto123'){
+                            dashboard();
+                        }
+                        else{
+                            login_error();
+                        }
                     }
-                    else{
-                        login_error();
+                    else if (selected === 2){
+                        if (password === 'hpg123'){
+                            dashboard();
+                        }
+                        else{
+                            login_error();
+                        }
                     }
-                }
-                else if (selected === 2){
-                    if (password === 'hpg123'){
-                        dashboard();
+                    console.log('is checked '+ isChecked);
+                    if(isChecked === true){
+                        storeData();
                     }
-                    else{
-                        login_error();
-                    }
+                } 
+                else{
+                    alert('Please connect to the internet.');
                 }
             } 
             else{
@@ -129,7 +189,7 @@ const Login = ({setNav, setUser}) => {
             <ScrollView>
                 <Text style={styles.userLabel}>*User</Text>
                 <View style={styles.selectContainer}>
-                    <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} inputStyles={{height: 23, marginTop: '2%'}} dropdownStyles={{backgroundColor: '#FFFFFF', height: 90, zIndex: 2}}/>
+                    <SelectList data={data} maxHeight={100} search={false} setSelected={(val) => setSelected(val)} inputStyles={{/*height: 23,*/ marginTop: '2%'}} defaultOption={data[selectedUser]} dropdownStyles={{backgroundColor: '#FFFFFF', height: 90, zIndex: 2,}}/>
                 </View>
                 <Text style={styles.passwordLabel}>*Password</Text>
                 <View style={styles.passwordTextfieldContainer}>

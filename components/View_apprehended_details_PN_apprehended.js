@@ -75,7 +75,7 @@ const View_apprehended_details_PN_apprehended = ({viewPlateNumber, setViewPlateN
       return (
         <View>
           <View style={styles.display_PN_container}>
-            <Text style={styles.label}>View Apprehended Vehicle with Criminal Offense</Text>
+            <Text style={styles.label}>View Apprehended Vehicle</Text>
           </View >
           <View style={styles.form_container}>
             <ScrollView>
@@ -210,7 +210,8 @@ const View_apprehended_details_PN_apprehended = ({viewPlateNumber, setViewPlateN
       textfield_Container: {
         paddingLeft: 30,
         paddingRight: 30,
-        marginTop: 13
+        marginTop: 13,
+        
       },
     
       textfield_Label: {
@@ -225,6 +226,7 @@ const View_apprehended_details_PN_apprehended = ({viewPlateNumber, setViewPlateN
         borderRadius: 10,
         paddingLeft: 5,
         paddingRight: 5,
+        color: '#000000',
       },
     
       select_crime: {

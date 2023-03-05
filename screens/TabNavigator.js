@@ -161,7 +161,7 @@ const TabNavigator = ({user,setNav}) => {
 
     {editForm &&
       <View style={styles.addForm_popup}>
-        <Edit_form_PN_list setForm={setForm} setEditForm={setEditForm} editPlateNumber={editPlateNumber}/>
+        <Edit_form_PN_list setForm={setForm} setEditForm={setEditForm} editPlateNumber={editPlateNumber} setEditList={setEditList}/>
       </View>
     }
 

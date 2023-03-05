@@ -20,15 +20,15 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
         setArchiveRow([]);
         if (data !== null) {
             Object.values(data).map((scanned) => {
-                let crime = '';
-                onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
-                    const data = snapshot.val();
-                    if (data !== null) {
-                        crime = data.criminalOffense;
-                  }
-                  });
+                // let crime = '';
+                // onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
+                //     const data = snapshot.val();
+                //     if (data !== null) {
+                //         crime = data.criminalOffense;
+                //   }
+                //   });
                   if(scanned.Apprehended === "no"){
-                  setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, crime, [
+                  setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, scanned.CriminalOffense, [
                     <TouchableOpacity onPress={()=>{
                         setViewLocArchive(true);
                         setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
