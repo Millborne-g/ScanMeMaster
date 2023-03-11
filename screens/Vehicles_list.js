@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, Alert} from 'react-native';
 import Display_table_PN_list from '../components/Display_table_PN_list';
 import Add_form_PN_list from '../components/Add_form_PN_list';
 import Edit_form_PN_list from '../components/Edit_form_PN_list';
@@ -39,7 +39,7 @@ const Vehicles_list = ({user,setForm,setEditList,setPlateNumber}) => {
           <Pressable style={styles.addBtn} onPress=
             {user === 'LTO'?
             () => setForm(true):
-            () => alert('Only LTO personnel can add Vehicle with Criminal Offense.')
+            () => Alert.alert('Message', 'Only LTO personnel can add Vehicle with Criminal Offense.')
             }>
             <Text style={styles.btnText}>Add</Text>
           </Pressable>

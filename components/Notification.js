@@ -12,9 +12,32 @@ const Notification = ({scannedPlateNumberList, curLocList, curDateList, curTimeL
     let curDateTime = curDateList[curDateList.length -1]+" "+curTimeList[curTimeList.length -1];
 
     const handleSubmitChange = () => {
-        update(ref(db, `/Scanned/${curDateTime}`), {
-            Notification : "off"
-        });
+        // // update(ref(db, `/Scanned/${curDateTime}`), {
+        // //     Notification : "off"
+        // // });
+        // let scannedDateTime = []
+        // onValue(ref(db, `/Scanned`), (snapshot) => {
+          
+        //   const data = snapshot.val();
+        //   if (data !== null) {
+        //     Object.values(data).map((scanned) => {
+        //         scannedDateTime.push(scanned.Date+' '+scanned.Time);
+                
+        //     });
+        //     console.log('yooooow '+data)
+        //   }
+        // });
+        // scannedDateTime.map((value)=>{
+        //     update(ref(db, `/Scanned/${value}`), {
+        //         Notification : "off"
+        //     });
+        // })
+        // scannedDateTime=[];
+        // curDateList.map((item, index) =>{
+        //     update(ref(db, `/Scanned/${curDateList[index]+' '+curTimeList[index]}`), {
+        //         Notification : "off"
+        //     });
+        // })
         setScannedPlateNumberList([]);
         setScannedCrimeList([]);
         setCurLocList([]);

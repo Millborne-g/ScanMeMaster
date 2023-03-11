@@ -63,7 +63,8 @@ const Login = ({setNav, setUser}) => {
       }
 
     const login_error = () =>{
-        alert("Invalid user or password.");
+        Alert.alert('Message', 'Invalid user or password.');
+        // alert("Invalid user or password.");
     }
 
     useEffect(()=>{
@@ -119,7 +120,8 @@ const Login = ({setNav, setUser}) => {
                     
                 } 
                 else{
-                    alert('Please connect to the internet.');
+                    Alert('Message', 'Please connect to the internet.');
+                    // alert('Please connect to the internet.');
                 }
             } 
             else{

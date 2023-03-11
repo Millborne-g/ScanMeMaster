@@ -20,7 +20,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
     },[])
   const click_Delete = (text) =>{
     if(isInternetConnected === true){
-        alert(text);
+        Alert.alert('Message', text)
         setEditList(false);
         let deleteScanned = [];
         onValue(ref(db, `/Scanned`), (snapshot) => {
@@ -43,7 +43,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
         setPlateNumber('');
     }
     else{
-        alert('Please connect to the internet.');
+        Alert.alert('Message', 'Please connect to the internet.')
     }
   }
 
@@ -53,13 +53,13 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
         setEditPlateNumber(plateNumber);
     }
     else{
-        alert('Please connect to the internet.');
+        Alert.alert('Message', 'Please connect to the internet.')
     }
   }
 
   const click_Apprehend = (text) =>{
     if(isInternetConnected === true){
-        alert(text);
+        Alert.alert('Message', text)
         setEditList(false);
         let appScanned = [];
         onValue(ref(db, `/Scanned`), (snapshot) => {
@@ -89,7 +89,8 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
         });
     }
     else{
-        alert('Please connect to the internet.');
+        Alert.alert('Message', 'Please connect to the internet.')
+        
     }
   }
 
@@ -104,14 +105,14 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
             <Pressable style={{...styles.Btn, ...styles.updateBtn}} onPress={
                 user==='LTO'?
                     ()=>click_Edit() :
-                    ()=>alert('Only LTO personnel can edit Vehicle with Criminal Offense.')
+                    ()=>Alert.alert('Message', 'Only LTO personnel can edit Vehicle with Criminal Offense.')
                 }>
                 <Text style={styles.btnText}>Edit</Text>
             </Pressable>
             <Pressable style={{...styles.Btn, ...styles.deleteBtn}} onPress={
                 user==='LTO'?
                 ()=> click_Delete('Vehicle Deleted Successfully!'):
-                ()=> alert('Only LTO personnel can delete Vehicle with Criminal Offense.')
+                ()=> Alert.alert('Message', 'Only LTO personnel can delete Vehicle with Criminal Offense.')
                 }>
                 <Text style={styles.btnText}>Delete</Text>
             </Pressable>

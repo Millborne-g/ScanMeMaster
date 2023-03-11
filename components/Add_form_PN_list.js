@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TextInput, Pressable, Animated, Touchable, TouchableOpacity, KeyboardAvoidingView, Alert} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SelectList } from 'react-native-dropdown-select-list';
 
@@ -72,7 +72,7 @@ const Add_form_PN_list = ({setForm}) => {
         setCriminalOffense(CO);
         if (plateNumber === '' || mvFileNumber === '' || make === '' || series === '' || bodyType === '' || bodyNumber === '' || yearModel === '' || fuel === '' || engineNumber === '' || chassisNumber === '' || denomination === '' || pistonDisplacement === '' || numberOfCylinders === '' || grossWT === '' || netWT === '' || shippingWT === '' || netCapacity === '' || completeOwnerName === '' || completeAddress === '' || ORNumber === '' || ORDate === ''){
           console.log("yow ")
-          alert("Please fill out all fields!");
+          Alert.alert('Message', 'Please fill out all fields!')
           console.log(plateNumber+' | '+criminalOffense+' | '+mvFileNumber+' | '+make+' | '+series+' | '+bodyType+' | '+bodyNumber+' | '+yearModel+' | '+fuel+' | '+engineNumber+' | '+chassisNumber+' | '+denomination+' | '+pistonDisplacement+' | '+numberOfCylinders+' | '+grossWT+' | '+netWT+' | '+shippingWT+' | '+netCapacity+' | '+completeOwnerName+' | '+completeAddress+' | '+ORNumber+' | '+ORDate)
           
         }
@@ -132,12 +132,12 @@ const Add_form_PN_list = ({setForm}) => {
             setORDate('');
 
             setForm(false);
-            alert("Vehicle saved!");
+            Alert.alert('Message', 'Vehicle saved!')
+           
           } 
           
           else{
-            
-            alert("Vehicle already exist!");
+            Alert.alert('Message', 'Vehicle already exist!');
           }
 
           
@@ -145,11 +145,12 @@ const Add_form_PN_list = ({setForm}) => {
 
       }catch(err){
         console.log(err);
-        alert("Please fill out all fields!");
+        Alert.alert('Message', 'Please fill out all fields!');
+        
       }
     }
     else{
-      alert('Please connect to the internet.');
+      Alert.alert('Message', 'Please connect to the internet.');
     }
   }
 

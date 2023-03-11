@@ -19,12 +19,11 @@ const Display_detected_PN = () => {
                 if(scanned.Apprehended === 'no'){
                     setScannedPlateNumberList(scanned.PlateNumber);
                     let crime = '';
-                    console.log('based '+scanned.PlateNumber)
                     onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
                         const data = snapshot.val();
                         if (data !== null) {
                             setScannedCrimeList(data.criminalOffense);
-                            console.log('hereeeeeeeeeeeeeee '+data.criminalOffense+' '+data.plateNumber+' '+scanned.PlateNumber)
+                            // console.log('hereeeeeeeeeeeeeee '+data.criminalOffense+' '+data.plateNumber+' '+scanned.PlateNumber)
                         }
                       });
                     //   setScannedCrimeList(scanned.CriminalOffense);
