@@ -14,7 +14,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
     useEffect(() => {
         let exist = '';
         let count = 0;
-        onValue(ref(db, `/ScannedPlateNmber`), (snapshot) => {
+        onValue(ref(db, `/ScannedPlateNumber`), (snapshot) => {
         count = 0;
         const data = snapshot.val();
         setArchiveRow([]);
