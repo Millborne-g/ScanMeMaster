@@ -7,9 +7,9 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Notification = ({scannedPlateNumberList, curLocList, curDateList, curTimeList, scannedCrimeList, setNotification, setScannedPlateNumberList, setCurLocList, setCurDateList, setCurTimeList, setScannedCrimeList}) => {
+const Notification = ({scannedPlateNotification, scannedCrimeNotification, scannedCurLocNotification, setNotification, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification}) => {
 
-    let curDateTime = curDateList[curDateList.length -1]+" "+curTimeList[curTimeList.length -1];
+    //let curDateTime = curDateList[curDateList.length -1]+" "+curTimeList[curTimeList.length -1];
 
     const handleSubmitChange = () => {
         // // update(ref(db, `/Scanned/${curDateTime}`), {
@@ -38,14 +38,29 @@ const Notification = ({scannedPlateNumberList, curLocList, curDateList, curTimeL
         //         Notification : "off"
         //     });
         // })
-        setScannedPlateNumberList([]);
-        setScannedCrimeList([]);
-        setCurLocList([]);
+        // setScannedPlateNumberList([]);
+        // setScannedCrimeList([]);
+        // setCurLocList([]);
+        setScannedPlateNotification('');
+        setScannedCrimeNotification('');
+        setScannedCurLocNotification('');
         setNotification(false);
       };
   return (
     <View style={styles.notificationContainer}>
-        {scannedPlateNumberList.map((item)=>{
+        <View style={styles.modal}>
+            <Image source={require('../assets/notifications.png')}/>
+            <Text style={styles.plate_Number_Label}>Plate number:</Text> 
+            <Text style={styles.plate_Number}>{scannedPlateNotification}</Text> 
+            <Text style={styles.crime_Label}>Criminal Offense:</Text> 
+            <Text style={styles.crime}>{scannedCrimeNotification}</Text> 
+            <Text style={styles.location_Label}>Location:</Text> 
+            <Text style={styles.location}>{scannedCurLocNotification}</Text>
+            <Pressable style={styles.okBtn} onPress={()=>handleSubmitChange()}>
+                <MaterialCommunityIcons name="close" size={45} />
+            </Pressable>
+        </View>
+        {/* {scannedPlateNumberList.map((item)=>{
             //setCurPlateNumber(item);
             return(
                 <View style={styles.modal}>
@@ -62,7 +77,7 @@ const Notification = ({scannedPlateNumberList, curLocList, curDateList, curTimeL
                     </Pressable>
                 </View>
             )
-        })}
+        })} */}
         
     </View>
   )

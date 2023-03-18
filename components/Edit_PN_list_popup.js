@@ -83,7 +83,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
                 Apprehended: 'yes',
             });
         })
-        remove(ref(db, `/ScannedPlateNmber/${plateNumber}`));
+        remove(ref(db, `/ScannedPlateNumber/${plateNumber}`));
         update(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`), {
             apprehended: 'yes',
         });

@@ -46,6 +46,10 @@ const TabNavigator = ({user,setNav}) => {
   const [curDateList, setCurDateList] = useState([]);
   const [curTimeList, setCurTimeList] = useState([]);
 
+  const [scannedPlateNotification, setScannedPlateNotification] = useState('');
+  const [scannedCrimeNotification, setScannedCrimeNotification] = useState('');
+  const [scannedCurLocNotification, setScannedCurLocNotification] = useState('');
+
   //Scanned Popup Notification
   const [scannedPlateNumberDateTimeLoc, setScannedPlateNumberDateTimeLoc] = useState('');
 
@@ -85,45 +89,118 @@ const TabNavigator = ({user,setNav}) => {
     console.log('');
     let PN = '';
     //Scanned
-    onValue(ref(db, `/Scanned`), (snapshot) => {
+    onValue(ref(db, `/ScannedNotification`), (snapshot) => {
+      //onValue(ref(db, `/Scanned`), (snapshot) => {
       //setList([]);
-      const data = snapshot.val();
-      if (data !== null) {
-        Object.values(data).map((scanPlateNumber) => {
-          onValue(ref(db, `/Vehicle_with_criminal_offense/${scanPlateNumber.PlateNumber}`), (snapshot) => {
-            const data = snapshot.val();
-            if (data !== null) {
-              if(data.apprehended === 'no' && scanPlateNumber.Notification === 'on'){
-                playSound();
-                console.log('scanPlateNumber.Apprehended '+scanPlateNumber.Apprehended)
+       const data = snapshot.val();
+       if (data !== null) {
+        // let notif = false;
+        
+        // console.log('scanPlateNumber.Apprehended '+data.Apprehended)
+        
+        // console.log("scanned "+data.PlateNumber);
+
+        // if(data.Apprehended === 'no' && data.Notification === 'on'){
+        //     setScannedPlateNotification(data.PlateNumber);
+        //     setScannedCrimeNotification(data.CriminalOffense);
+        //     setScannedCurLocNotification(data.Location);
+        //     playSound();
+        //     setNotification(true);
+        //     update(ref(db, `/ScannedNotification`), {
+        //       Notification : "off"
+        //     });  
+        // }
+
+        // Object.values(data).map((scanPlateNumber) => {
+        //   onValue(ref(db, `/Vehicle_with_criminal_offense/${scanPlateNumber.PlateNumber}`), (snapshot) => {
+        //     const dataV = snapshot.val();
+        //     if (dataV !== null) {
+        //       if(scanPlateNumber.Apprehended === 'no' && scanPlateNumber.Notification === 'on'){
+              
+        //         console.log('scanPlateNumber.Apprehended '+scanPlateNumber.Apprehended)
+  
+        //         console.log("scanned "+scanPlateNumber.PlateNumber);
+  
+        //         setNotification(true);
+        //         setScannedPlateNumber(scanPlateNumber.PlateNumber);
+        //         // onValue(ref(db, `/Vehicle_with_criminal_offense/${scanPlateNumber.PlateNumber}`), (snapshot) => {
+        //         //   const data = snapshot.val();
+        //         //   if (data !== null) {
+        //         //     setScannedCrimeList((oldArray) => [...oldArray, data.criminalOffense]);
+        //         // }
+        //         // });
+        //         update(ref(db, `/Scanned/${scanPlateNumber.Date+' '+scanPlateNumber.Time}`), {
+        //           Notification : "off"
+        //         });
+        //         setScannedPlateNumberList((oldArray) => [...oldArray,scanPlateNumber.PlateNumber]);
+        //         setScannedCrimeList((oldArray) => [...oldArray, scanPlateNumber.CriminalOffense]);
+        //         setCurLocList((oldArray) => [...oldArray,scanPlateNumber.Location]);
+        //         setCurDateList((oldArray) => [...oldArray,scanPlateNumber.Date]);
+        //         setCurTimeList((oldArray) => [...oldArray,scanPlateNumber.Time])
+        //         console.log("scanned "+scannedPlateNumber);
+        //       }
+        //     }
+        //   })
+
+
+          onValue(ref(db, `/Vehicle_with_criminal_offense/${data.PlateNumber}`), (snapshot) => {
+            const dataV = snapshot.val();
+            if (dataV !== null) {
+              if(data.Apprehended === 'no' && data.Notification === 'on'){
                 
-                console.log("scanned "+scannedPlateNumber);
-                  
+                console.log('scanPlateNumber.Apprehended '+data.Apprehended)
+  
+                console.log("scanned "+data.PlateNumber);
+  
                 setNotification(true);
-                setScannedPlateNumber(scanPlateNumber.PlateNumber);
-                onValue(ref(db, `/Vehicle_with_criminal_offense/${scanPlateNumber.PlateNumber}`), (snapshot) => {
-                  const data = snapshot.val();
-                  if (data !== null) {
-                    setScannedCrimeList((oldArray) => [...oldArray, data.criminalOffense]);
-                }
-                });
-                update(ref(db, `/Scanned/${scanPlateNumber.Date+' '+scanPlateNumber.Time}`), {
+                setScannedPlateNumber(data.PlateNumber);
+                // onValue(ref(db, `/Vehicle_with_criminal_offense/${scanPlateNumber.PlateNumber}`), (snapshot) => {
+                //   const data = snapshot.val();
+                //   if (data !== null) {
+                //     setScannedCrimeList((oldArray) => [...oldArray, data.criminalOffense]);
+                // }
+                // });
+                update(ref(db, `/ScannedNotification`), {
                   Notification : "off"
                 });
-                setScannedPlateNumberList((oldArray) => [...oldArray,scanPlateNumber.PlateNumber]);
-                setCurLocList((oldArray) => [...oldArray,scanPlateNumber.Location]);
-                setCurDateList((oldArray) => [...oldArray,scanPlateNumber.Date]);
-                setCurTimeList((oldArray) => [...oldArray,scanPlateNumber.Time])
+                setScannedPlateNumberList((oldArray) => [...oldArray,data.PlateNumber]);
+                setScannedCrimeList((oldArray) => [...oldArray, data.CriminalOffense]);
+                setCurLocList((oldArray) => [...oldArray,data.Location]);
+                setCurDateList((oldArray) => [...oldArray,data.Date]);
+                setCurTimeList((oldArray) => [...oldArray,data.Time])
                 console.log("scanned "+scannedPlateNumber);
                 
               }
-          }
-          });
+            }
+          })
+
           
-        });
-      }
+          
+       //});
+       }
+      
     });
   }, []);
+
+  useEffect(() => {
+    if (scannedPlateNumberList.length > 0) {
+      //const latestData = scannedPlateNumberList.pop(); // remove latest data from queue
+      setScannedPlateNotification(scannedPlateNumberList.pop());
+      playSound();
+    }
+  }, [scannedPlateNumberList]);
+
+  useEffect(() => {
+    if (scannedCrimeList.length > 0) {
+      setScannedCrimeNotification(scannedCrimeList.pop());
+    }
+  }, [scannedCrimeList]);
+
+  useEffect(() => {
+    if (curLocList.length > 0) {
+      setScannedCurLocNotification(curLocList.pop());
+    }
+  }, [curLocList]);
 
   console.log("crime "+scannedCrimeList[scannedCrimeList.length -1]+ " PN "+scannedPlateNumberList[scannedPlateNumberList-1])
 
@@ -211,7 +288,7 @@ const TabNavigator = ({user,setNav}) => {
     } */}
 
     {notification &&
-      <Notification scannedPlateNumberList={scannedPlateNumberList} curLocList={curLocList} curDateList={curDateList} curTimeList={curTimeList} scannedCrimeList={scannedCrimeList} setNotification={setNotification} setScannedPlateNumberList={setScannedPlateNumberList} setCurLocList={setCurLocList} setCurDateList={setCurDateList} setCurTimeList={setCurTimeList} setScannedCrimeList={setScannedCrimeList}/>
+      <Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification}/>
       // <Notification scannedPlateNumber={scannedPlateNumber} setNotification={setNotification} />
     }
     

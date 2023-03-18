@@ -124,7 +124,7 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
               ORDate
             });
 
-            update(ref(db, `/ScannedPlateNmber/${plateNumber}`), {
+            update(ref(db, `/ScannedPlateNumber/${plateNumber}`), {
               CriminalOffense: CO,
             });
 
