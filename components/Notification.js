@@ -7,44 +7,44 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-//const Notification = ({scannedPlateNotification, scannedCrimeNotification, scannedCurLocNotification, setNotification, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification}) => {
-const Notification = ({setNotification}) => {
+const Notification = ({scannedPlateNotification, scannedCrimeNotification, scannedCurLocNotification, setNotification, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setScannedPlateNumberList, setScannedCrimeList, setCurLocList}) => {
+// const Notification = ({setNotification}) => {
 
     //let curDateTime = curDateList[curDateList.length -1]+" "+curTimeList[curTimeList.length -1];
-    const [scannedPlateNumberList, setScannedPlateNumberList] = useState('');
-    const [scannedCrimeList, setScannedCrimeList] = useState('');
-    const [curLocList, setCurLocList] = useState('');
-    const [curDateList, setCurDateList] = useState('');
-    const [curTimeList, setCurTimeList] = useState('');
+    // const [scannedPlateNumberList, setScannedPlateNumberList] = useState('');
+    // const [scannedCrimeList, setScannedCrimeList] = useState('');
+    // const [curLocList, setCurLocList] = useState('');
+    // const [curDateList, setCurDateList] = useState('');
+    // const [curTimeList, setCurTimeList] = useState('');
 //read
-    useEffect(() => {
-        onValue(ref(db, `/ScannedNotification`), (snapshot) => {
-        const data = snapshot.val();
-        if (data !== null) {
-            setScannedPlateNumberList(data.PlateNumber);
-            setScannedCrimeList(data.CriminalOffense);
-            setCurLocList(data.Location);
-            // Object.values(data).map((scanned) => {
-            //     if(scanned.Apprehended === 'no'){
-            //         setScannedPlateNumberList(scanned.PlateNumber);
-            //         let crime = '';
-            //         onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
-            //             const data = snapshot.val();
-            //             if (data !== null) {
-            //                 setScannedCrimeList(data.criminalOffense);
-            //                 // console.log('hereeeeeeeeeeeeeee '+data.criminalOffense+' '+data.plateNumber+' '+scanned.PlateNumber)
-            //             }
-            //           });
-            //         //   setScannedCrimeList(scanned.CriminalOffense);
-            //           setCurLocList(scanned.Location);
-            //           setCurDateList(scanned.Date);
-            //           setCurTimeList(scanned.Time);
-            //     }
-            // });
-        }
-        });
-        console.log("it worked");
-    }, []);
+    // useEffect(() => {
+    //     onValue(ref(db, `/ScannedNotification`), (snapshot) => {
+    //     const data = snapshot.val();
+    //     if (data !== null) {
+    //         setScannedPlateNumberList(data.PlateNumber);
+    //         setScannedCrimeList(data.CriminalOffense);
+    //         setCurLocList(data.Location);
+    //         // Object.values(data).map((scanned) => {
+    //         //     if(scanned.Apprehended === 'no'){
+    //         //         setScannedPlateNumberList(scanned.PlateNumber);
+    //         //         let crime = '';
+    //         //         onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
+    //         //             const data = snapshot.val();
+    //         //             if (data !== null) {
+    //         //                 setScannedCrimeList(data.criminalOffense);
+    //         //                 // console.log('hereeeeeeeeeeeeeee '+data.criminalOffense+' '+data.plateNumber+' '+scanned.PlateNumber)
+    //         //             }
+    //         //           });
+    //         //         //   setScannedCrimeList(scanned.CriminalOffense);
+    //         //           setCurLocList(scanned.Location);
+    //         //           setCurDateList(scanned.Date);
+    //         //           setCurTimeList(scanned.Time);
+    //         //     }
+    //         // });
+    //     }
+    //     });
+    //     console.log("it worked");
+    // }, []);
     const handleSubmitChange = () => {
         // // update(ref(db, `/Scanned/${curDateTime}`), {
         // //     Notification : "off"
@@ -75,9 +75,11 @@ const Notification = ({setNotification}) => {
         // setScannedPlateNumberList([]);
         // setScannedCrimeList([]);
         // setCurLocList([]);
-        // setScannedPlateNotification('');
-        // setScannedCrimeNotification('');
-        // setScannedCurLocNotification('');
+        setScannedPlateNotification('');
+        setScannedCrimeNotification('');
+        setScannedCurLocNotification('');
+        set(ref(db, `/ScannedNotification`), {}) 
+        set(ref(db, `/ScannedPlateNumberNotification`), {}) 
         setNotification(false);
       };
   return (
@@ -85,11 +87,11 @@ const Notification = ({setNotification}) => {
         <View style={styles.modal}>
             <Image source={require('../assets/notifications.png')}/>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
-            <Text style={styles.plate_Number}>{scannedPlateNumberList}</Text> 
+            <Text style={styles.plate_Number}>{scannedPlateNotification}</Text> 
             <Text style={styles.crime_Label}>Criminal Offense:</Text> 
-            <Text style={styles.crime}>{scannedCrimeList}</Text> 
+            <Text style={styles.crime}>{scannedCrimeNotification}</Text> 
             <Text style={styles.location_Label}>Location:</Text> 
-            <Text style={styles.location}>{curLocList}</Text>
+            <Text style={styles.location}>{scannedCurLocNotification}</Text>
             <Pressable style={styles.okBtn} onPress={()=>handleSubmitChange()}>
                 <MaterialCommunityIcons name="close" size={45} />
             </Pressable>

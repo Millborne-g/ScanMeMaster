@@ -88,9 +88,9 @@ const Login = ({setNav, setUser}) => {
 
     const click_login = () =>{
         try {
-            
-            if(password !== ''){
-                if(isInternetConnected === true){
+            if(isInternetConnected === true){
+                if(password !== ''){
+                
                     console.log('data[[selected-1]].value '+data[[selected-1]].value);
                     if(selected === 1){
                         
@@ -118,14 +118,15 @@ const Login = ({setNav, setUser}) => {
                     }
                     console.log('is checked '+ isChecked);
                     
+                
+                    } 
+                    else{
+                        login_error();
+                    }
                 } 
-                else{
-                    Alert('Message', 'Please connect to the internet.');
-                    // alert('Please connect to the internet.');
-                }
-            } 
             else{
-                login_error();
+                Alert('Message', 'Please connect to the internet.');
+                // alert('Please connect to the internet.');
             }
         }
         catch(err) {
@@ -183,7 +184,7 @@ const Login = ({setNav, setUser}) => {
         <Button title='click me' mode='contained' onPress={() => navigation.navigate('Dashboard')}/>
         */}
         <View style={styles.logoContainer}>
-            <Image source={require('../assets/logo.png')}/>
+            <Image style={styles.logo} source={require('../assets/logo.png')}/>
         </View>   
         <View style={styles.headerContainer}>
             <Text style={styles.header}>ScanMeMaster</Text>
@@ -218,11 +219,11 @@ const Login = ({setNav, setUser}) => {
             </TouchableOpacity>
             
 
-            <Pressable style={styles.loginBtn} onPress={
+            <TouchableOpacity style={styles.loginBtn} onPress={
                 () => click_login() //handleSubmitChange() //handleDelete()//submit_to_DB() //click_login()
                 }>
                 <Text style={styles.btnText}>Login</Text>
-            </Pressable>
+            </TouchableOpacity>
             
         </View>
         
@@ -238,7 +239,14 @@ const styles = StyleSheet.create({
     },
 
     logoContainer: {
-        marginBottom: 20,
+        marginBottom: 10,
+        height: 140,
+        width: 140,
+    },
+
+    logo: {
+        height: 140,
+        width: 140,
     },
 
     headerContainer:{
@@ -249,11 +257,14 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 25,
         fontWeight: 'bold',
-        marginBottom: 7
+        marginBottom: 7,
+        color: '#264E72',
     },
 
     subHeader: {
         fontSize: 14,
+        fontWeight: '400',
+        color: '#999EA1',
     },
 
     textFieldContainer: {

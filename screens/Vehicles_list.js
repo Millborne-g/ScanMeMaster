@@ -36,13 +36,13 @@ const Vehicles_list = ({user,setForm,setEditList,setPlateNumber}) => {
         </View>
 
         <View style={styles.btn_container}>
-          <Pressable style={styles.addBtn} onPress=
+          <TouchableOpacity style={styles.addBtn} onPress=
             {user === 'LTO'?
             () => setForm(true):
             () => Alert.alert('Message', 'Only LTO personnel can add Vehicle with Criminal Offense.')
             }>
             <Text style={styles.btnText}>Add</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
         
     </View>

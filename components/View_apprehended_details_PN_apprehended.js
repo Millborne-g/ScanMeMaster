@@ -81,7 +81,7 @@ const View_apprehended_details_PN_apprehended = ({viewPlateNumber, setViewPlateN
             <ScrollView>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Plate number:</Text>
-                <TextInput style={styles.textfield} editable={false} placeholder='Plate number' value={plateNumber} onChangeText={(e)=>setPlateNumber(e)}/>
+                <TextInput style={styles.textfield} editable={false} placeholder='Plate number' value={plateNumber.split("_")[0]} onChangeText={(e)=>setPlateNumber(e)}/>
               </View>
               <View style={styles.select_crime}>
                 <Text style={styles.textfield_Label}>Criminal Offense:</Text>
@@ -172,9 +172,9 @@ const View_apprehended_details_PN_apprehended = ({viewPlateNumber, setViewPlateN
           </View>
     
           <View style={styles.btns_Container}>
-            <Pressable style={styles.saveBtn} onPress={() =>setViewPlateNumberDetails(false)}>
+            <TouchableOpacity style={styles.saveBtn} onPress={() =>setViewPlateNumberDetails(false)}>
               <Text style={styles.btnText}>Back</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           
         </View>

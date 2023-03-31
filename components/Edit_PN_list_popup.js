@@ -8,8 +8,9 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import NetInfo from "@react-native-community/netinfo";
 
-const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber}) => {
+const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setNotification, setScannedPlateNumberList, setScannedCrimeList, setCurLocList}) => {
     const [isInternetConnected, setIsInternetConnected] = useState(false);
+    const [clickButton, setClickButton] = useState(false);
   
     useEffect(()=>{
       NetInfo.addEventListener(state => {
@@ -20,7 +21,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
     },[])
   const click_Delete = (text) =>{
     if(isInternetConnected === true){
-        Alert.alert('Message', text)
+        
         setEditList(false);
         let deleteScanned = [];
         onValue(ref(db, `/Scanned`), (snapshot) => {
@@ -41,6 +42,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
         
         remove(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`));
         setPlateNumber('');
+        Alert.alert('Message', text)
     }
     else{
         Alert.alert('Message', 'Please connect to the internet.')
@@ -58,8 +60,14 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
   }
 
   const click_Apprehend = (text) =>{
+    var Apprehend_ScannedPlateNumber = '';
+    var Apprehend_ScannedCriminalOffense = '';
+    var Apprehend_ScannedLocation= '';
+    var Apprehend_ScannedApprehended= '';
+    var Apprehend_ScannedDate = '';
+    var Apprehend_ScannedTime = '';
     if(isInternetConnected === true){
-        Alert.alert('Message', text)
+        
         setEditList(false);
         let appScanned = [];
         onValue(ref(db, `/Scanned`), (snapshot) => {
@@ -70,7 +78,17 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
                     console.log('scanned.PlateNumber '+scanned.PlateNumber);
                     if(scanned.PlateNumber === plateNumber){
                         console.log('scanned.Date scanned.Time '+ scanned.Date+' '+scanned.Time)
+                        Apprehend_ScannedPlateNumber = scanned.PlateNumber;
+                        Apprehend_ScannedCriminalOffense = scanned.CriminalOffense ;
+                        Apprehend_ScannedLocation= scanned.Location;
+                        Apprehend_ScannedApprehended= scanned.Apprehended;
+                        Apprehend_ScannedDate = scanned.Date;
+                        Apprehend_ScannedTime = scanned.Time;
                         appScanned.push(scanned.Date+' '+scanned.Time);
+                        // update(ref(db, `/Scanned/${scanned.Date+' '+scanned.Time}`), {
+                        //     Apprehended: 'yes',
+                        //     Notification : "off"
+                        // });
                     }
                 });
             }
@@ -78,15 +96,123 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
 
         console.log('apprehendScanned '+appScanned);
 
-        appScanned.map((item)=>{
-            update(ref(db, `/Scanned/${item}`), {
-                Apprehended: 'yes',
-            });
-        })
+        
         remove(ref(db, `/ScannedPlateNumber/${plateNumber}`));
         update(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`), {
             apprehended: 'yes',
         });
+
+        let Apprehend_plateNumber  = '';
+        let Apprehend_criminalOffense  = '';
+        let Apprehend_apprehended = '';
+        let Apprehend_mvFileNumber = '';
+        let Apprehend_make = '';
+        let Apprehend_series = '';
+        let Apprehend_bodyType = '';
+        let Apprehend_bodyNumber = '';
+        let Apprehend_yearModel = '';
+        let Apprehend_fuel = '';
+        let Apprehend_engineNumber = '';
+        let Apprehend_chassisNumber = '';
+        let Apprehend_denomination = '';
+        let Apprehend_pistonDisplacement = '';
+        let Apprehend_numberOfCylinders = '';
+        let Apprehend_grossWT = '';
+        let Apprehend_netWT = '';
+        let Apprehend_shippingWT = '';
+        let Apprehend_netCapacity = '';
+        let Apprehend_completeOwnerName = '';
+        let Apprehend_completeAddress = '';
+        let Apprehend_ORNumber = '';
+        let Apprehend_ORDate = '';
+        let Apprehend_currentDateTime = ''
+
+        onValue(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`), (snapshot) => {
+            const data = snapshot.val();
+            if (data !== null) {
+                Apprehend_plateNumber = data.plateNumber;
+                Apprehend_criminalOffense  = data.criminalOffense;
+                Apprehend_apprehended  = data.apprehended;
+                Apprehend_mvFileNumber = data.mvFileNumber;
+                Apprehend_make = data.make;
+                Apprehend_series = data.series;
+                Apprehend_bodyType = data.bodyType;
+                Apprehend_bodyNumber = data.bodyNumber;
+                Apprehend_yearModel = data.yearModel;
+                Apprehend_fuel = data.fuel;
+                Apprehend_engineNumber = data.engineNumber;
+                Apprehend_chassisNumber = data.chassisNumber;
+                Apprehend_denomination = data.denomination;
+                Apprehend_pistonDisplacement = data.pistonDisplacement;
+                Apprehend_numberOfCylinders = data.numberOfCylinders;
+                Apprehend_grossWT = data.grossWT;
+                Apprehend_netWT = data.netWT;
+                Apprehend_shippingWT = data.shippingWT;
+                Apprehend_netCapacity = data.netCapacity;
+                Apprehend_completeOwnerName = data.completeOwnerName;
+                Apprehend_completeAddress = data.completeAddress;
+                Apprehend_ORNumber = data.ORNumber;
+                Apprehend_ORDate = data.ORDate;
+                Apprehend_currentDateTime = data.currentDateTime
+            }
+        });
+
+        let uuid = uid();
+
+        set(ref(db, `/Vehicle_with_criminal_offense/${plateNumber+'_'+uuid}`), {
+            plateNumber: Apprehend_plateNumber+'_'+uuid,
+            criminalOffense: Apprehend_criminalOffense,
+            apprehended: 'yes',
+            mvFileNumber: Apprehend_mvFileNumber,
+            make: Apprehend_make,
+            series: Apprehend_series,
+            bodyType: Apprehend_bodyType,
+            bodyNumber: Apprehend_bodyNumber,
+            yearModel: Apprehend_yearModel,
+            fuel: Apprehend_fuel,
+            engineNumber: Apprehend_engineNumber,
+            chassisNumber: Apprehend_chassisNumber,
+            denomination: Apprehend_denomination,
+            pistonDisplacement: Apprehend_pistonDisplacement,
+            numberOfCylinders: Apprehend_numberOfCylinders,
+            grossWT: Apprehend_grossWT,
+            netWT: Apprehend_netWT,
+            shippingWT: Apprehend_shippingWT,
+            netCapacity: Apprehend_netCapacity,
+            completeOwnerName: Apprehend_completeOwnerName,
+            completeAddress: Apprehend_completeAddress,
+            ORNumber: Apprehend_ORNumber,
+            ORDate: Apprehend_ORDate,
+          });
+          remove(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`));
+          set(ref(db, `/ScannedNotification`), {})    
+          set(ref(db, `/ScannedPlateNumberNotification`), {})   
+          appScanned.map((item)=>{
+            set(ref(db, `/ScannedApprehended/${item}`), {
+                PlateNumber: Apprehend_ScannedPlateNumber+'_'+uuid,
+                CriminalOffense: Apprehend_ScannedCriminalOffense,
+                Location: Apprehend_ScannedLocation,
+                Apprehended: Apprehend_ScannedApprehended,
+                Date: Apprehend_ScannedDate,
+                Time: Apprehend_ScannedTime,
+            });
+            remove(ref(db, `/Scanned/${item}`));
+            });
+
+            // appScanned.map((item)=>{
+            //     remove(ref(db, `/Scanned/${item}`));
+            // })
+
+            
+            setPlateNumber('');
+          Alert.alert('Message', text)
+          setScannedPlateNotification(''); 
+          setScannedCrimeNotification('');
+          setScannedCurLocNotification('');
+          setScannedPlateNumberList([]); 
+          setScannedCrimeList([]); 
+          setCurLocList([]);
+          setNotification(false)
     }
     else{
         Alert.alert('Message', 'Please connect to the internet.')
@@ -96,26 +222,27 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
 
   return (
     <View style={styles.notificationContainer}>
+        
         <View style={styles.modal}>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
             <Text style={styles.plate_Number}>{plateNumber}</Text>
-            <Pressable style={{...styles.Btn, ...styles.apprehendedBtn}} onPress={()=>click_Apprehend('Vehicle Apprehended!')} >
+            <TouchableOpacity style={{...styles.Btn, ...styles.apprehendedBtn}} onPress={()=>{click_Apprehend('Vehicle Apprehended!')}} >
                 <Text style={styles.btnText}>Apprehended</Text>
-            </Pressable>
-            <Pressable style={{...styles.Btn, ...styles.updateBtn}} onPress={
+            </TouchableOpacity>
+            <TouchableOpacity style={{...styles.Btn, ...styles.updateBtn}} onPress={
                 user==='LTO'?
                     ()=>click_Edit() :
                     ()=>Alert.alert('Message', 'Only LTO personnel can edit Vehicle with Criminal Offense.')
                 }>
                 <Text style={styles.btnText}>Edit</Text>
-            </Pressable>
-            <Pressable style={{...styles.Btn, ...styles.deleteBtn}} onPress={
+            </TouchableOpacity>
+            <TouchableOpacity style={{...styles.Btn, ...styles.deleteBtn}} onPress={
                 user==='LTO'?
                 ()=> click_Delete('Vehicle Deleted Successfully!'):
                 ()=> Alert.alert('Message', 'Only LTO personnel can delete Vehicle with Criminal Offense.')
                 }>
                 <Text style={styles.btnText}>Delete</Text>
-            </Pressable>
+            </TouchableOpacity>
 
             <Pressable style={styles.closeBtn} onPress={()=>setEditList(false)}>
                 <MaterialCommunityIcons name="close" size={45} />

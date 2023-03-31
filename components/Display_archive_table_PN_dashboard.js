@@ -8,37 +8,63 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 
 const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNumberDateTimeLoc}) => {
 
-    const headers = ["Plate No.", 'Crime', 'Location'];
+    const headers = ["Date/Time", "Plate No.", 'Crime', 'Location'];
     const [archiveRow, setArchiveRow] = useState([]);
     const prevDataRef = useRef(null); // store previous data
     useEffect(() => {
         let exist = '';
         let count = 0;
-        onValue(ref(db, `/ScannedPlateNumber`), (snapshot) => {
-        count = 0;
-        const data = snapshot.val();
-        setArchiveRow([]);
-        if (data !== null) {
-            Object.values(data).map((scanned) => {
-                // let crime = '';
-                // onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
-                //     const data = snapshot.val();
-                //     if (data !== null) {
-                //         crime = data.criminalOffense;
-                //   }
-                //   });
-                  if(scanned.Apprehended === "no"){
-                  setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, scanned.CriminalOffense, [
-                    <TouchableOpacity onPress={()=>{
-                        setViewLocArchive(true);
-                        setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
-                        }
-                        }> 
-                        <Text style={styles.viewText}>View</Text>
-                    </TouchableOpacity>
-                        ]
-                   ]]);
-                }
+        onValue(ref(db, `/Scanned`), (snapshot) => {
+            count = 0;
+            const data = snapshot.val();
+            setArchiveRow([]);
+            if (data !== null) {
+                const reversedData = Object.values(data).reverse();
+                reversedData.map((scanned) => {
+                    // let crime = '';
+                    // onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
+                    //     const data = snapshot.val();
+                    //     if (data !== null) {
+                    //         crime = data.criminalOffense;
+                    //   }
+                    //   });
+                      if(scanned.Apprehended === "no"){
+                      setArchiveRow((oldArray) => [...oldArray, [scanned.Date+'/ \n'+scanned.Time,scanned.PlateNumber, scanned.CriminalOffense, scanned.Location]]);
+                        // <TouchableOpacity onPress={()=>{
+                        //     setViewLocArchive(true);
+                        //     setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
+                        //     }
+                        //     }> 
+                        //     <Text style={styles.viewText}>View</Text>
+                        // </TouchableOpacity>
+                    //         ]
+                    //    ]]);
+                    }
+        // onValue(ref(db, `/ScannedPlateNumber`), (snapshot) => {
+        // count = 0;
+        // const data = snapshot.val();
+        // setArchiveRow([]);
+        // if (data !== null) {
+        //     Object.values(data).map((scanned) => {
+        //         // let crime = '';
+        //         // onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
+        //         //     const data = snapshot.val();
+        //         //     if (data !== null) {
+        //         //         crime = data.criminalOffense;
+        //         //   }
+        //         //   });
+        //           if(scanned.Apprehended === "no"){
+        //           setArchiveRow((oldArray) => [...oldArray, [scanned.PlateNumber, scanned.CriminalOffense, [
+        //             <TouchableOpacity onPress={()=>{
+        //                 setViewLocArchive(true);
+        //                 setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
+        //                 }
+        //                 }> 
+        //                 <Text style={styles.viewText}>View</Text>
+        //             </TouchableOpacity>
+        //                 ]
+        //            ]]);
+        //         }
 
                   //Naay ga doble if e display
                 //   if(scanned.Apprehended === "no"){
@@ -112,7 +138,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                 <Row
                     data={headers}
                     height={40}
-                    flexArr={[1,1,1]}
+                    flexArr={[1.3,1,1,1]}
                     
                     textStyle={{
                         paddingLeft: 10,
@@ -136,11 +162,11 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                     }}>
                     <Rows 
                         data={archiveRow} 
-                        height={50} 
-                        flexArr={[1,1,1]}
+                        height={60} 
+                        flexArr={[1.3,1,1,1]}
                         textStyle={{
                             paddingLeft: 10,
-                            fontSize: 15
+                            fontSize: 13
                         }}
 
                         style={{

@@ -40,6 +40,8 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
       const [ORDate, setORDate] = useState('');
       const [apprehended, setApprehended] = useState('');
       const [isInternetConnected, setIsInternetConnected] = useState(false);
+      const [submitted, setSubmitted] = useState(false);
+      const [selectSubmitted, setSelectSubmitted] = useState(false);
       //read
     useEffect(() => {
       console.log('fgd')
@@ -87,6 +89,7 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
 
     const Save_Edit_Submit = () =>{
       if(isInternetConnected === true){
+        setSubmitted(true)
         try{
           let CO = crime[[selected-1]].value;
           //let apprehended = 'no';
@@ -178,7 +181,11 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
             <ScrollView>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Plate number:</Text>
-                <TextInput style={styles.textfield} placeholder='Plate number' value={plateNumber} onChangeText={(e)=>setPlateNumber(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (plateNumber ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Plate number' value={plateNumber} onChangeText={(e)=>setPlateNumber(e)}/>
               </View>
               <View style={styles.select_crime}>
                 <Text style={styles.textfield_Label}>Criminal Offense:</Text>
@@ -186,97 +193,174 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>MV File Number:</Text>
-                <TextInput style={styles.textfield} placeholder='MV File Number' value={mvFileNumber} onChangeText={(e)=>setMvFileNumber(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (mvFileNumber ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='MV File Number' value={mvFileNumber} onChangeText={(e)=>setMvFileNumber(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Make:</Text>
-                <TextInput style={styles.textfield} placeholder='Make' value={make} onChangeText={(e)=>setMake(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (make ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Make' value={make} onChangeText={(e)=>setMake(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Series:</Text>
-                <TextInput style={styles.textfield} placeholder='Series' value={series} onChangeText={(e)=>setSeries(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (series ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Series' value={series} onChangeText={(e)=>setSeries(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Body Type:</Text>
-                <TextInput style={styles.textfield} placeholder='Body Type' value={bodyType} onChangeText={(e)=>setBodyType(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (bodyType ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Body Type' value={bodyType} onChangeText={(e)=>setBodyType(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Body Number:</Text>
-                <TextInput style={styles.textfield} placeholder='Body Number' value={bodyNumber} onChangeText={(e)=>setBodyNumber(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (bodyNumber ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Body Number' value={bodyNumber} onChangeText={(e)=>setBodyNumber(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Year Model:</Text>
-                <TextInput style={styles.textfield} placeholder='Year Model' value={yearModel} onChangeText={(e)=>setYearModel(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (yearModel ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Year Model' value={yearModel} onChangeText={(e)=>setYearModel(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Fuel:</Text>
-                <TextInput style={styles.textfield} placeholder='Fuel' value={fuel} onChangeText={(e)=>setFuel(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (fuel ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Fuel' value={fuel} onChangeText={(e)=>setFuel(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Engine Number:</Text>
-                <TextInput style={styles.textfield} placeholder='Engine Number' value={engineNumber} onChangeText={(e)=>setEngineNumber(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (engineNumber ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} placeholder='Engine Number' value={engineNumber} onChangeText={(e)=>setEngineNumber(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Chassis Number:</Text>
-                <TextInput style={styles.textfield} placeholder='Chassis Number' value={chassisNumber} onChangeText={(e)=>setChassisNumber(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (chassisNumber ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Chassis Number' value={chassisNumber} onChangeText={(e)=>setChassisNumber(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Denomination:</Text>
-                <TextInput style={styles.textfield} placeholder='Denomination' value={denomination} onChangeText={(e)=>setDenomination(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (denomination ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Denomination' value={denomination} onChangeText={(e)=>setDenomination(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Piston Displacement:</Text>
-                <TextInput style={styles.textfield} placeholder='Piston Displacement' value={pistonDisplacement} onChangeText={(e)=>setPistonDisplacement(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (pistonDisplacement ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} placeholder='Piston Displacement' value={pistonDisplacement} onChangeText={(e)=>setPistonDisplacement(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Number of Cylinders:</Text>
-                <TextInput style={styles.textfield} placeholder='Number of Cylinders' value={numberOfCylinders} onChangeText={(e)=>setNumberOfCylinders(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (numberOfCylinders ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Number of Cylinders' value={numberOfCylinders} onChangeText={(e)=>setNumberOfCylinders(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Gross WT.:</Text>
-                <TextInput style={styles.textfield} placeholder='Gross WT.' value={grossWT} onChangeText={(e)=>setGrossWT(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (grossWT ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} placeholder='Gross WT.' value={grossWT} onChangeText={(e)=>setGrossWT(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Net WT.:</Text>
-                <TextInput style={styles.textfield} placeholder='Net WT.' value={netWT} onChangeText={(e)=>setNetWT(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (netWT ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Net WT.' value={netWT} onChangeText={(e)=>setNetWT(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Shipping WT.:</Text>
-                <TextInput style={styles.textfield} placeholder='Shipping WT.' value={shippingWT} onChangeText={(e)=>setShippingWT(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (shippingWT ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Shipping WT.' value={shippingWT} onChangeText={(e)=>setShippingWT(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Net Capacity:</Text>
-                <TextInput style={styles.textfield} placeholder='Net Capacity' value={netCapacity} onChangeText={(e)=>setNetCapacity(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (netCapacity ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Net Capacity' value={netCapacity} onChangeText={(e)=>setNetCapacity(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Complete Owner's Name:</Text>
-                <TextInput style={styles.textfield} placeholder='Complete Owner`s Name' value={completeOwnerName} onChangeText={(e)=>setCompleteOwnerName(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (completeOwnerName ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Complete Owner`s Name' value={completeOwnerName} onChangeText={(e)=>setCompleteOwnerName(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Complete Address:</Text>
-                <TextInput style={styles.textfield} placeholder='Complete Address' value={completeAddress} onChangeText={(e)=>setCompleteAddress(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (completeAddress ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='Complete Address' value={completeAddress} onChangeText={(e)=>setCompleteAddress(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>OR Number:</Text>
-                <TextInput style={styles.textfield} placeholder='OR Number' value={ORNumber} onChangeText={(e)=>setORNumber(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (ORNumber ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='OR Number' value={ORNumber} onChangeText={(e)=>setORNumber(e)}/>
               </View>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>OR Date:</Text>
-                <TextInput style={styles.textfield} placeholder='OR Date' value={ORDate} onChangeText={(e)=>setORDate(e)}/>
+                <TextInput style={[
+                  submitted ?
+                  (ORDate ? styles.textfield: styles.textfieldError) : styles.textfield
+                  ]} 
+                  placeholder='OR Date' value={ORDate} onChangeText={(e)=>setORDate(e)}/>
               </View>
             </ScrollView>
           </View>
     
           <View style={styles.btns_Container}>
-            <Pressable style={styles.saveBtn} onPress={() => 
+            <TouchableOpacity style={styles.saveBtn} onPress={() => 
               {
                 Save_Edit_Submit()
               }}>
               <Text style={styles.btnText}>Update</Text>
-            </Pressable>
-            <Pressable style={styles.cancelBtn} onPress={() => setEditForm(false) }>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.cancelBtn} onPress={() => setEditForm(false) }>
               <Text style={styles.btnText}>Cancel</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           
         </View>
@@ -323,6 +407,15 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
         borderWidth: 1,
         height: 45,
         borderColor: '#C6C6C6',
+        borderRadius: 10,
+        paddingLeft: 5,
+        paddingRight: 5,
+      },
+
+      textfieldError:{
+        borderWidth: 1,
+        height: 45,
+        borderColor: '#FF9494',
         borderRadius: 10,
         paddingLeft: 5,
         paddingRight: 5,

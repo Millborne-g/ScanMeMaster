@@ -72,7 +72,7 @@ const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
                         flexArr={[1,1,1]}
                         textStyle={{
                             paddingLeft: 10,
-                            fontSize: 15
+                            fontSize: 13
                         }}
 
                         style={{
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     },
 
     editText: {
+        fontSize: 13,
         color: '#2666FA',
     }
 })

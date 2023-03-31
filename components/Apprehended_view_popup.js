@@ -20,7 +20,7 @@ const Apprehended_view_popup = ({setShowApprehendedDetails, viewPlateNumber, set
           const data = snapshot.val();
           setCrime(data.criminalOffense)
           console.log("viewPlateNumber "+data.criminalOffense);
-          onValue(ref(db, `/Scanned`), (snapshot) => {
+          onValue(ref(db, `/ScannedApprehended`), (snapshot) => {
             const data = snapshot.val();
             if (data !== null) {
               Object.values(data).map((viewed) => {
@@ -38,7 +38,7 @@ const Apprehended_view_popup = ({setShowApprehendedDetails, viewPlateNumber, set
     <View style={styles.notificationContainer}>
         <View style={styles.modal}>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
-            <Text style={styles.plate_Number}>{viewPlateNumber}</Text> 
+            <Text style={styles.plate_Number}>{viewPlateNumber.split("_")[0]}</Text> 
             <Text style={styles.crime_Label}>Criminal Offense:</Text> 
             <Text style={styles.crime}>{crime}</Text> 
             <Text style={styles.date_time_Label}>Date/Time:</Text> 
@@ -47,9 +47,9 @@ const Apprehended_view_popup = ({setShowApprehendedDetails, viewPlateNumber, set
             <Text style={styles.location_Label}>Location:</Text> 
             <Text style={styles.location}>{locaton}</Text> 
 
-            <Pressable style={styles.Btn} onPress={()=>setViewPlateNumberDetails(true)}>
+            <TouchableOpacity style={styles.Btn} onPress={()=>setViewPlateNumberDetails(true)}>
                 <Text style={styles.btnText}>View More</Text>
-            </Pressable>
+            </TouchableOpacity>
 
             <Pressable style={styles.okBtn} onPress={()=>setShowApprehendedDetails(false)}>
                 <MaterialCommunityIcons name="close" size={45} />

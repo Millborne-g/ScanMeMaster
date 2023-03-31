@@ -23,7 +23,7 @@ useEffect(() => {
         Object.values(data).map((list) => {
             if(list.apprehended === "yes"){
                 setPlateNumber(list.plateNumber);
-                setList((oldArray) => [...oldArray, [list.plateNumber, list.criminalOffense, [
+                setList((oldArray) => [...oldArray, [list.plateNumber.split("_")[0], list.criminalOffense, [
                     <TouchableOpacity onPress={()=>{
                         setViewPlateNumber(list.plateNumber);
                         setShowApprehendedDetails(true);
@@ -74,7 +74,7 @@ useEffect(() => {
                         flexArr={[1,1,1]}
                         textStyle={{
                             paddingLeft: 10,
-                            fontSize: 15
+                            fontSize: 13
                         }}
 
                         style={{
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
 
     viewText: {
         color: '#2666FA',
+        fontSize: 13
     }
 })
 

@@ -50,6 +50,8 @@ const TabNavigator = ({user,setNav}) => {
   const [scannedCrimeNotification, setScannedCrimeNotification] = useState('');
   const [scannedCurLocNotification, setScannedCurLocNotification] = useState('');
 
+  const [scannedNotification, setScannedNotification] = useState(false);
+
   //Scanned Popup Notification
   const [scannedPlateNumberDateTimeLoc, setScannedPlateNumberDateTimeLoc] = useState('');
 
@@ -147,13 +149,13 @@ const TabNavigator = ({user,setNav}) => {
             const dataV = snapshot.val();
             if (dataV !== null) {
               if(data.Apprehended === 'no' && data.Notification === 'on'){
-                
+                setScannedNotification(true);
                 console.log('scanPlateNumber.Apprehended '+data.Apprehended)
   
                 console.log("scanned "+data.PlateNumber);
   
-                setNotification(true);
-                playSound();
+                
+                // playSound();
                 setScannedPlateNumber(data.PlateNumber);
                 // onValue(ref(db, `/Vehicle_with_criminal_offense/${scanPlateNumber.PlateNumber}`), (snapshot) => {
                 //   const data = snapshot.val();
@@ -161,16 +163,23 @@ const TabNavigator = ({user,setNav}) => {
                 //     setScannedCrimeList((oldArray) => [...oldArray, data.criminalOffense]);
                 // }
                 // });
-                update(ref(db, `/ScannedNotification`), {
-                  Notification : "off"
-                });
-                // setScannedPlateNumberList((oldArray) => [...oldArray,data.PlateNumber]);
-                // setScannedCrimeList((oldArray) => [...oldArray, data.CriminalOffense]);
-                // setCurLocList((oldArray) => [...oldArray,data.Location]);
-                // setCurDateList((oldArray) => [...oldArray,data.Date]);
-                // setCurTimeList((oldArray) => [...oldArray,data.Time])
+                // update(ref(db, `/Scanned/${data.Date+' '+data.Time}`), {
+                //   Notification : "off"
+                // });
+                setScannedPlateNumberList((oldArray) => [...oldArray,data.PlateNumber]);
+                setScannedCrimeList((oldArray) => [...oldArray, data.CriminalOffense]);
+                setCurLocList((oldArray) => [...oldArray,data.Location]);
+                setCurDateList((oldArray) => [...oldArray,data.Date]);
+                setCurTimeList((oldArray) => [...oldArray,data.Time])
+
+                // setScannedPlateNotification(data.PlateNumber);
+                // setScannedCrimeNotification(data.CriminalOffense);
+                // setScannedCurLocNotification(data.Location);
                 console.log("scanned "+scannedPlateNumber);
-                
+                update(ref(db, `/ScannedNotification`), {
+                        Notification : "off"
+                });
+                // setNotification(false);
               }
             }
           })
@@ -183,25 +192,26 @@ const TabNavigator = ({user,setNav}) => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (scannedPlateNumberList.length > 0) {
-  //     //const latestData = scannedPlateNumberList.pop(); // remove latest data from queue
-  //     setScannedPlateNotification(scannedPlateNumberList.pop());
-  //     playSound();
-  //   }
-  // }, [scannedPlateNumberList]);
+  useEffect(() => {
+    if (scannedPlateNumberList.length > 0) {
+      //const latestData = scannedPlateNumberList.pop(); // remove latest data from queue
+      setScannedPlateNotification(scannedPlateNumberList.pop());
+      setNotification(true);
+      playSound();
+    }
+  }, [scannedPlateNumberList]);
 
-  // useEffect(() => {
-  //   if (scannedCrimeList.length > 0) {
-  //     setScannedCrimeNotification(scannedCrimeList.pop());
-  //   }
-  // }, [scannedCrimeList]);
+  useEffect(() => {
+    if (scannedCrimeList.length > 0) {
+      setScannedCrimeNotification(scannedCrimeList.pop());
+    }
+  }, [scannedCrimeList]);
 
-  // useEffect(() => {
-  //   if (curLocList.length > 0) {
-  //     setScannedCurLocNotification(curLocList.pop());
-  //   }
-  // }, [curLocList]);
+  useEffect(() => {
+    if (curLocList.length > 0) {
+      setScannedCurLocNotification(curLocList.pop());
+    }
+  }, [curLocList]);
 
   console.log("crime "+scannedCrimeList[scannedCrimeList.length -1]+ " PN "+scannedPlateNumberList[scannedPlateNumberList-1])
 
@@ -262,7 +272,7 @@ const TabNavigator = ({user,setNav}) => {
     }
 
     {editList &&
-      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber} setEditPlateNumber={setEditPlateNumber}/>
+      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber} setEditPlateNumber={setEditPlateNumber} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setNotification={setNotification} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} />
     }
 
     {editForm &&
@@ -289,9 +299,13 @@ const TabNavigator = ({user,setNav}) => {
     } */}
 
     {notification &&
-      //<Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification}/>
-      <Notification setNotification={setNotification} />
+      <Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} />
+      //<Notification setNotification={setNotification} />
       //alert('test '+scannedPlateNotification)
+
+      // Alert.alert('Alert', 'test '+scannedPlateNotification, [
+      //   {text: 'OK', onPress: () => {setNotification(false)}},
+      // ])
     }
     
     
@@ -299,9 +313,6 @@ const TabNavigator = ({user,setNav}) => {
     
 
     {console.log("Scanned List "+scannedPlateNumberList[scannedPlateNumberList.length -1])}
-    
-    
-
     
     
     {/**<Notification />
