@@ -12,6 +12,7 @@ import NetInfo from "@react-native-community/netinfo";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../components/loader';
 
+
 const Login = ({setNav, setUser}) => {
     const data =[
         {key:1, value:'LTO'},
@@ -224,9 +225,11 @@ const Login = ({setNav, setUser}) => {
                 }>
                 <Text style={styles.btnText}>Login</Text>
             </TouchableOpacity>
+                
+            
             
         </View>
-        {/* <Loader /> */}
+        
     </View>
   )
 }

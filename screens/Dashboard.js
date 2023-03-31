@@ -5,7 +5,7 @@ import Display_archive_table_PN_dashboard from '../components/Display_archive_ta
 import Recently_scanned_vehicle_location from '../components/Recently_scanned_vehicle_location_popup';
 import NetInfo from "@react-native-community/netinfo";
 
-const Dashboard = ({user, click_Vehicle_List, setViewLocArchive,setScannedPlateNumberDateTimeLoc}) => {
+const Dashboard = ({user, click_Vehicle_List, setViewLocArchive,setScannedPlateNumberDateTimeLoc,setLoading}) => {
   const [dashboard, setDashboard] = useState(true);
   const [list, setList] = useState(false);
   const [archive, setArchive] = useState(false);
@@ -37,7 +37,7 @@ const Dashboard = ({user, click_Vehicle_List, setViewLocArchive,setScannedPlateN
           */}
           <View style={styles.Display_archive_table_PN_dashboard_container}>
           
-            <Display_archive_table_PN_dashboard setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc}/>
+            <Display_archive_table_PN_dashboard setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc} setLoading={setLoading}/>
           </View>
           
         </View >

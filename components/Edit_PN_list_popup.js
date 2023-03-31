@@ -8,7 +8,7 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import NetInfo from "@react-native-community/netinfo";
 
-const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setNotification, setScannedPlateNumberList, setScannedCrimeList, setCurLocList}) => {
+const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setNotification, setScannedPlateNumberList, setScannedCrimeList, setCurLocList, setLoading}) => {
     const [isInternetConnected, setIsInternetConnected] = useState(false);
     const [clickButton, setClickButton] = useState(false);
 
@@ -20,7 +20,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
     let hours = currentDate.getHours().toString().padStart(2, '0');
     let minutes = currentDate.getMinutes().toString().padStart(2, '0');
     let seconds = currentDate.getSeconds().toString().padStart(2, '0');
-
+    
     const dateTime = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
   
     useEffect(()=>{
@@ -31,8 +31,9 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
       });
     },[])
   const click_Delete = (text) =>{
+    
     if(isInternetConnected === true){
-        
+        setLoading(true);
         setEditList(false);
         let deleteScanned = [];
         onValue(ref(db, `/Scanned`), (snapshot) => {
@@ -54,6 +55,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
         remove(ref(db, `/Vehicle_with_criminal_offense/${plateNumber}`));
         setPlateNumber('');
         Alert.alert('Message', text)
+        setLoading(false);
     }
     else{
         Alert.alert('Message', 'Please connect to the internet.')
@@ -78,7 +80,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
     var Apprehend_ScannedDate = '';
     var Apprehend_ScannedTime = '';
     if(isInternetConnected === true){
-        
+        setLoading(true);
         setEditList(false);
         let appScanned = [];
         onValue(ref(db, `/Scanned`), (snapshot) => {
@@ -225,6 +227,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
           setScannedCrimeList([]); 
           setCurLocList([]);
           setNotification(false)
+          setLoading(false);
     }
     else{
         Alert.alert('Message', 'Please connect to the internet.')
@@ -243,7 +246,10 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
             </TouchableOpacity>
             <TouchableOpacity style={{...styles.Btn, ...styles.updateBtn}} onPress={
                 user==='LTO'?
-                    ()=>click_Edit() :
+                    ()=>{
+                        setLoading(true);
+                        click_Edit()
+                    } :
                     ()=>Alert.alert('Message', 'Only LTO personnel can edit Vehicle with Criminal Offense.')
                 }>
                 <Text style={styles.btnText}>Edit</Text>

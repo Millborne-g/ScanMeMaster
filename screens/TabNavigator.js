@@ -22,6 +22,8 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import { Audio } from 'expo-av';
 
+import Loader from '../components/loader';
+
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({user,setNav}) => {
@@ -61,6 +63,10 @@ const TabNavigator = ({user,setNav}) => {
   //View Apprehend plate number popup
   const [viewPlateNumber, setViewPlateNumber] = useState('');
   const [viewPlateNumberDetails, setViewPlateNumberDetails] = useState(false);
+
+
+  //Loading
+  const [loading, setLoading] = useState(false);
 
   const [sound, setSound] = useState();
   const [soundCount, setSoundCount] = useState(0)
@@ -272,7 +278,7 @@ const TabNavigator = ({user,setNav}) => {
     }
 
     {editList &&
-      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber} setEditPlateNumber={setEditPlateNumber} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setNotification={setNotification} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} />
+      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber} setEditPlateNumber={setEditPlateNumber} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setNotification={setNotification} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} setLoading={setLoading} />
     }
 
     {editForm &&
@@ -307,6 +313,19 @@ const TabNavigator = ({user,setNav}) => {
       //   {text: 'OK', onPress: () => {setNotification(false)}},
       // ])
     }
+
+    {loading && 
+    
+    <View style={styles.loaderContainer}>
+      <View style={styles.loaderContainerBG}>
+      </View>
+      <Loader/>
+    </View>
+    }
+
+    
+
+  
     
     
 
@@ -330,6 +349,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 90,
     backgroundColor: '#FFFFFF'
+  },
+
+  loaderContainer:{
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+  },
+
+  loaderContainerBG:{
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    top:0,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)'
   }
 })
 
