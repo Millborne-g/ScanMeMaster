@@ -7,7 +7,7 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import NetInfo from "@react-native-community/netinfo";
 
-const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
+const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList, setScannedPlateNumberList, setScannedCrimeList, setCurLocList}) => {
     const crime =[
         {key:1, value:'Carnap'},
         {key:2, value:'Hit and Run'}
@@ -153,9 +153,12 @@ const Edit_form_PN_list = ({setEditForm,editPlateNumber,setEditList}) => {
             setCompleteAddress('');
             setORNumber('');
             setORDate('');
-            
             setEditForm(false);
             setEditList(false);
+            setScannedPlateNumberList([]); 
+            setScannedCrimeList([]); 
+            setCurLocList([]);
+            
             
             alert("Vehicle saved!");
             

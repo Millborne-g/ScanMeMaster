@@ -8,7 +8,7 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import NetInfo from "@react-native-community/netinfo";
 
-const Add_form_PN_list = ({setForm}) => {
+const Add_form_PN_list = ({setForm, setScannedPlateNumberList, setScannedCrimeList, setCurLocList}) => {
   const crime =[
     {key:1, value:'Carnap'},
     {key:2, value:'Hit and Run'}
@@ -148,7 +148,9 @@ const Add_form_PN_list = ({setForm}) => {
             setORNumber('');
             setORDate('');
 
-
+            setScannedPlateNumberList([]); 
+            setScannedCrimeList([]); 
+            setCurLocList([]);
             setForm(false);
             Alert.alert('Message', 'Vehicle saved!')
            

@@ -11,6 +11,17 @@ import NetInfo from "@react-native-community/netinfo";
 const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setNotification, setScannedPlateNumberList, setScannedCrimeList, setCurLocList}) => {
     const [isInternetConnected, setIsInternetConnected] = useState(false);
     const [clickButton, setClickButton] = useState(false);
+
+    let currentDate = new Date();
+
+    let year = currentDate.getFullYear();
+    let month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    let date = currentDate.getDate().toString().padStart(2, '0');
+    let hours = currentDate.getHours().toString().padStart(2, '0');
+    let minutes = currentDate.getMinutes().toString().padStart(2, '0');
+    let seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+    const dateTime = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
   
     useEffect(()=>{
       NetInfo.addEventListener(state => {
@@ -157,10 +168,11 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
             }
         });
 
-        let uuid = uid();
 
-        set(ref(db, `/Vehicle_with_criminal_offense/${plateNumber+'_'+uuid}`), {
-            plateNumber: Apprehend_plateNumber+'_'+uuid,
+        let dateTime = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+
+        set(ref(db, `/Vehicle_with_criminal_offense/${dateTime+'_'+plateNumber}`), {
+            plateNumber: dateTime+'_'+Apprehend_plateNumber,
             criminalOffense: Apprehend_criminalOffense,
             apprehended: 'yes',
             mvFileNumber: Apprehend_mvFileNumber,
@@ -189,7 +201,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
           set(ref(db, `/ScannedPlateNumberNotification`), {})   
           appScanned.map((item)=>{
             set(ref(db, `/ScannedApprehended/${item}`), {
-                PlateNumber: Apprehend_ScannedPlateNumber+'_'+uuid,
+                PlateNumber: dateTime+'_'+Apprehend_plateNumber,
                 CriminalOffense: Apprehend_ScannedCriminalOffense,
                 Location: Apprehend_ScannedLocation,
                 Apprehended: Apprehend_ScannedApprehended,
@@ -338,7 +350,7 @@ const styles = StyleSheet.create({
     },
 
     updateBtn: {
-        backgroundColor: '#00915C'
+        backgroundColor: '#46C263'
     },
 
     deleteBtn:{

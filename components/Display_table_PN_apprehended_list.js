@@ -8,6 +8,7 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 const Display_table_PN_apprehended_list = ({setShowApprehendedDetails, setViewPlateNumber}) => {
 const headers = ["Plate No.", 'Crime', ''];
 const [list, setList] = useState([]);
+const [listEmpty, setListEmpty] = useState(true);
 
 const [plateNumber, setPlateNumber] = useState('')
 
@@ -20,10 +21,12 @@ useEffect(() => {
       setList([]);
       const data = snapshot.val();
       if (data !== null) {
-        Object.values(data).map((list) => {
+        const reversedData = Object.values(data).reverse();
+        reversedData.map((list) => {
             if(list.apprehended === "yes"){
+                setListEmpty(false);
                 setPlateNumber(list.plateNumber);
-                setList((oldArray) => [...oldArray, [list.plateNumber.split("_")[0], list.criminalOffense, [
+                setList((oldArray) => [...oldArray, [list.plateNumber.split("_")[1], list.criminalOffense, [
                     <TouchableOpacity onPress={()=>{
                         setViewPlateNumber(list.plateNumber);
                         setShowApprehendedDetails(true);
@@ -64,6 +67,12 @@ useEffect(() => {
                 />
             </Table>
         <ScrollView style={{marginTop: -1}}>
+        { listEmpty? 
+                <View style={styles.noDataAvailable}>
+                    <Text>
+                        No Data Available
+                    </Text>
+                </View> :
             <Table >
                 <TableWrapper style={{
                     flexDirection: 'row',
@@ -84,6 +93,7 @@ useEffect(() => {
                         /> 
                 </TableWrapper>
             </Table>
+            }
         </ScrollView>
     </View>
     
@@ -93,6 +103,16 @@ useEffect(() => {
 const styles = StyleSheet.create({
     box_container: {
         height: '100%',
+    },
+
+    noDataAvailable :{
+        height: 500,
+        width: '100%',
+        // backgroundColor: 'red',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems:'center',
+        justifyContent:'center',
     },
 
     viewText: {

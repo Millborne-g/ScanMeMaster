@@ -81,7 +81,7 @@ const View_apprehended_details_PN_apprehended = ({viewPlateNumber, setViewPlateN
             <ScrollView>
               <View style={styles.textfield_Container}>
                 <Text style={styles.textfield_Label}>Plate number:</Text>
-                <TextInput style={styles.textfield} editable={false} placeholder='Plate number' value={plateNumber.split("_")[0]} onChangeText={(e)=>setPlateNumber(e)}/>
+                <TextInput style={styles.textfield} editable={false} placeholder='Plate number' value={plateNumber.split("_")[1]} onChangeText={(e)=>setPlateNumber(e)}/>
               </View>
               <View style={styles.select_crime}>
                 <Text style={styles.textfield_Label}>Criminal Offense:</Text>

@@ -78,6 +78,9 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
         setScannedPlateNotification('');
         setScannedCrimeNotification('');
         setScannedCurLocNotification('');
+        setScannedPlateNumberList([]); 
+        setScannedCrimeList([]); 
+        setCurLocList([]);
         set(ref(db, `/ScannedNotification`), {}) 
         set(ref(db, `/ScannedPlateNumberNotification`), {}) 
         setNotification(false);

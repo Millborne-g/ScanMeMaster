@@ -8,6 +8,7 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
     const headers = ["Plate No.", 'Crime', ''];
     const [list, setList] = useState([]);
+    const [listEmpty, setListEmpty] = useState(true);
 
     const rowsDB = []
 
@@ -20,6 +21,8 @@ const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
           if (data !== null) {
             Object.values(data).map((list) => {
                 if(list.apprehended === "no"){
+                    setListEmpty(false);
+                    console.log(list)
                     setList((oldArray) => [...oldArray, [list.plateNumber, list.criminalOffense, [
                         <TouchableOpacity onPress={()=>{
                             setEditList(true);
@@ -62,7 +65,14 @@ const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
                 />
             </Table>
         <ScrollView style={{marginTop: -1}}>
-            <Table >
+           
+            { listEmpty? 
+                <View style={styles.noDataAvailable}>
+                    <Text>
+                        No Data Available
+                    </Text>
+                </View> :
+                <Table >
                 <TableWrapper style={{
                     flexDirection: 'row',
                     }}>
@@ -80,8 +90,10 @@ const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
                             borderColor: '#9F9F9F',
                         }}
                         /> 
-                </TableWrapper>
-            </Table>
+                    </TableWrapper>
+                </Table>
+            }
+            
         </ScrollView>
     </View>
     
@@ -91,6 +103,16 @@ const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
 const styles = StyleSheet.create({
     box_container: {
         height: '100%',
+    },
+
+    noDataAvailable :{
+        height: 500,
+        width: '100%',
+        // backgroundColor: 'red',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems:'center',
+        justifyContent:'center',
     },
 
     editText: {

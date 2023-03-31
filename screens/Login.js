@@ -10,7 +10,7 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import NetInfo from "@react-native-community/netinfo";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Loader from '../components/loader';
 
 const Login = ({setNav, setUser}) => {
     const data =[
@@ -226,7 +226,7 @@ const Login = ({setNav, setUser}) => {
             </TouchableOpacity>
             
         </View>
-        
+        {/* <Loader /> */}
     </View>
   )
 }

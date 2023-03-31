@@ -22,6 +22,7 @@
     "expo-checkbox": "~2.2.2",
     "expo-status-bar": "~1.4.2",
     "firebase": "^9.17.1",
+    "lottie-react-native": "^6.0.0-rc.3",
     "react": "18.1.0",
     "react-native": "0.70.5",
     "react-native-check-box": "^2.1.7",

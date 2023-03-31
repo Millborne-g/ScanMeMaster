@@ -267,7 +267,7 @@ const TabNavigator = ({user,setNav}) => {
 
     {form &&
         <View style={styles.addForm_popup}>
-          <Add_form_PN_list setForm={setForm}/>
+          <Add_form_PN_list setForm={setForm} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList}/>
         </View>
     }
 
@@ -277,7 +277,7 @@ const TabNavigator = ({user,setNav}) => {
 
     {editForm &&
       <View style={styles.addForm_popup}>
-        <Edit_form_PN_list setForm={setForm} setEditForm={setEditForm} editPlateNumber={editPlateNumber} setEditList={setEditList}/>
+        <Edit_form_PN_list setForm={setForm} setEditForm={setEditForm} editPlateNumber={editPlateNumber} setEditList={setEditList} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList}/>
       </View>
     }
 
@@ -299,7 +299,7 @@ const TabNavigator = ({user,setNav}) => {
     } */}
 
     {notification &&
-      <Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} />
+      <Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} />
       //<Notification setNotification={setNotification} />
       //alert('test '+scannedPlateNotification)
 

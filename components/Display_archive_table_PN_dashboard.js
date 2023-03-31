@@ -10,6 +10,8 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
 
     const headers = ["Date/Time", "Plate No.", 'Crime', 'Location'];
     const [archiveRow, setArchiveRow] = useState([]);
+    const [listEmpty, setListEmpty] = useState(true);
+
     const prevDataRef = useRef(null); // store previous data
     useEffect(() => {
         let exist = '';
@@ -19,6 +21,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
             const data = snapshot.val();
             setArchiveRow([]);
             if (data !== null) {
+                setListEmpty(false)
                 const reversedData = Object.values(data).reverse();
                 reversedData.map((scanned) => {
                     // let crime = '';
@@ -134,6 +137,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
     }, []);
   return (
     <View style={styles.box_container}>
+        
         <Table >
                 <Row
                     data={headers}
@@ -156,6 +160,12 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                 />
             </Table>
         <ScrollView style={{marginTop: -1}}>
+            { listEmpty? 
+            <View style={styles.noDataAvailable}>
+                <Text>
+                    No Data Available
+                </Text>
+            </View> :
             <Table >
                 <TableWrapper style={{
                     flexDirection: 'row',
@@ -176,6 +186,8 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                         /> 
                 </TableWrapper>
             </Table>
+        }
+            
         </ScrollView>
     </View>
     
@@ -185,6 +197,16 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
 const styles = StyleSheet.create({
     box_container: {
         height: '100%',
+    },
+
+    noDataAvailable :{
+        height: 320,
+        width: '100%',
+        // backgroundColor: 'red',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems:'center',
+        justifyContent:'center',
     },
 
     viewText: {
