@@ -6,7 +6,7 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNumberDateTimeLoc}) => {
+const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNumberDateTimeLoc,setLoading}) => {
 
     const headers = ["Date/Time", "Plate No.", 'Crime', 'Location'];
     const [archiveRow, setArchiveRow] = useState([]);
@@ -21,6 +21,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
             const data = snapshot.val();
             setArchiveRow([]);
             if (data !== null) {
+                setLoading(false)
                 setListEmpty(false)
                 const reversedData = Object.values(data).reverse();
                 reversedData.map((scanned) => {
@@ -132,8 +133,12 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
 
             })
             
+        } 
+        else{
+            setLoading(false)
         }
         });
+        
     }, []);
   return (
     <View style={styles.box_container}>
