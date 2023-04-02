@@ -8,7 +8,9 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import NetInfo from "@react-native-community/netinfo";
 
-const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setNotification, setScannedPlateNumberList, setScannedCrimeList, setCurLocList, setLoading}) => {
+import Loader from '../components/loader';
+
+const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setNotification, setScannedPlateNumberList, setScannedCrimeList, setCurLocList}) => {
     const [isInternetConnected, setIsInternetConnected] = useState(false);
     const [clickButton, setClickButton] = useState(false);
 
@@ -22,6 +24,9 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
     let seconds = currentDate.getSeconds().toString().padStart(2, '0');
     
     const dateTime = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+
+    //loading
+    const [loading, setLoading] = useState(false);
   
     useEffect(()=>{
       NetInfo.addEventListener(state => {
@@ -241,13 +246,16 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
         <View style={styles.modal}>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
             <Text style={styles.plate_Number}>{plateNumber}</Text>
-            <TouchableOpacity style={{...styles.Btn, ...styles.apprehendedBtn}} onPress={()=>{click_Apprehend('Vehicle Apprehended!')}} >
+            <TouchableOpacity style={{...styles.Btn, ...styles.apprehendedBtn}} onPress={()=>{
+                setLoading(true);
+                click_Apprehend('Vehicle Apprehended!')
+                }} >
                 <Text style={styles.btnText}>Apprehended</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{...styles.Btn, ...styles.updateBtn}} onPress={
                 user==='LTO'?
                     ()=>{
-                        setLoading(true);
+                        //setLoading(true);
                         click_Edit()
                     } :
                     ()=>Alert.alert('Message', 'Only LTO personnel can edit Vehicle with Criminal Offense.')
@@ -256,7 +264,10 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
             </TouchableOpacity>
             <TouchableOpacity style={{...styles.Btn, ...styles.deleteBtn}} onPress={
                 user==='LTO'?
-                ()=> click_Delete('Vehicle Deleted Successfully!'):
+                ()=> {
+                    setLoading(true);
+                    click_Delete('Vehicle Deleted Successfully!');
+                }:
                 ()=> Alert.alert('Message', 'Only LTO personnel can delete Vehicle with Criminal Offense.')
                 }>
                 <Text style={styles.btnText}>Delete</Text>
@@ -266,6 +277,12 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
                 <MaterialCommunityIcons name="close" size={45} />
             </Pressable>
         </View>
+        {loading && 
+            <View style={styles.loaderContainer}>
+                <View style={styles.loaderContainerBG}></View>
+                <Loader/>
+            </View>
+        }
     </View>
   )
 }
@@ -291,6 +308,23 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingTop: 20
     },
+
+    loaderContainer:{
+        height: '100%',
+        width: '100%',
+        position: 'absolute',
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center',
+      },
+    
+      loaderContainerBG:{
+        height: '100%',
+        width: '100%',
+        position: 'absolute',
+        top:0,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)'
+      },
 
     plate_Number_Label:{
         fontSize: 16,
