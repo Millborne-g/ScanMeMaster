@@ -7,7 +7,7 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Notification = ({scannedPlateNotification, scannedCrimeNotification, scannedCurLocNotification, setNotification, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setScannedPlateNumberList, setScannedCrimeList, setCurLocList}) => {
+const Notification = ({scannedPlateNotification, scannedCrimeNotification, scannedCurLocNotification, setNotification, scannedDetectedPN, scannedColor, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setScannedDetectedPN, setScannedColor, setScannedPlateNumberList, setScannedCrimeList, setCurLocList, setScannedDetectedPNList, setScannedColorList}) => {
 // const Notification = ({setNotification}) => {
 
     //let curDateTime = curDateList[curDateList.length -1]+" "+curTimeList[curTimeList.length -1];
@@ -78,9 +78,13 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
         setScannedPlateNotification('');
         setScannedCrimeNotification('');
         setScannedCurLocNotification('');
+        setScannedDetectedPN(''); 
+        setScannedColor(''); 
         setScannedPlateNumberList([]); 
         setScannedCrimeList([]); 
         setCurLocList([]);
+        setScannedDetectedPNList([]);
+        setScannedColorList([]);
         set(ref(db, `/ScannedNotification`), {}) 
         set(ref(db, `/ScannedPlateNumberNotification`), {}) 
         setNotification(false);
@@ -88,7 +92,30 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
   return (
     <View style={styles.notificationContainer}>
         <View style={styles.modal}>
+            <View style={styles.warning_img_bg}>
+            {
+                scannedColor === 'yellow' ? 
+                <Image style={styles.warning_img} source={require('../assets/yellow.png')}/>:
+                <Image style={styles.warning_img} source={require('../assets/red.png')}/>
+
+            }
+            </View>
+            <Text style={styles.plate_Number_Label}>Detected Plate number:</Text> 
+            <Text style={styles.plate_Number}>{scannedDetectedPN}</Text> 
+            <Text style={styles.crime_Label}>Plate number:</Text> 
+            <Text style={styles.crime}>{scannedPlateNotification}</Text> 
+            <Text style={styles.crime_Label}>Criminal Offense:</Text> 
+            <Text style={styles.crime}>{scannedCrimeNotification}</Text> 
+            <Text style={styles.location_Label}>Location:</Text> 
+            <Text style={styles.location}>{scannedCurLocNotification}</Text>
+            <Pressable style={styles.okBtn} onPress={()=>handleSubmitChange()}>
+                <MaterialCommunityIcons name="close" size={45} />
+            </Pressable>
+        </View>
+
+        {/* <View style={styles.modal}>
             <Image source={require('../assets/notifications.png')}/>
+            <Image style={styles.warning_img} source={require('../assets/yellow.png')}/>
             <Text style={styles.plate_Number_Label}>Plate number:</Text> 
             <Text style={styles.plate_Number}>{scannedPlateNotification}</Text> 
             <Text style={styles.crime_Label}>Criminal Offense:</Text> 
@@ -99,7 +126,9 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
                 <MaterialCommunityIcons name="close" size={45} />
             </Pressable>
         </View>
-        {/* {scannedPlateNumberList.map((item)=>{
+
+
+        {scannedPlateNumberList.map((item)=>{
             //setCurPlateNumber(item);
             return(
                 <View style={styles.modal}>
@@ -155,6 +184,7 @@ const styles = StyleSheet.create({
         fontSize: 48,
         fontWeight: 'bold',
         color: '#252727',
+        marginBottom: 10,
         
     },
 
@@ -167,7 +197,7 @@ const styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
         color: '#252727',
-        
+        marginBottom: 10,
     },
 
     location_Label:{
@@ -179,8 +209,8 @@ const styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
         color: '#252727',
-        marginBottom: 20
-        
+        marginBottom: 20,
+        marginBottom: 10,
     },
 
     btnText: {
@@ -196,6 +226,24 @@ const styles = StyleSheet.create({
         top: '2%',
         right: '2%'
     },
+
+    warning_img_bg:{
+        marginTop: "-20%" ,
+        marginBottom: 10,
+        backgroundColor: 'white',
+        height: 102,
+        width: 102,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 100,
+
+    },
+
+    warning_img:{
+        height: 100,
+        width: 100,
+        
+    }
 
 })
 

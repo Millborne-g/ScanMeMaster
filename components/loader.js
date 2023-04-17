@@ -15,7 +15,7 @@ const loader = () => {
                   onAnimationComplete={() => console.log('onAnimationComplete')}
                   backgroundColor="#3d5875" /> */}
           <ActivityIndicator size = { 75 } color="#2666FA" />
-          <Text style={styles.text}>Processing</Text>
+          <Text style={styles.text}>Loading</Text>
 
       </View>
       

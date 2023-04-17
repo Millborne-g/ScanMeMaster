@@ -42,15 +42,22 @@ const TabNavigator = ({user,setNav}) => {
   const [scannedPlateNumber, setScannedPlateNumber] = useState('');
 
   //Scanned Popup Notification
+  const [scannedColorList, setScannedColorList] = useState([]);
+  const [scannedDetectedPNList, setScannedDetectedPNList] = useState([]);
   const [scannedPlateNumberList, setScannedPlateNumberList] = useState([]);
   const [scannedCrimeList, setScannedCrimeList] = useState([]);
   const [curLocList, setCurLocList] = useState([]);
+  
+
   const [curDateList, setCurDateList] = useState([]);
   const [curTimeList, setCurTimeList] = useState([]);
 
+  const [scannedColor, setScannedColor] = useState('');
+  const [scannedDetectedPN, setScannedDetectedPN] = useState('');
   const [scannedPlateNotification, setScannedPlateNotification] = useState('');
   const [scannedCrimeNotification, setScannedCrimeNotification] = useState('');
   const [scannedCurLocNotification, setScannedCurLocNotification] = useState('');
+  
 
   const [scannedNotification, setScannedNotification] = useState(false);
 
@@ -172,6 +179,11 @@ const TabNavigator = ({user,setNav}) => {
                 // update(ref(db, `/Scanned/${data.Date+' '+data.Time}`), {
                 //   Notification : "off"
                 // });
+
+                // const [scannedColorList, setScannedColorList] = useState([]);
+                // const [scannedDetectedPNList, setScannedDetectedPNList] = useState([]);
+                setScannedColorList((oldArray) => [...oldArray,data.Color])
+                setScannedDetectedPNList((oldArray) => [...oldArray,data.DetectedPN])
                 setScannedPlateNumberList((oldArray) => [...oldArray,data.PlateNumber]);
                 setScannedCrimeList((oldArray) => [...oldArray, data.CriminalOffense]);
                 setCurLocList((oldArray) => [...oldArray,data.Location]);
@@ -198,6 +210,9 @@ const TabNavigator = ({user,setNav}) => {
     });
   }, []);
 
+  // const [scannedColor, setScannedColor] = useState('');
+  // const [scannedDetectedPN, setScannedDetectedPN] = useState('');
+
   useEffect(() => {
     if (scannedPlateNumberList.length > 0) {
       //const latestData = scannedPlateNumberList.pop(); // remove latest data from queue
@@ -206,6 +221,20 @@ const TabNavigator = ({user,setNav}) => {
       playSound();
     }
   }, [scannedPlateNumberList]);
+
+  useEffect(() => {
+    if (scannedColorList.length > 0) {
+      //const latestData = scannedPlateNumberList.pop(); // remove latest data from queue
+      setScannedColor(scannedColorList.pop());
+    }
+  }, [scannedColorList]);
+
+  useEffect(() => {
+    if (scannedDetectedPNList.length > 0) {
+      //const latestData = scannedPlateNumberList.pop(); // remove latest data from queue
+      setScannedDetectedPN(scannedDetectedPNList.pop());
+    }
+  }, [scannedDetectedPNList]);
 
   useEffect(() => {
     if (scannedCrimeList.length > 0) {
@@ -305,7 +334,22 @@ const TabNavigator = ({user,setNav}) => {
     } */}
 
     {notification &&
-      <Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} />
+
+      // useEffect(() => {
+      //   if (scannedColorList.length > 0) {
+      //     //const latestData = scannedPlateNumberList.pop(); // remove latest data from queue
+      //     setScannedColor(scannedColorList.pop());
+      //   }
+      // }, [scannedColorList]);
+
+      // useEffect(() => {
+      //   if (scannedDetectedPNList.length > 0) {
+      //     //const latestData = scannedPlateNumberList.pop(); // remove latest data from queue
+      //     setScannedDetectedPN(scannedDetectedPNList.pop());
+      //   }
+      // }, [scannedDetectedPNList]);
+
+      <Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} scannedDetectedPN={scannedDetectedPN} scannedColor={scannedColor} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setScannedDetectedPN={setScannedDetectedPN} setScannedColor={setScannedColor} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} setScannedDetectedPNList={setScannedDetectedPNList} setScannedColorList={setScannedColorList} />
       //<Notification setNotification={setNotification} />
       //alert('test '+scannedPlateNotification)
 
