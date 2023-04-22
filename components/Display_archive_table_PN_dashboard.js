@@ -33,7 +33,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                     //   }
                     //   });
                       if(scanned.Apprehended === "no"){
-                      setArchiveRow((oldArray) => [...oldArray, [scanned.Date+'/ \n'+scanned.Time,scanned.PlateNumber, scanned.CriminalOffense, scanned.Location]]);
+                      setArchiveRow((oldArray) => [...oldArray, [scanned.Date+'/ \n'+scanned.Time,scanned.DetectedPN+'\n'+'('+scanned.PlateNumber+')', scanned.CriminalOffense, scanned.Location]]);
                         // <TouchableOpacity onPress={()=>{
                         //     setViewLocArchive(true);
                         //     setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
@@ -147,7 +147,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                 <Row
                     data={headers}
                     height={40}
-                    flexArr={[1.3,1,1,1]}
+                    flexArr={[1.3,1.2,1,1]}
                     
                     textStyle={{
                         paddingLeft: 10,
@@ -161,6 +161,9 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                         width: '100%',
                         borderBottomWidth: 0.5,
                         borderColor: '#9F9F9F',
+                        paddingLeft: -3,
+                        paddingRight: 3
+                        
                     }}
                 />
             </Table>
@@ -178,7 +181,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                     <Rows 
                         data={archiveRow} 
                         height={60} 
-                        flexArr={[1.3,1,1,1]}
+                        flexArr={[1.3,1.2,1,1]}
                         textStyle={{
                             paddingLeft: 10,
                             fontSize: 13
@@ -187,6 +190,8 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                         style={{
                             borderBottomWidth: 0.5,
                             borderColor: '#9F9F9F',
+                            paddingLeft: -3,
+                            paddingRight: 3
                         }}
                         /> 
                 </TableWrapper>
@@ -198,6 +203,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
     
   )
 }
+
 
 const styles = StyleSheet.create({
     box_container: {
