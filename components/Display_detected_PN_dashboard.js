@@ -6,6 +6,7 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 
 const Display_detected_PN = () => {
     const [scannedPlateNumberList, setScannedPlateNumberList] = useState('');
+    const [scannedDetectedPNList, setScannedDetectedPNList] = useState('');
     const [scannedCrimeList, setScannedCrimeList] = useState('');
     const [curLocList, setCurLocList] = useState('');
     const [curDateList, setCurDateList] = useState('');
@@ -18,6 +19,7 @@ const Display_detected_PN = () => {
             Object.values(data).map((scanned) => {
                 if(scanned.Apprehended === 'no'){
                     setScannedPlateNumberList(scanned.PlateNumber);
+                    setScannedDetectedPNList(scanned.DetectedPN)
                     let crime = '';
                     onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
                         const data = snapshot.val();
@@ -30,6 +32,7 @@ const Display_detected_PN = () => {
                       setCurLocList(scanned.Location);
                       setCurDateList(scanned.Date);
                       setCurTimeList(scanned.Time);
+
                 }
             });
         }
@@ -41,7 +44,8 @@ const Display_detected_PN = () => {
         {scannedPlateNumberList === '' ?
             <Text style={styles.detected_PN}>none</Text>:
             <>
-                <Text style={styles.detected_PN}>{scannedPlateNumberList}</Text>
+                <Text style={styles.detected_PN}>{scannedDetectedPNList}</Text>
+                <Text style={styles.detected_PN_match}>({scannedPlateNumberList})</Text>
                 <Text style={styles.detected_PN_crime}>{scannedCrimeList}</Text>
                 <Text style={styles.detected_PN_location}>{curLocList}</Text>
                 <Text style={styles.detected_PN_date_time}>{curDateList} {curTimeList}</Text>
@@ -54,7 +58,7 @@ const Display_detected_PN = () => {
 
 const styles = StyleSheet.create({
     box_container: {
-        height: 190,
+        height: 215,
         width: '100%',
         backgroundColor: '#2666FA',
         borderRadius: 15,
@@ -66,6 +70,14 @@ const styles = StyleSheet.create({
         fontSize: 48,
         fontWeight: 'bold',
         color: '#FFFFFF',
+        marginTop: '-3%'
+    },
+
+    detected_PN_match: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+        marginBottom: 10
     },
 
     detected_PN_crime: {

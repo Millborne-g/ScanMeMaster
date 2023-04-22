@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 12,
     overflow: 'hidden',
-    height: '70%'
+    height: '68%'
   },
   
 

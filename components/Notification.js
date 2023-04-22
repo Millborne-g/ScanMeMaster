@@ -102,7 +102,7 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
             </View>
             <Text style={styles.plate_Number_Label}>Detected Plate number:</Text> 
             <Text style={styles.plate_Number}>{scannedDetectedPN}</Text> 
-            <Text style={styles.crime_Label}>Plate number:</Text> 
+            <Text style={styles.crime_Label}>Closest Match:</Text> 
             <Text style={styles.crime}>{scannedPlateNotification}</Text> 
             <Text style={styles.crime_Label}>Criminal Offense:</Text> 
             <Text style={styles.crime}>{scannedCrimeNotification}</Text> 
