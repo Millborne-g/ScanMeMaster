@@ -76,7 +76,7 @@ const Display_detected_PN = () => {
 
                     </View>
                     <View style={styles.results}>
-                        <Text style={styles.detected_PN_match_label}>Conversion:</Text>
+                        <Text style={styles.detected_PN_match_label}>Converted:</Text>
                         <Text style={styles.detected_PN_match}>{scannedDetectedPNList}</Text>
                         <Text style={styles.detected_PN_match_label}>Match:</Text>
                         <Text style={styles.detected_PN_match}>{scannedMatchPN}</Text>

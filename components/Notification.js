@@ -214,7 +214,7 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
                 <Image style={styles.warning_img} source={require('../assets/red.png')}/>
                 }
             </View> */}
-            <Text style={styles.plate_Number_Label}>Conversion:</Text> 
+            <Text style={styles.plate_Number_Label}>Converted:</Text> 
             {/* <Text style={styles.plate_Number}>NBC-XXX</Text>  */}
             <Text style={styles.plate_Number}>{scannedDetectedPN}</Text> 
             <Text style={styles.location_Label}>Location:</Text> 
