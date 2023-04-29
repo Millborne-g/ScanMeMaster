@@ -47,6 +47,8 @@ const TabNavigator = ({user,setNav}) => {
   const [scannedPlateNumberList, setScannedPlateNumberList] = useState([]);
   const [scannedCrimeList, setScannedCrimeList] = useState([]);
   const [curLocList, setCurLocList] = useState([]);
+  const [scannedClosestMatchesList, setScannedClosestMatchesList] = useState([]);
+  const [scannedImageLinkList, setScannedImageLinkList] = useState([]);
   
 
   const [curDateList, setCurDateList] = useState([]);
@@ -57,6 +59,9 @@ const TabNavigator = ({user,setNav}) => {
   const [scannedPlateNotification, setScannedPlateNotification] = useState('');
   const [scannedCrimeNotification, setScannedCrimeNotification] = useState('');
   const [scannedCurLocNotification, setScannedCurLocNotification] = useState('');
+  const [scannedClosestMatches, setScannedClosestMatches] = useState('');
+  const [scannedImageLink, setScannedImageLink] = useState('');
+
   
 
   const [scannedNotification, setScannedNotification] = useState(false);
@@ -180,8 +185,6 @@ const TabNavigator = ({user,setNav}) => {
                 //   Notification : "off"
                 // });
 
-                // const [scannedColorList, setScannedColorList] = useState([]);
-                // const [scannedDetectedPNList, setScannedDetectedPNList] = useState([]);
                 setScannedColorList((oldArray) => [...oldArray,data.Color])
                 setScannedDetectedPNList((oldArray) => [...oldArray,data.DetectedPN])
                 setScannedPlateNumberList((oldArray) => [...oldArray,data.PlateNumber]);
@@ -189,6 +192,11 @@ const TabNavigator = ({user,setNav}) => {
                 setCurLocList((oldArray) => [...oldArray,data.Location]);
                 setCurDateList((oldArray) => [...oldArray,data.Date]);
                 setCurTimeList((oldArray) => [...oldArray,data.Time])
+                setScannedClosestMatchesList((oldArray) => [...oldArray,data.ClosestMatches])
+                setScannedImageLinkList((oldArray) => [...oldArray,data.ImageLink])
+                // const [scannedClosestMatchesList, setScannedClosestMatchesList] = useState([]);
+  
+                
 
                 // setScannedPlateNotification(data.PlateNumber);
                 // setScannedCrimeNotification(data.CriminalOffense);
@@ -247,6 +255,19 @@ const TabNavigator = ({user,setNav}) => {
       setScannedCurLocNotification(curLocList.pop());
     }
   }, [curLocList]);
+
+  useEffect(() => {
+    if (scannedClosestMatchesList.length > 0) {
+      setScannedClosestMatches(scannedClosestMatchesList.pop());
+    }
+  }, [scannedClosestMatchesList]);
+
+  useEffect(() => {
+    if (scannedImageLinkList.length > 0) {
+      setScannedImageLink(scannedImageLinkList.pop());
+    }
+  }, [scannedImageLinkList]);
+
 
   console.log("crime "+scannedCrimeList[scannedCrimeList.length -1]+ " PN "+scannedPlateNumberList[scannedPlateNumberList-1])
 
@@ -349,7 +370,14 @@ const TabNavigator = ({user,setNav}) => {
       //   }
       // }, [scannedDetectedPNList]);
 
-      <Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} scannedDetectedPN={scannedDetectedPN} scannedColor={scannedColor} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setScannedDetectedPN={setScannedDetectedPN} setScannedColor={setScannedColor} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} setScannedDetectedPNList={setScannedDetectedPNList} setScannedColorList={setScannedColorList} />
+      <Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} scannedDetectedPN={scannedDetectedPN} scannedColor={scannedColor} scannedClosestMatches={scannedClosestMatches} scannedImageLink={scannedImageLink} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setScannedDetectedPN={setScannedDetectedPN} setScannedColor={setScannedColor} setScannedClosestMatches={setScannedClosestMatches} setScannedImageLink={setScannedImageLink} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} setScannedDetectedPNList={setScannedDetectedPNList} setScannedColorList={setScannedColorList}setScannedClosestMatchesList={setScannedClosestMatchesList} setScannedImageLinkList={setScannedImageLinkList}/>
+      // const [scannedClosestMatchesList, setScannedClosestMatchesList] = useState([]);
+      // const [scannedClosestMatches, setScannedClosestMatches] = useState('');
+
+//       const [scannedImageLinkList, setScannedImageLinkList] = useState([]);  
+
+// const [scannedImageLink, setScannedImageLink] = useState('');
+      
       //<Notification setNotification={setNotification} />
       //alert('test '+scannedPlateNotification)
 
