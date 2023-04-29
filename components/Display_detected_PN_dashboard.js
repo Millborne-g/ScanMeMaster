@@ -62,7 +62,7 @@ const Display_detected_PN = () => {
   return (
     <View style={styles.box_container}>
         {scannedPlateNumberList === '' ?
-            <Text style={styles.detected_PN}>none</Text>:
+            <Text style={styles.none}>none</Text>:
             <>
                 <View style={styles.detected_PN_upper}>
                     <Text style={styles.detected_PN_location}>{curLocList}</Text>
@@ -209,6 +209,13 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 14,
         fontWeight: '800'
+    },
+
+    none:{
+        fontSize: 48,
+        fontWeight: 'bold',
+        color: '#000000',
+        marginTop: '25%'
     },
 
 
