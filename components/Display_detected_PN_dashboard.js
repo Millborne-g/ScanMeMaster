@@ -92,7 +92,7 @@ const Display_detected_PN = () => {
                                 <Text style={styles.confidence_level}>{scannedMatchPNCL}%</Text>
                             </View> 
                             : parseInt(scannedMatchPNCL) >= 75 ?
-                            <View style={styles.confidence_level_container_red}>
+                            <View style={styles.confidence_level_container_green}>
                                 <Text style={styles.confidence_level_label}>Confidence:</Text>
                                 <Text style={styles.confidence_level}>{scannedMatchPNCL}%</Text>
                             </View> : ''
@@ -174,14 +174,14 @@ const styles = StyleSheet.create({
         // borderWidth: 0.5
     },
 
-    confidence_level_container_red:{
+    confidence_level_container_green:{
         position: 'absolute',
         right: '-11%',
         top: '-18%',
         height: 60,
         width: 60,
         borderRadius: 100,
-        backgroundColor: '#FF546C',
+        backgroundColor: '#3B9A45',
         justifyContent: 'center',
         alignItems:'center',
         elevation: 6
