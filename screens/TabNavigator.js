@@ -23,6 +23,7 @@ import { onValue, ref, remove, set, update } from 'firebase/database';
 import { Audio } from 'expo-av';
 
 import Loader from '../components/loader';
+import PopupArchive from '../components/PopupArchive'
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +39,7 @@ const TabNavigator = ({user,setNav}) => {
   const [editList, setEditList] = useState(false);
   const [showApprehendedDetails, setShowApprehendedDetails] = useState(false);
   const [notification, setNotification] = useState(false);
+  const [popupArchive, setPopupArchive] = useState(false);
 
   const [scannedPlateNumber, setScannedPlateNumber] = useState('');
 
@@ -290,7 +292,7 @@ const TabNavigator = ({user,setNav}) => {
         }}
         
         >
-            <Tab.Screen name="Dashboard" children={()=><Dashboard user={user} click_Vehicle_List={click_Vehicle_List} setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc} setLoading={setLoading}/>} options={{
+            <Tab.Screen name="Dashboard" children={()=><Dashboard user={user} click_Vehicle_List={click_Vehicle_List} setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc} setLoading={setLoading} setPopupArchive={setPopupArchive}/>} options={{
             headerShown: false,
             tabBarIcon: ({color}) => (  
                 <MaterialCommunityIcons name="view-dashboard-outline" size={30} color={color} />
@@ -384,6 +386,10 @@ const TabNavigator = ({user,setNav}) => {
       // Alert.alert('Alert', 'test '+scannedPlateNotification, [
       //   {text: 'OK', onPress: () => {setNotification(false)}},
       // ])
+    }
+
+    {popupArchive &&
+      <PopupArchive scannedPlateNumberDateTimeLoc={scannedPlateNumberDateTimeLoc} setPopupArchive={setPopupArchive}/>
     }
 
     {loading && 

@@ -22,15 +22,16 @@ const Display_detected_PN = () => {
             Object.values(data).map((scanned) => {
                 if(scanned.Apprehended === 'no'){
                     setScannedPlateNumberList(scanned.PlateNumber);
-                    setScannedDetectedPNList(scanned.DetectedPN)
+                    setScannedDetectedPNList(scanned.DetectedPN);
+                    setScannedCrimeList(scanned.CriminalOffense);
                     let crime = '';
-                    onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
-                        const data = snapshot.val();
-                        if (data !== null) {
-                            setScannedCrimeList(data.criminalOffense);
-                            // console.log('hereeeeeeeeeeeeeee '+data.criminalOffense+' '+data.plateNumber+' '+scanned.PlateNumber)
-                        }
-                      });
+                    // onValue(ref(db, `/Vehicle_with_criminal_offense/${scanned.PlateNumber}`), (snapshot) => {
+                    //     const data = snapshot.val();
+                    //     if (data !== null) {
+                    //         setScannedCrimeList(data.criminalOffense);
+                    //         // console.log('hereeeeeeeeeeeeeee '+data.criminalOffense+' '+data.plateNumber+' '+scanned.PlateNumber)
+                    //     }
+                    //   });
 
                       try{
                         const string = scanned.ClosestMatches

@@ -55,7 +55,7 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
                     if (parseInt(item[2]) >= 60 && parseInt(item[2]) <= 75) {
                         confidenceLevel = <View style={styles.confidenceLevel_yellow}><Text style={styles.confidenceLevelText}>{item[2]}%</Text></View>;
                     } else if (parseInt(item[2]) > 75) {
-                        confidenceLevel = <View style={styles.confidenceLevel_green}><Text style={styles.confidenceLevelText}>{item[2]}%</Text></View>;
+                        confidenceLevel = <View style={styles.confidenceLevel_red}><Text style={styles.confidenceLevelText}>{item[2]}%</Text></View>;
                     }
                     return [item[0], item[1], confidenceLevel];
                     });
@@ -504,8 +504,8 @@ const styles = StyleSheet.create({
         width: '90%'
     },
 
-    confidenceLevel_green:{
-        backgroundColor: '#3B9A45',
+    confidenceLevel_red:{
+        backgroundColor: '#FF546C',
         padding: 10,
         justifyContent: 'center',
         alignItems:'center',
