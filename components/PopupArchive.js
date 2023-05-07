@@ -58,7 +58,7 @@ const PopupArchive = ({scannedPlateNumberDateTimeLoc,setPopupArchive}) => {
                     if (parseInt(item[2]) >= 60 && parseInt(item[2]) <= 75) {
                         confidenceLevel = <View style={styles.confidenceLevel_yellow}><Text style={styles.confidenceLevelText}>{item[2]}%</Text></View>;
                     } else if (parseInt(item[2]) > 75) {
-                        confidenceLevel = <View style={styles.confidenceLevel_red}><Text style={styles.confidenceLevelText}>{item[2]}%</Text></View>;
+                        confidenceLevel = <View style={styles.confidenceLevel_green}><Text style={styles.confidenceLevelText}>{item[2]}%</Text></View>;
                     }
                     return [item[0], item[1], confidenceLevel];
                     });
@@ -90,9 +90,9 @@ const PopupArchive = ({scannedPlateNumberDateTimeLoc,setPopupArchive}) => {
   return (
     <View style={styles.notificationContainer}>
         <View style={styles.modal}>
-            {/* <View style={styles.top_indcator}>
-                <Text style={styles.top_indcator}>Archived</Text>
-            </View> */}
+            <View style={styles.top_indcator}>
+                <Text style={styles.top_indcator_text}>Archive</Text>
+            </View>
             <View style={styles.img_bg}>
                 {/* <Image style={styles.warning_img} source={{uri: 'https://firebasestorage.googleapis.com/v0/b/scanmemaster-9da58.appspot.com/o/2023-04-29%2017%3A50%3A22%20NBC1234.jpg?alt=media'}}/> */}
                 <Image style={styles.warning_img} source={{uri: scannedImageLink}}/>
@@ -205,6 +205,29 @@ const styles = StyleSheet.create({
         zIndex: 1
     },
 
+    top_indcator:{
+        height: 80,
+        width: 130,
+        position:'absolute',
+        marginTop: '-12%',
+        top: 1,
+        left: 0,
+        // zIndex: 1,
+        backgroundColor: '#2666FA',
+        borderRadius: 10,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent:'center',
+        textAlign:'center'
+    },
+
+    top_indcator_text:{
+        color: 'white',
+        fontSize: 20,
+        fontWeight: '600',
+        marginTop: '-10%'
+    },
+
     modal:{
         alignItems: 'center',
         justifyContent: 'center',
@@ -215,7 +238,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         position: 'absolute',
         margin: 'auto',
-        overflow: 'hidden',
+        // overflow: 'hidden',
         // marginTop: 1000,
     },
 
@@ -307,6 +330,8 @@ const styles = StyleSheet.create({
     warning_img:{
         height: '100%',
         width: '100%',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
         // height: 170,
         // width: 332,
         
@@ -343,8 +368,8 @@ const styles = StyleSheet.create({
         width: '90%'
     },
 
-    confidenceLevel_red:{
-        backgroundColor: '#FF546C',
+    confidenceLevel_green:{
+        backgroundColor: '#3B9A45',
         padding: 10,
         justifyContent: 'center',
         alignItems:'center',

@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, StyleSheet, Text, View, Image, Pressable, Touchable, TouchableOpacity, TextInput } from 'react-native';
 import NetInfo from "@react-native-community/netinfo";
 import Display_table_PN_apprehended_list from '../components/Display_table_PN_apprehended_list';
+import Loader from '../components/loader';
 
 const Archive = ({user,setShowApprehendedDetails, setViewPlateNumber}) => {
-  const [isInternetConnected, setIsInternetConnected] = useState(false)
+  const [isInternetConnected, setIsInternetConnected] = useState(false);
+  const [loadingApprehended, setLoadingApprehended] = useState(true);
   useEffect(()=>{
     NetInfo.addEventListener(state => {
         console.log("Connection type", state.type);
@@ -35,9 +37,18 @@ const Archive = ({user,setShowApprehendedDetails, setViewPlateNumber}) => {
         */}
         <View style={styles.display_PN_container}>
           <View style={styles.display_table_PN_list_container}>
-            <Display_table_PN_apprehended_list setShowApprehendedDetails={setShowApprehendedDetails} setViewPlateNumber={setViewPlateNumber}/>
+            <Display_table_PN_apprehended_list setShowApprehendedDetails={setShowApprehendedDetails} setViewPlateNumber={setViewPlateNumber} setLoadingApprehended={setLoadingApprehended}/>
           </View>
         </View>
+
+        {loadingApprehended && 
+    
+          <View style={styles.loaderContainer}>
+            <View style={styles.loaderContainerBG}>
+            </View>
+            <Loader/>
+          </View>
+          }
         
     </View>
     
@@ -127,6 +138,23 @@ const styles = StyleSheet.create({
       borderRadius: 12,
       overflow: 'hidden',
     },
+
+    loaderContainer:{
+      height: '100%',
+      width: '100%',
+      position: 'absolute',
+      display:'flex',
+      alignItems:'center',
+      justifyContent:'center',
+    },
+  
+    loaderContainerBG:{
+      height: '100%',
+      width: '100%',
+      position: 'absolute',
+      top:0,
+      backgroundColor: 'rgba(0, 0, 0, 0.3)'
+    }
 }); 
 
 export default Archive

@@ -10,7 +10,12 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 import NetInfo from "@react-native-community/netinfo";
 
+import Loader from '../components/loader';
+
 const Vehicles_list = ({user,setForm,setEditList,setPlateNumber}) => {
+  // setLoading(true);
+  const [listDone, setListDone] = useState(false)
+  const [loadingVehicleList, setLoadingVehicleList] = useState(true);
   return (
     <View style={styles.container}>
         <View style={styles.header}>
@@ -31,7 +36,7 @@ const Vehicles_list = ({user,setForm,setEditList,setPlateNumber}) => {
          */}
         <View style={styles.display_PN_container}>
           <View style={styles.display_table_PN_list_container}>
-            <Display_table_PN_list setEditList={setEditList} setPlateNumber={setPlateNumber}/>
+            <Display_table_PN_list setEditList={setEditList} setPlateNumber={setPlateNumber} setLoadingVehicleList={setLoadingVehicleList}/>
           </View>
         </View>
 
@@ -44,6 +49,15 @@ const Vehicles_list = ({user,setForm,setEditList,setPlateNumber}) => {
             <Text style={styles.btnText}>Add</Text>
           </TouchableOpacity>
         </View>
+
+        {loadingVehicleList && 
+    
+        <View style={styles.loaderContainer}>
+          <View style={styles.loaderContainerBG}>
+          </View>
+          <Loader/>
+        </View>
+        }
         
     </View>
     
@@ -164,6 +178,24 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 90,
     backgroundColor: '#FFFFFF'
+  },
+
+  
+  loaderContainer:{
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+  },
+
+  loaderContainerBG:{
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    top:0,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)'
   }
 });  
 

@@ -16,7 +16,7 @@ const Apprehended_view_popup = ({setShowApprehendedDetails, viewPlateNumber, set
 
     //read
     useEffect(() => {
-        onValue(ref(db, `/Vehicle_with_criminal_offense/${viewPlateNumber}`), (snapshot) => {
+        onValue(ref(db, `/Apprehended_Vehicle_with_criminal_offense/${viewPlateNumber}`), (snapshot) => {
           const data = snapshot.val();
           setCrime(data.criminalOffense)
           console.log("viewPlateNumber "+data.criminalOffense);

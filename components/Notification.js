@@ -9,7 +9,7 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Notification = ({scannedPlateNotification, scannedCrimeNotification, scannedCurLocNotification, setNotification, scannedDetectedPN, scannedColor, scannedClosestMatches, scannedImageLink, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setScannedDetectedPN, setScannedColor, setScannedClosestMatches, setScannedImageLink, setScannedPlateNumberList, setScannedCrimeList, setCurLocList, setScannedDetectedPNList, setScannedColorList, setScannedClosestMatchesList, setScannedImageLinkList}) => {
+const Notification = ({scannedPlateNotification, scannedCrimeNotification, scannedCurLocNotification, setNotification, scannedDetectedPN, scannedColor, scannedClosestMatches, scannedImageLink, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setScannedDetectedPN, setScannedColor, setScannedClosestMatches, setScannedImageLink, setScannedPlateNumberList, setScannedCrimeList, setCurLocList, setScannedDetectedPNList, setScannedColorList, setScannedClosestMatchesList, setScannedImageLinkList, setPopupArchive}) => {
     const headers = ["Plate no.", "Crime", 'Confidence'];
     // const archiveRow = [
     //     ["Date/Time", "Plate No.", <View style={styles.confidenceLevel}><Text style={styles.confidenceLevelText}>100%</Text></View>],        
@@ -55,7 +55,7 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
                     if (parseInt(item[2]) >= 60 && parseInt(item[2]) <= 75) {
                         confidenceLevel = <View style={styles.confidenceLevel_yellow}><Text style={styles.confidenceLevelText}>{item[2]}%</Text></View>;
                     } else if (parseInt(item[2]) > 75) {
-                        confidenceLevel = <View style={styles.confidenceLevel_red}><Text style={styles.confidenceLevelText}>{item[2]}%</Text></View>;
+                        confidenceLevel = <View style={styles.confidenceLevel_green}><Text style={styles.confidenceLevelText}>{item[2]}%</Text></View>;
                     }
                     return [item[0], item[1], confidenceLevel];
                     });
@@ -63,6 +63,7 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
                 } else{
                     setNotification(false);
                 }
+                setPopupArchive(false)
                 // console.log('modified ', modifiedData);
                 
                 //   setArchiveRow(modifiedData)
@@ -504,8 +505,8 @@ const styles = StyleSheet.create({
         width: '90%'
     },
 
-    confidenceLevel_red:{
-        backgroundColor: '#FF546C',
+    confidenceLevel_green:{
+        backgroundColor: '#3B9A45',
         padding: 10,
         justifyContent: 'center',
         alignItems:'center',

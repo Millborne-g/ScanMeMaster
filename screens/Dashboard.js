@@ -4,13 +4,13 @@ import Display_detected_PN_dashboard from '../components/Display_detected_PN_das
 import Display_archive_table_PN_dashboard from '../components/Display_archive_table_PN_dashboard';
 import Recently_scanned_vehicle_location from '../components/Recently_scanned_vehicle_location_popup';
 import NetInfo from "@react-native-community/netinfo";
-
+import Loader from '../components/loader';
 const Dashboard = ({user, click_Vehicle_List, setViewLocArchive,setScannedPlateNumberDateTimeLoc,setLoading,setPopupArchive}) => {
   const [dashboard, setDashboard] = useState(true);
   const [list, setList] = useState(false);
   const [archive, setArchive] = useState(false);
   const [apprehended, setApprehended] = useState(false);
-  
+  const [loadingDashboard, setLoadingDashboard] = useState(true);
   return (
     <View style={styles.container}>
         <View style={styles.header}>
@@ -20,7 +20,7 @@ const Dashboard = ({user, click_Vehicle_List, setViewLocArchive,setScannedPlateN
           </View>
         </View>
         <View style={styles.display_PN_container}>
-          <Text style={styles.label}>Recently Scanned Vehicle</Text>
+          <Text style={styles.label}>Recently Detected Vehicle</Text>
           <Display_detected_PN_dashboard />
         </View >
 
@@ -37,10 +37,19 @@ const Dashboard = ({user, click_Vehicle_List, setViewLocArchive,setScannedPlateN
           */}
           <View style={styles.Display_archive_table_PN_dashboard_container}>
           
-            <Display_archive_table_PN_dashboard setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc} setLoading={setLoading} setPopupArchive={setPopupArchive}/>
+            <Display_archive_table_PN_dashboard setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc} setLoading={setLoading} setLoadingDashboard={setLoadingDashboard} setPopupArchive={setPopupArchive}/>
           </View>
           
         </View >
+
+        {loadingDashboard && 
+    
+        <View style={styles.loaderContainer}>
+          <View style={styles.loaderContainerBG}>
+          </View>
+          <Loader/>
+        </View>
+        }
     </View>
   )
 }
@@ -122,6 +131,23 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     height: '67%'
   },
+
+  loaderContainer:{
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+  },
+
+  loaderContainerBG:{
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    top:0,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)'
+  }
   
 
 })

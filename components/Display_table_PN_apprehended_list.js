@@ -5,7 +5,7 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Display_table_PN_apprehended_list = ({setShowApprehendedDetails, setViewPlateNumber}) => {
+const Display_table_PN_apprehended_list = ({setShowApprehendedDetails, setViewPlateNumber,setLoadingApprehended}) => {
 const headers = ["Plate No.", 'Crime', ''];
 const [list, setList] = useState([]);
 const [listEmpty, setListEmpty] = useState(true);
@@ -17,7 +17,7 @@ const rowsDB = [];
 //read
 useEffect(() => {
     console.log('')
-    onValue(ref(db, `/Vehicle_with_criminal_offense`), (snapshot) => {
+    onValue(ref(db, `/Apprehended_Vehicle_with_criminal_offense`), (snapshot) => {
       setList([]);
       const data = snapshot.val();
       if (data !== null) {
@@ -25,6 +25,7 @@ useEffect(() => {
         reversedData.map((list) => {
             if(list.apprehended === "yes"){
                 setListEmpty(false);
+                setLoadingApprehended(false);
                 setPlateNumber(list.plateNumber);
                 setList((oldArray) => [...oldArray, [list.plateNumber.split("_")[1], list.criminalOffense, [
                     <TouchableOpacity onPress={()=>{
@@ -40,6 +41,9 @@ useEffect(() => {
           //console.log('test list '+list.plateNumber)
         });
       }
+      else{
+        setLoadingApprehended(false);
+    }
     });
   }, []);
 

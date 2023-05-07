@@ -5,7 +5,7 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
-const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
+const Display_table_PN_list = ({setEditList,setPlateNumber,setLoadingVehicleList}) => {
     const headers = ["Plate No.", 'Crime', ''];
     const [list, setList] = useState([]);
     const [listEmpty, setListEmpty] = useState(true);
@@ -19,10 +19,13 @@ const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
           setList([]);
           const data = snapshot.val();
           if (data !== null) {
+            
             Object.values(data).map((list) => {
                 if(list.apprehended === "no"){
+                    setLoadingVehicleList(false);
                     setListEmpty(false);
-                    console.log(list)
+                    // setListDone(true)
+                    // console.log(list)
                     setList((oldArray) => [...oldArray, [list.plateNumber, list.criminalOffense, [
                         <TouchableOpacity onPress={()=>{
                             setEditList(true);
@@ -36,6 +39,8 @@ const Display_table_PN_list = ({setEditList,setPlateNumber}) => {
               
               //console.log('test list '+list.plateNumber)
             });
+          } else {
+            setLoadingVehicleList(false);
           }
         });
       }, []);

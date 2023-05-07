@@ -84,6 +84,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
     var Apprehend_ScannedApprehended= '';
     var Apprehend_ScannedDate = '';
     var Apprehend_ScannedTime = '';
+    var Apprehend_ScannedImageLink = '';
     if(isInternetConnected === true){
         setLoading(true);
         setEditList(false);
@@ -102,6 +103,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
                         Apprehend_ScannedApprehended= scanned.Apprehended;
                         Apprehend_ScannedDate = scanned.Date;
                         Apprehend_ScannedTime = scanned.Time;
+                        Apprehend_ScannedImageLink = scanned.ImageLink
                         appScanned.push(scanned.Date+' '+scanned.Time);
                         // update(ref(db, `/Scanned/${scanned.Date+' '+scanned.Time}`), {
                         //     Apprehended: 'yes',
@@ -178,7 +180,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
 
         let dateTime = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
 
-        set(ref(db, `/Vehicle_with_criminal_offense/${dateTime+'_'+plateNumber}`), {
+        set(ref(db, `/Apprehended_Vehicle_with_criminal_offense/${dateTime+'_'+plateNumber}`), {
             plateNumber: dateTime+'_'+Apprehend_plateNumber,
             criminalOffense: Apprehend_criminalOffense,
             apprehended: 'yes',
@@ -214,6 +216,7 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
                 Apprehended: Apprehend_ScannedApprehended,
                 Date: Apprehend_ScannedDate,
                 Time: Apprehend_ScannedTime,
+                ImageLink: Apprehend_ScannedImageLink
             });
             remove(ref(db, `/Scanned/${item}`));
             });

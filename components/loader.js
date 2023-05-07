@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
       justifyContent:'center',
       position:'absolute',
       // backgroundColor:'red',
-      backgroundColor: 'white',
+      // backgroundColor: 'white',
       borderRadius: 25
       
     },

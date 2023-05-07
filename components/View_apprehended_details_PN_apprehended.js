@@ -42,7 +42,7 @@ const View_apprehended_details_PN_apprehended = ({viewPlateNumber, setViewPlateN
       //read
     useEffect(() => {
       console.log('fgd')
-      onValue(ref(db, `/Vehicle_with_criminal_offense/${viewPlateNumber}`), (snapshot) => {
+      onValue(ref(db, `/Apprehended_Vehicle_with_criminal_offense/${viewPlateNumber}`), (snapshot) => {
         const data = snapshot.val();
         if (data !== null) {
 

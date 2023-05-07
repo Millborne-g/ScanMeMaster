@@ -80,7 +80,7 @@ const TabNavigator = ({user,setNav}) => {
 
 
   //Loading
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [sound, setSound] = useState();
   const [soundCount, setSoundCount] = useState(0)
@@ -186,7 +186,7 @@ const TabNavigator = ({user,setNav}) => {
                 // update(ref(db, `/Scanned/${data.Date+' '+data.Time}`), {
                 //   Notification : "off"
                 // });
-
+                
                 setScannedColorList((oldArray) => [...oldArray,data.Color])
                 setScannedDetectedPNList((oldArray) => [...oldArray,data.DetectedPN])
                 setScannedPlateNumberList((oldArray) => [...oldArray,data.PlateNumber]);
@@ -228,6 +228,7 @@ const TabNavigator = ({user,setNav}) => {
       //const latestData = scannedPlateNumberList.pop(); // remove latest data from queue
       setScannedPlateNotification(scannedPlateNumberList.pop());
       setNotification(true);
+      
       playSound();
     }
   }, [scannedPlateNumberList]);
@@ -356,6 +357,10 @@ const TabNavigator = ({user,setNav}) => {
     })
     } */}
 
+    {popupArchive &&
+      <PopupArchive scannedPlateNumberDateTimeLoc={scannedPlateNumberDateTimeLoc} setPopupArchive={setPopupArchive}/>
+    }
+
     {notification &&
 
       // useEffect(() => {
@@ -372,7 +377,7 @@ const TabNavigator = ({user,setNav}) => {
       //   }
       // }, [scannedDetectedPNList]);
 
-      <Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} scannedDetectedPN={scannedDetectedPN} scannedColor={scannedColor} scannedClosestMatches={scannedClosestMatches} scannedImageLink={scannedImageLink} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setScannedDetectedPN={setScannedDetectedPN} setScannedColor={setScannedColor} setScannedClosestMatches={setScannedClosestMatches} setScannedImageLink={setScannedImageLink} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} setScannedDetectedPNList={setScannedDetectedPNList} setScannedColorList={setScannedColorList}setScannedClosestMatchesList={setScannedClosestMatchesList} setScannedImageLinkList={setScannedImageLinkList}/>
+      <Notification scannedPlateNotification={scannedPlateNotification} scannedCrimeNotification={scannedCrimeNotification} scannedCurLocNotification={scannedCurLocNotification} setNotification={setNotification} scannedDetectedPN={scannedDetectedPN} scannedColor={scannedColor} scannedClosestMatches={scannedClosestMatches} scannedImageLink={scannedImageLink} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setScannedDetectedPN={setScannedDetectedPN} setScannedColor={setScannedColor} setScannedClosestMatches={setScannedClosestMatches} setScannedImageLink={setScannedImageLink} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} setScannedDetectedPNList={setScannedDetectedPNList} setScannedColorList={setScannedColorList}setScannedClosestMatchesList={setScannedClosestMatchesList} setScannedImageLinkList={setScannedImageLinkList} setPopupArchive={setPopupArchive}/>
       // const [scannedClosestMatchesList, setScannedClosestMatchesList] = useState([]);
       // const [scannedClosestMatches, setScannedClosestMatches] = useState('');
 
@@ -388,9 +393,7 @@ const TabNavigator = ({user,setNav}) => {
       // ])
     }
 
-    {popupArchive &&
-      <PopupArchive scannedPlateNumberDateTimeLoc={scannedPlateNumberDateTimeLoc} setPopupArchive={setPopupArchive}/>
-    }
+    
 
     {loading && 
     

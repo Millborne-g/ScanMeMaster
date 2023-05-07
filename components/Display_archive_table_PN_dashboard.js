@@ -7,7 +7,7 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
 
-const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNumberDateTimeLoc,setLoading,setPopupArchive}) => {
+const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNumberDateTimeLoc,setLoading, setLoadingDashboard, setPopupArchive}) => {
 
     const headers = ["Date/Time", "Plate No.", 'Crime', 'Location'];
 
@@ -25,6 +25,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
             setArchiveRow([]);
             if (data !== null) {
                 setLoading(false)
+                
                 setListEmpty(false)
                 const reversedData = Object.values(data).reverse();
                 reversedData.map((scanned) => {
@@ -36,6 +37,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                     //   }
                     //   });
                       if(scanned.Apprehended === "no"){
+                        setLoadingDashboard(false)
                       setArchiveRow((oldArray) => [...oldArray, [
                             [   
                                 <TouchableOpacity style={{flexWrap: 'wrap', flexDirection: 'row', width: 89, height: 55}} onPress={()=>{
@@ -175,7 +177,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
             
         } 
         else{
-            setLoading(false)
+            setLoadingDashboard(false)
         }
         });
         
