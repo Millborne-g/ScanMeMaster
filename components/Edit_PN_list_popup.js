@@ -10,7 +10,7 @@ import NetInfo from "@react-native-community/netinfo";
 
 import Loader from '../components/loader';
 
-const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setNotification, setScannedPlateNumberList, setScannedCrimeList, setScannedClosestMatchesList, setScannedImageLinkList, setScannedImageLink, setCurLocList, setScannedDetectedPNList}) => {
+const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,criminalOffense, setPlateNumber, setEditPlateNumber, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setNotification, setScannedPlateNumberList, setScannedCrimeList, setCurLocList}) => {
     const [isInternetConnected, setIsInternetConnected] = useState(false);
     const [clickButton, setClickButton] = useState(false);
 
@@ -231,13 +231,9 @@ const Edit_PN_list_popup = ({setEditList , setEditForm, user, plateNumber,crimin
           setScannedPlateNotification(''); 
           setScannedCrimeNotification('');
           setScannedCurLocNotification('');
-          setScannedImageLink('');
           setScannedPlateNumberList([]); 
           setScannedCrimeList([]); 
           setCurLocList([]);
-          setScannedClosestMatchesList([]); 
-          setScannedImageLinkList([]);
-          setScannedDetectedPNList([]);
           setNotification(false)
           setLoading(false);
     }

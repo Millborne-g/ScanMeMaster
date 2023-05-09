@@ -184,6 +184,9 @@ const Login = ({setNav, setUser}) => {
         {/*<Text>Login</Text>
         <Button title='click me' mode='contained' onPress={() => navigation.navigate('Dashboard')}/>
         */}
+        <View style={styles.betaContainer}>
+            <Text>Beta v5.2.1</Text>
+        </View>
         <View style={styles.logoContainer}>
             <Image style={styles.logo} source={require('../assets/logo.png')}/>
         </View>   
@@ -241,6 +244,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
+    betaContainer:{
+        position:'absolute',
+        top: '5%',
+        left: '6%'
+    },
     logoContainer: {
         marginBottom: 10,
         height: 140,

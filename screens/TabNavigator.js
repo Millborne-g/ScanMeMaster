@@ -25,26 +25,9 @@ import { Audio } from 'expo-av';
 import Loader from '../components/loader';
 import PopupArchive from '../components/PopupArchive'
 
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-})
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = ({user,setNav}) => {
-
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notificationPush, setNotificationPush] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
-
-
   const routeScreen = false;
   const tabRef = useRef(null);
   const [plateNumber, setPlateNumber] = useState('')
@@ -181,10 +164,6 @@ const TabNavigator = ({user,setNav}) => {
         //     }
         //   })
 
-        const PushAsyncFunction = async () => {
-          await schedulePushNotification();
-        };
-
 
           onValue(ref(db, `/Vehicle_with_criminal_offense/${data.PlateNumber}`), (snapshot) => {
             const dataV = snapshot.val();
@@ -228,9 +207,6 @@ const TabNavigator = ({user,setNav}) => {
                 update(ref(db, `/ScannedNotification`), {
                         Notification : "off"
                 });
-
-                PushAsyncFunction();
-
                 // setNotification(false);
               }
             }
@@ -294,25 +270,6 @@ const TabNavigator = ({user,setNav}) => {
       setScannedImageLink(scannedImageLinkList.pop());
     }
   }, [scannedImageLinkList]);
-  
-
-
-  useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-
-    notificationListener.current = Notifications.addNotificationReceivedListener(notificationPush => {
-      setNotification(notificationPush);
-    });
-
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
-
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
 
 
   console.log("crime "+scannedCrimeList[scannedCrimeList.length -1]+ " PN "+scannedPlateNumberList[scannedPlateNumberList-1])
@@ -374,7 +331,7 @@ const TabNavigator = ({user,setNav}) => {
     }
 
     {editList &&
-      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber} setEditPlateNumber={setEditPlateNumber} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setNotification={setNotification} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} setScannedClosestMatchesList={setScannedClosestMatchesList} setScannedImageLinkList={setScannedImageLinkList} setScannedImageLink={setScannedImageLink} setScannedDetectedPNList={setScannedDetectedPNList} setLoading={setLoading} />
+      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber} setEditPlateNumber={setEditPlateNumber} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setNotification={setNotification} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} setLoading={setLoading} />
     }
 
     {editForm &&
@@ -464,50 +421,6 @@ const TabNavigator = ({user,setNav}) => {
     */}
     </>
   )
-}
-
-async function schedulePushNotification() {
-  
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "Alert!",
-      body: "We have detected a vehicle with criminal offense. Please open the app to view more details and take appropriate action as necessary.",
-      data: { data: '...' },
-    },
-    trigger: { seconds: 2 },
-  });
-}
-
-async function registerForPushNotificationsAsync() {
-  let token;
-
-  if (Platform.OS === 'android') {
-    await Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-    });
-  }
-
-  if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
-  } else {
-    alert('Must use physical device for Push Notifications');
-  }
-
-  return token;
 }
 
 const styles = StyleSheet.create({
