@@ -374,7 +374,7 @@ const TabNavigator = ({user,setNav}) => {
     }
 
     {editList &&
-      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber} setEditPlateNumber={setEditPlateNumber} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setNotification={setNotification} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} setLoading={setLoading} />
+      <Edit_PN_list_popup setEditList={setEditList} setEditForm={setEditForm} user={user} plateNumber={plateNumber} setPlateNumber={setPlateNumber} setEditPlateNumber={setEditPlateNumber} setScannedPlateNotification={setScannedPlateNotification} setScannedCrimeNotification={setScannedPlateNotification} setScannedCurLocNotification={setScannedCurLocNotification} setNotification={setNotification} setScannedPlateNumberList={setScannedPlateNumberList} setScannedCrimeList={setScannedCrimeList} setCurLocList={setCurLocList} setScannedClosestMatchesList={setScannedClosestMatchesList} setScannedImageLinkList={setScannedImageLinkList} setScannedImageLink={setScannedImageLink} setScannedDetectedPNList={setScannedDetectedPNList} setLoading={setLoading} />
     }
 
     {editForm &&
