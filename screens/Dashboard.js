@@ -5,7 +5,7 @@ import Display_archive_table_PN_dashboard from '../components/Display_archive_ta
 import Recently_scanned_vehicle_location from '../components/Recently_scanned_vehicle_location_popup';
 import NetInfo from "@react-native-community/netinfo";
 import Loader from '../components/loader';
-const Dashboard = ({user, click_Vehicle_List, setViewLocArchive,setScannedPlateNumberDateTimeLoc,setLoading,setPopupArchive}) => {
+const Dashboard = ({user, click_Vehicle_List, setViewLocArchive,setScannedPlateNumberDateTimeLoc,setLoading,setPopupArchive, setViewArchiveTime, setViewArchiveDate}) => {
   const [dashboard, setDashboard] = useState(true);
   const [list, setList] = useState(false);
   const [archive, setArchive] = useState(false);
@@ -37,7 +37,7 @@ const Dashboard = ({user, click_Vehicle_List, setViewLocArchive,setScannedPlateN
           */}
           <View style={styles.Display_archive_table_PN_dashboard_container}>
           
-            <Display_archive_table_PN_dashboard setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc} setLoading={setLoading} setLoadingDashboard={setLoadingDashboard} setPopupArchive={setPopupArchive}/>
+            <Display_archive_table_PN_dashboard setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc} setLoading={setLoading} setLoadingDashboard={setLoadingDashboard} setPopupArchive={setPopupArchive} setViewArchiveTime={setViewArchiveTime} setViewArchiveDate={setViewArchiveDate}/>
           </View>
           
         </View >

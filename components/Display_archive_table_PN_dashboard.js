@@ -7,7 +7,7 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
 
-const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNumberDateTimeLoc,setLoading, setLoadingDashboard, setPopupArchive}) => {
+const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNumberDateTimeLoc,setLoading, setLoadingDashboard, setPopupArchive, setViewArchiveTime, setViewArchiveDate}) => {
 
     const headers = ["Date/Time", "Plate No.", 'Crime', 'Location'];
 
@@ -42,7 +42,9 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                             [   
                                 <TouchableOpacity style={{flexWrap: 'wrap', flexDirection: 'row', width: 89, height: 55}} onPress={()=>{
                                     setPopupArchive(true);
-                                    setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
+                                    setScannedPlateNumberDateTimeLoc(scanned.DetectedPN);
+                                    setViewArchiveTime(scanned.Time);
+                                    setViewArchiveDate(scanned.Date);
                                     }
                                     }> 
                                     <View style={{width: '100%', height: '100%', justifyContent: 'center'}}>
@@ -53,7 +55,9 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                             [
                                 <TouchableOpacity style={{flexWrap: 'wrap', flexDirection: 'row', width: 74, height: 55}} onPress={()=>{
                                     setPopupArchive(true);
-                                    setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
+                                    setScannedPlateNumberDateTimeLoc(scanned.DetectedPN);
+                                    setViewArchiveTime(scanned.Time);
+                                    setViewArchiveDate(scanned.Date);
                                     }
                                     }>
                                     <View style={{width: '100%', height: '100%', justifyContent: 'center'}}>
@@ -64,7 +68,9 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                             [
                                 <TouchableOpacity style={{flexWrap: 'wrap', flexDirection: 'row', width: 59, height: 55}} onPress={()=>{
                                     setPopupArchive(true);
-                                    setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
+                                    setScannedPlateNumberDateTimeLoc(scanned.DetectedPN);
+                                    setViewArchiveTime(scanned.Time);
+                                    setViewArchiveDate(scanned.Date);
                                     }
                                     }>
                                     <View style={{width: '100%', height: '100%', justifyContent: 'center'}}>
@@ -75,7 +81,9 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                             [
                                 <TouchableOpacity style={{flexWrap: 'wrap', flexDirection: 'row', width: 57, height: 55}} onPress={()=>{
                                     setPopupArchive(true);
-                                    setScannedPlateNumberDateTimeLoc(scanned.PlateNumber);
+                                    setScannedPlateNumberDateTimeLoc(scanned.DetectedPN);
+                                    setViewArchiveTime(scanned.Time);
+                                    setViewArchiveDate(scanned.Date);
                                     }
                                     }>
                                     <View style={{width: '100%', height: '100%', justifyContent: 'center'}}>

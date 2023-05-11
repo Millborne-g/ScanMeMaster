@@ -78,6 +78,10 @@ const TabNavigator = ({user,setNav}) => {
   const [viewPlateNumber, setViewPlateNumber] = useState('');
   const [viewPlateNumberDetails, setViewPlateNumberDetails] = useState(false);
 
+  //Archive popup
+  const [viewArchiveTime, setViewArchiveTime] = useState('');
+  const [viewArchiveDate, setViewArchiveDate] = useState('');
+
 
   //Loading
   const [loading, setLoading] = useState(false);
@@ -293,7 +297,7 @@ const TabNavigator = ({user,setNav}) => {
         }}
         
         >
-            <Tab.Screen name="Dashboard" children={()=><Dashboard user={user} click_Vehicle_List={click_Vehicle_List} setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc} setLoading={setLoading} setPopupArchive={setPopupArchive}/>} options={{
+            <Tab.Screen name="Dashboard" children={()=><Dashboard user={user} click_Vehicle_List={click_Vehicle_List} setViewLocArchive={setViewLocArchive} setScannedPlateNumberDateTimeLoc={setScannedPlateNumberDateTimeLoc} setLoading={setLoading} setPopupArchive={setPopupArchive} setViewArchiveTime={setViewArchiveTime} setViewArchiveDate={setViewArchiveDate}/>} options={{
             headerShown: false,
             tabBarIcon: ({color}) => (  
                 <MaterialCommunityIcons name="view-dashboard-outline" size={30} color={color} />
@@ -358,7 +362,7 @@ const TabNavigator = ({user,setNav}) => {
     } */}
 
     {popupArchive &&
-      <PopupArchive scannedPlateNumberDateTimeLoc={scannedPlateNumberDateTimeLoc} setPopupArchive={setPopupArchive}/>
+      <PopupArchive scannedPlateNumberDateTimeLoc={scannedPlateNumberDateTimeLoc} setPopupArchive={setPopupArchive} viewArchiveTime={viewArchiveTime} viewArchiveDate={viewArchiveDate}/>
     }
 
     {notification &&

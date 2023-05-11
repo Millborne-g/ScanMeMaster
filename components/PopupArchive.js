@@ -10,7 +10,7 @@ import {uid} from 'uid';
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
 
-const PopupArchive = ({scannedPlateNumberDateTimeLoc,setPopupArchive}) => {
+const PopupArchive = ({scannedPlateNumberDateTimeLoc,setPopupArchive, viewArchiveTime, viewArchiveDate}) => {
     const headers = ["Plate no.", "Crime", 'Confidence'];
     
     const [archiveRow, setArchiveRow] = useState([]);
@@ -26,7 +26,7 @@ const PopupArchive = ({scannedPlateNumberDateTimeLoc,setPopupArchive}) => {
           if (data !== null) {
             Object.values(data).map((scanned) => {
                 
-                if(scanned.PlateNumber === scannedPlateNumberDateTimeLoc){
+                if(scanned.DetectedPN === scannedPlateNumberDateTimeLoc && viewArchiveTime === scanned.Time && viewArchiveDate === scanned.Date){
                    
                     setScannedImageLink(scanned.ImageLink);
                     setScannedDetectedPN(scanned.DetectedPN)
