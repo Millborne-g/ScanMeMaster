@@ -126,7 +126,7 @@ const Login = ({setNav, setUser}) => {
                     }
                 } 
             else{
-                Alert('Message', 'Please connect to the internet.');
+                Alert.alert('Message', 'Please connect to the internet.');
                 // alert('Please connect to the internet.');
             }
         }

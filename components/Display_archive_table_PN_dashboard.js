@@ -61,7 +61,7 @@ const Display_archive_table_PN_dashboard = ({setViewLocArchive,setScannedPlateNu
                                     }
                                     }>
                                     <View style={{width: '100%', height: '100%', justifyContent: 'center'}}>
-                                        <Text>{scanned.DetectedPN}</Text>
+                                        <Text style={{color: '#2666FA'}}>{scanned.DetectedPN}</Text>
                                     </View>
                                 </TouchableOpacity>
                             ], 
