@@ -9,8 +9,42 @@ import {db} from '../firebase';
 import {uid} from 'uid'; 
 import { onValue, ref, remove, set, update } from 'firebase/database';
 
+import * as Notifications from 'expo-notifications';
+
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+
 const Notification = ({scannedPlateNotification, scannedCrimeNotification, scannedCurLocNotification, setNotification, scannedDetectedPN, scannedColor, scannedClosestMatches, scannedImageLink, setScannedPlateNotification, setScannedCrimeNotification, setScannedCurLocNotification, setScannedDetectedPN, setScannedColor, setScannedClosestMatches, setScannedImageLink, setScannedPlateNumberList, setScannedCrimeList, setCurLocList, setScannedDetectedPNList, setScannedColorList, setScannedClosestMatchesList, setScannedImageLinkList, setPopupArchive}) => {
     const headers = ["Plate no.", "Crime", 'Confidence'];
+
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [pushNotification, setPushNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    
+        notificationListener.current = Notifications.addNotificationReceivedListener(pushNotification => {
+          setPushNotification(pushNotification);
+        });
+    
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+          console.log(response);
+        });
+    
+        return () => {
+          Notifications.removeNotificationSubscription(notificationListener.current);
+          Notifications.removeNotificationSubscription(responseListener.current);
+        };
+      }, []);
+
     // const archiveRow = [
     //     ["Date/Time", "Plate No.", <View style={styles.confidenceLevel}><Text style={styles.confidenceLevelText}>100%</Text></View>],        
     //     ["Date/Time", "Plate No.", <View style={styles.confidenceLevel}><Text style={styles.confidenceLevelText}>100%</Text></View>],
@@ -44,6 +78,10 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
             // console.log('dsdadada '+arr[0][0]);
 
             try{
+
+                const PushAsyncFunction = async () => {
+                    await schedulePushNotification();
+                };
                 const string = scannedClosestMatches;
                 const str = string.replace(/'/g, '"');
                 const arr = JSON.parse(str.replace(/\(/g, "[").replace(/\)/g, "]"));
@@ -60,6 +98,7 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
                     return [item[0], item[1], confidenceLevel];
                     });
                     setArchiveRow(modifiedData);
+                    PushAsyncFunction();
                 } else{
                     setNotification(false);
                 }
@@ -356,6 +395,50 @@ const Notification = ({scannedPlateNotification, scannedCrimeNotification, scann
     </View>
   )
 }
+
+async function schedulePushNotification() {
+  
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Alert!",
+        body: "We have detected a vehicle with criminal offense. Please open the app to view more details and take appropriate action as necessary.",
+        data: { data: '...' },
+      },
+      trigger: { seconds: 2 },
+    });
+  }
+
+async function registerForPushNotificationsAsync() {
+    let token;
+  
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+  
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+  
+    return token;
+  }
 
 const styles = StyleSheet.create({
     notificationContainer: {
